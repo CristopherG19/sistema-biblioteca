@@ -1,0 +1,437 @@
+/* ========================================
+   SISTEMA BIBLIOTECARIO - ESTILOS PROFESIONALES
+   ======================================== */
+
+/* Variables CSS personalizadas */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --card-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --card-shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+/* Estilos base */
+body { 
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* Gradiente personalizado para hero */
+.bg-gradient-primary {
+    background: var(--primary-gradient);
+    position: relative;
+}
+
+.bg-gradient-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Efectos hover en las tarjetas */
+.hover-card {
+    transition: var(--transition);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+
+.hover-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover) !important;
+}
+
+/* Cards mejoradas */
+.card {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* Botones personalizados */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: none;
+    transition: var(--transition);
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4190);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white !important;
+}
+
+.btn-light {
+    background: white !important;
+    color: #333 !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-light:hover {
+    background: #f8f9fa !important;
+    color: #333 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-light i {
+    color: #667eea !important;
+}
+
+.btn-success {
+    background: var(--success-gradient);
+    border: none;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+    color: white !important;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #0f8679, #32d96b);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+    color: white !important;
+}
+
+.btn-info {
+    background: var(--info-gradient);
+    border: none;
+    box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+    color: white !important;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #138496, #20a8d8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+    color: white !important;
+}
+
+.btn-outline-primary {
+    border: 2px solid #667eea;
+    color: #667eea !important;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: #667eea !important;
+    border-color: #667eea;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-success {
+    border: 2px solid #11998e;
+    color: #11998e !important;
+    background: transparent;
+}
+
+.btn-outline-success:hover {
+    background: #11998e !important;
+    border-color: #11998e;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-info {
+    border: 2px solid #17a2b8;
+    color: #17a2b8 !important;
+    background: transparent;
+}
+
+.btn-outline-info:hover {
+    background: #17a2b8 !important;
+    border-color: #17a2b8;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-light {
+    border: 2px solid white !important;
+    color: white !important;
+    background: transparent !important;
+}
+
+.btn-outline-light:hover {
+    background: white !important;
+    border-color: white !important;
+    color: #333 !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-light:hover i {
+    color: #667eea !important;
+}
+
+/* Hero section mejorado */
+.bg-gradient-primary {
+    background: var(--primary-gradient);
+    position: relative;
+    color: white !important;
+}
+
+.bg-gradient-primary * {
+    color: white !important;
+}
+
+.bg-gradient-primary h1,
+.bg-gradient-primary h2,
+.bg-gradient-primary h3,
+.bg-gradient-primary h4,
+.bg-gradient-primary h5,
+.bg-gradient-primary h6 {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.bg-gradient-primary p {
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.bg-gradient-primary .text-white {
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.bg-gradient-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.hero-icon {
+    animation: float 4s ease-in-out infinite;
+    opacity: 0.8;
+    color: white !important;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(1deg); }
+    50% { transform: translateY(-10px) rotate(0deg); }
+    75% { transform: translateY(-5px) rotate(-1deg); }
+}
+
+/* Estadísticas animadas */
+.stat-number {
+    animation: countUp 1s ease-out;
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+@keyframes countUp {
+    from { 
+        opacity: 0; 
+        transform: scale(0.5) translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
+}
+
+/* Iconos con gradiente */
+.text-primary { color: #667eea !important; }
+.text-success { color: #11998e !important; }
+.text-info { color: #17a2b8 !important; }
+.text-warning { color: #f093fb !important; }
+
+/* Navegación mejorada */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
+.navbar-brand i {
+    color: white !important;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 6px;
+}
+
+.navbar-nav .nav-link i {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.navbar-nav .nav-link:hover i {
+    color: white !important;
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.dropdown-item {
+    color: #333 !important;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #667eea !important;
+}
+
+.dropdown-item i {
+    color: #666 !important;
+}
+
+.dropdown-item:hover i {
+    color: #667eea !important;
+}
+
+/* Badges estilizados */
+.badge {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Efectos de opacidad para módulos futuros */
+.opacity-75 {
+    opacity: 0.75;
+    transition: var(--transition);
+}
+
+.opacity-75:hover {
+    opacity: 1;
+}
+
+/* Mejoras tipográficas */
+.display-4 {
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.lead {
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-icon {
+        display: none;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .hover-card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Loading states */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

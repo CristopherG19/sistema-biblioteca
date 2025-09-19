@@ -1,0 +1,17 @@
+{
+    "name": "sistema/biblioteca",
+    "description": "Sistema de gestión de biblioteca con soporte para PDFs",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "smalot/pdfparser": "^2.0",
+        "setasign/fpdi": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sistema\\Biblioteca\\": "app/"
+        }
+    },
+    "require-dev": {
+    }
+}

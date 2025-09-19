@@ -1,0 +1,29 @@
+# Configuración para uploads de PDF
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# Permitir archivos PDF en el directorio uploads
+<Files "*.pdf">
+    Allow from all
+</Files>
+
+# Configurar límites de upload
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 300
+php_value memory_limit 256M
+
+# Configurar tipos MIME
+AddType application/pdf .pdf
+
+# Seguridad - No permitir ejecución de scripts en uploads
+<Files "*.php">
+    Deny from all
+</Files>
+<Files "*.phtml">
+    Deny from all
+</Files>
+<Files "*.phps">
+    Deny from all
+</Files>
