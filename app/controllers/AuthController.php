@@ -44,7 +44,7 @@ class AuthController {
                 // Buscar usuario en la base de datos
                 $userData = $this->usuarioModel->getByUsername($usuario);
                 
-                if ($userData && password_verify($password, $userData['clave'])) {
+                if ($userData && password_verify($password, $userData['password'])) {
                     // Login exitoso - crear sesión
                     $_SESSION['usuario_id'] = $userData['idUsuario'];
                     $_SESSION['usuario_nombre'] = $userData['nombre'];

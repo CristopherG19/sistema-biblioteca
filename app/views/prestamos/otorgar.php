@@ -44,7 +44,7 @@
                                 <strong>Editorial:</strong> <?php echo htmlspecialchars($libro['editorial']); ?><br>
                                 <strong>ISBN:</strong> <?php echo htmlspecialchars($libro['isbn']); ?><br>
                                 <strong>Categoría:</strong> 
-                                <span class="badge bg-info"><?php echo htmlspecialchars($libro['categoria']); ?></span>
+                                <span class="badge bg-info"><?php echo htmlspecialchars($libro['categoria_nombre']); ?></span>
                             </p>
                             <div class="row text-center">
                                 <div class="col-4">

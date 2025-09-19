@@ -64,7 +64,7 @@
                                                         data-titulo="<?php echo htmlspecialchars($libro['titulo']); ?>"
                                                         data-autor="<?php echo htmlspecialchars($libro['autor']); ?>"
                                                         data-editorial="<?php echo htmlspecialchars($libro['editorial']); ?>"
-                                                        data-categoria="<?php echo htmlspecialchars($libro['categoria']); ?>"
+                                                        data-categoria="<?php echo htmlspecialchars($libro['categoria_nombre']); ?>"
                                                         <?php echo (isset($_POST['libro_id']) && $_POST['libro_id'] == $libro['idLibro']) ? 'selected' : ''; ?>>
                                                     <?php echo htmlspecialchars($libro['titulo'] . ' - ' . $libro['autor']); ?>
                                                     (<?php echo $libro['disponible']; ?> disponible<?php echo $libro['disponible'] != 1 ? 's' : ''; ?>)

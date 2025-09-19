@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'sistema/biblioteca',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '1a144d47d88f97801828b25a122efd48803a4599',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'sistema/biblioteca' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '1a144d47d88f97801828b25a122efd48803a4599',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

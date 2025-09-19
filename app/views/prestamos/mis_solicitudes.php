@@ -168,21 +168,43 @@
                         <tbody>
                             <?php foreach ($solicitudes as $solicitud): ?>
                                 <?php 
-                                $badgeClass = match($solicitud['estado']) {
-                                    'Pendiente' => 'bg-warning',
-                                    'Aprobada' => 'bg-success',
-                                    'Rechazada' => 'bg-danger',
-                                    'Convertida' => 'bg-info',
-                                    default => 'bg-secondary'
-                                };
+                                $badgeClass = '';
+                                switch($solicitud['estado']) {
+                                    case 'Pendiente':
+                                        $badgeClass = 'bg-warning';
+                                        break;
+                                    case 'Aprobada':
+                                        $badgeClass = 'bg-success';
+                                        break;
+                                    case 'Rechazada':
+                                        $badgeClass = 'bg-danger';
+                                        break;
+                                    case 'Convertida':
+                                        $badgeClass = 'bg-info';
+                                        break;
+                                    default:
+                                        $badgeClass = 'bg-secondary';
+                                        break;
+                                }
                                 
-                                $iconClass = match($solicitud['estado']) {
-                                    'Pendiente' => 'fas fa-clock',
-                                    'Aprobada' => 'fas fa-check',
-                                    'Rechazada' => 'fas fa-times',
-                                    'Convertida' => 'fas fa-exchange-alt',
-                                    default => 'fas fa-question'
-                                };
+                                $iconClass = '';
+                                switch($solicitud['estado']) {
+                                    case 'Pendiente':
+                                        $iconClass = 'fas fa-clock';
+                                        break;
+                                    case 'Aprobada':
+                                        $iconClass = 'fas fa-check';
+                                        break;
+                                    case 'Rechazada':
+                                        $iconClass = 'fas fa-times';
+                                        break;
+                                    case 'Convertida':
+                                        $iconClass = 'fas fa-exchange-alt';
+                                        break;
+                                    default:
+                                        $iconClass = 'fas fa-question';
+                                        break;
+                                }
                                 ?>
                                 <tr>
                                     <td class="py-3 text-muted">

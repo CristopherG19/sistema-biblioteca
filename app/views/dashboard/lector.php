@@ -100,7 +100,7 @@
                                             <h6 class="book-title"><?= htmlspecialchars($libro['titulo']) ?></h6>
                                             <p class="book-author"><?= htmlspecialchars($libro['autor']) ?></p>
                                             <span class="book-category">
-                                                <?= htmlspecialchars($libro['categoria']) ?>
+                                                <?= htmlspecialchars($libro['categoria_nombre']) ?>
                                             </span>
                                             <div class="book-availability mt-2">
                                                 <span class="badge bg-success">

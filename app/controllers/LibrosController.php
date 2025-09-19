@@ -59,11 +59,11 @@ class LibrosController {
                     
                     // Primero insertar el libro básico para obtener el ID
                     // Usar INSERT directo en lugar de procedimiento para obtener lastInsertId()
-                    global $pdo;
+                    $conexion = obtenerConexion();
                     
                     $sql = "INSERT INTO Libros (idCategoria, titulo, autor, editorial, anio, isbn, stock, disponible, descripcion) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    $stmt = $pdo->prepare($sql);
+                    $stmt = $conexion->prepare($sql);
                     $insertSuccess = $stmt->execute([
                         $_POST['idCategoria'],
                         $_POST['titulo'],
@@ -78,7 +78,7 @@ class LibrosController {
                     
                     if ($insertSuccess) {
                         // Obtener el ID del último libro insertado
-                        $idLibro = $pdo->lastInsertId();
+                        $idLibro = $conexion->lastInsertId();
                         error_log("Libro insertado con ID: " . $idLibro);
                         
                         // Procesar el PDF
@@ -293,9 +293,9 @@ class LibrosController {
     
     private function registrarLectura($idLibro, $idUsuario) {
         try {
-            global $pdo;
+            $conexion = obtenerConexion();
             // Usar procedimiento almacenado para registrar lectura
-            $stmt = $pdo->prepare("CALL sp_libro_registrar_lectura(?, ?)");
+            $stmt = $conexion->prepare("CALL sp_libro_registrar_lectura(?, ?)");
             $stmt->execute([$idLibro, $idUsuario]);
             $stmt->closeCursor(); // Liberar resultado del procedimiento
         } catch (Exception $e) {

@@ -157,12 +157,21 @@
                                             $estado = 'Vencido';
                                         }
                                         
-                                        $badgeClass = match($estado) {
-                                            'Activo' => 'bg-success',
-                                            'Devuelto' => 'bg-primary',
-                                            'Vencido' => 'bg-danger',
-                                            default => 'bg-secondary'
-                                        };
+                                        $badgeClass = '';
+                                        switch($estado) {
+                                            case 'Activo':
+                                                $badgeClass = 'bg-success';
+                                                break;
+                                            case 'Devuelto':
+                                                $badgeClass = 'bg-primary';
+                                                break;
+                                            case 'Vencido':
+                                                $badgeClass = 'bg-danger';
+                                                break;
+                                            default:
+                                                $badgeClass = 'bg-secondary';
+                                                break;
+                                        }
                                         ?>
                                         <span class="badge <?php echo $badgeClass; ?>"><?php echo $estado; ?></span>
                                     </td>

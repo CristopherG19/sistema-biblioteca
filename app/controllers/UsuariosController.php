@@ -40,7 +40,7 @@ class UsuariosController {
                     $datos = [
                         'nombre' => trim($_POST['nombre']),
                         'usuario' => trim($_POST['usuario']),
-                        'clave' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                         'rol' => $_POST['rol'],
                         'email' => trim($_POST['email']),
                         'telefono' => trim($_POST['telefono'])
@@ -103,11 +103,11 @@ class UsuariosController {
                     
                     // Solo actualizar password si se proporcionó uno nuevo
                     if (!empty($_POST['password'])) {
-                        $datos['clave'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        $datos['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     } else {
                         // Mantener el password actual
                         $usuarioActual = $this->usuarioModel->getById($id);
-                        $datos['clave'] = $usuarioActual['clave'];
+                        $datos['password'] = $usuarioActual['password'];
                     }
                     
                     if ($this->usuarioModel->actualizar($id, $datos)) {

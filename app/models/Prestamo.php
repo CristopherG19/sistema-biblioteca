@@ -131,8 +131,8 @@ class Prestamo {
     // Devolver préstamo (actualizado a procedimiento)
     public function devolver($prestamo_id, $observaciones = null) {
         try {
-            $stmt = $this->conexion->prepare("CALL sp_prestamo_devolver_completo(?, ?)");
-            $stmt->execute([$prestamo_id, $observaciones]);
+            $stmt = $this->conexion->prepare("CALL sp_prestamo_devolver_completo(?)");
+            $stmt->execute([$prestamo_id]);
             
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
@@ -368,6 +368,88 @@ class Prestamo {
             $stmt = $this->conexion->prepare("SELECT * FROM Prestamos WHERE idPrestamo = ?");
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    }
+    
+    // Actualizar préstamo (método faltante)
+    public function actualizar($id, $datos) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_prestamo_actualizar(?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $id,
+                $datos['fecha_devolucion_esperada'] ?? null,
+                $datos['estado'] ?? null,
+                $datos['observaciones'] ?? null,
+                $datos['fecha_devolucion_real'] ?? null
+            ]);
+            
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            
+            return [
+                'success' => $resultado['status'] === 'success',
+                'message' => $resultado['message']
+            ];
+        } catch (PDOException $e) {
+            error_log("Error al actualizar préstamo: " . $e->getMessage());
+            return ['success' => false, 'message' => 'Error interno del sistema'];
+        }
+    }
+    
+    // Registrar devolución (método faltante)
+    public function registrarDevolucion($prestamo_id, $observaciones = null) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_prestamo_registrar_devolucion(?, ?)");
+            $stmt->execute([$prestamo_id, $observaciones]);
+            
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            
+            return [
+                'success' => $resultado['status'] === 'success',
+                'message' => $resultado['message']
+            ];
+        } catch (PDOException $e) {
+            error_log("Error al registrar devolución: " . $e->getMessage());
+            return ['success' => false, 'message' => 'Error interno del sistema'];
+        }
+    }
+    
+    // Buscar préstamos (método faltante)
+    public function buscar($termino) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_prestamo_buscar(?)");
+            $stmt->execute([$termino]);
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $resultado;
+        } catch (PDOException $e) {
+            error_log("Error al buscar préstamos: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    // Verificar disponibilidad (método faltante - alias para validarDisponibilidad)
+    public function verificarDisponibilidad($libro_id) {
+        return $this->validarDisponibilidad($libro_id);
+    }
+    
+    // Auto-devolver préstamo (método faltante)
+    public function autodevolverPrestamo($prestamo_id) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_prestamo_auto_devolver(?)");
+            $stmt->execute([$prestamo_id]);
+            
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            
+            return [
+                'success' => $resultado['status'] === 'success',
+                'message' => $resultado['message']
+            ];
+        } catch (PDOException $e) {
+            error_log("Error al auto-devolver préstamo: " . $e->getMessage());
+            return ['success' => false, 'message' => 'Error interno del sistema'];
         }
     }
 }

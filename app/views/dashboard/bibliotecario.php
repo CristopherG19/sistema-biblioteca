@@ -129,7 +129,7 @@
                                             <td class="text-muted"><?= htmlspecialchars($libro['autor']) ?></td>
                                             <td>
                                                 <span class="badge bg-secondary rounded-pill">
-                                                    <?= htmlspecialchars($libro['categoria']) ?>
+                                                    <?= htmlspecialchars($libro['categoria_nombre']) ?>
                                                 </span>
                                             </td>
                                             <td class="text-center">

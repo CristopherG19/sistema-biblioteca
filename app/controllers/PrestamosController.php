@@ -755,7 +755,7 @@ class PrestamosController {
         }
         
         try {
-            $resultado = $this->prestamoModel->autodevolverPrestamo($prestamo_id, $_SESSION['usuario_id']);
+            $resultado = $this->prestamoModel->autodevolverPrestamo($prestamo_id);
             
             if ($resultado['success']) {
                 header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode($resultado['message']));

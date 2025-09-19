@@ -188,7 +188,7 @@ include __DIR__ . '/../partials/header.php';
                                     <td>
                                         <span class="badge bg-info">
                                             <i class="fas fa-tag me-1"></i>
-                                            <?php echo htmlspecialchars($libro['categoria']); ?>
+                                            <?php echo htmlspecialchars($libro['categoria_nombre']); ?>
                                         </span>
                                     </td>
                                     <td>

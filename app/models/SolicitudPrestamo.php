@@ -234,7 +234,7 @@ class SolicitudPrestamo {
                         l.isbn,
                         l.disponible,
                         l.descripcion,
-                        c.nombre as categoria
+                        c.nombre as categoria_nombre
                     FROM Libros l
                     INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
                     WHERE l.disponible > 0

@@ -59,7 +59,7 @@
                                     <td class="fw-semibold"><i class="fas fa-tag me-2 text-primary"></i>Categoría:</td>
                                     <td>
                                         <span class="badge bg-info">
-                                            <?php echo htmlspecialchars($libro['categoria']); ?>
+                                            <?php echo htmlspecialchars($libro['categoria_nombre']); ?>
                                         </span>
                                     </td>
                                 </tr>
