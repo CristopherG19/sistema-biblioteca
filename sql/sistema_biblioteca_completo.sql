@@ -302,7 +302,7 @@ BEGIN
         COUNT(*) as total_usuarios,
         SUM(CASE WHEN rol = 2 THEN 1 ELSE 0 END) as total_lectores,
         SUM(CASE WHEN rol = 1 THEN 1 ELSE 0 END) as total_bibliotecarios,
-        SUM(CASE WHEN DATE(fecha_registro) = CURDATE() THEN 1 ELSE 0 END) as nuevos_hoy
+        SUM(CASE WHEN DATE(fecha_registro) = CURRENT_DATE THEN 1 ELSE 0 END) as nuevos_hoy
     FROM Usuarios
     WHERE activo = TRUE;
 END //
@@ -366,7 +366,7 @@ BEGIN
     INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
     WHERE l.disponible > 0 AND l.activo = TRUE
     ORDER BY l.titulo
-    LIMIT COALESCE(p_limite, 1000);
+    LIMIT CASE WHEN p_limite IS NULL THEN 1000 ELSE p_limite END;
 END //
 
 -- Buscar libros por título o autor
@@ -396,8 +396,8 @@ END //
 CREATE PROCEDURE sp_libro_obtener_con_prestamos()
 BEGIN
     SELECT l.*, c.nombre as categoria,
-           COALESCE(COUNT(p.idPrestamo), 0) as total_prestamos,
-           COALESCE(SUM(CASE WHEN p.fechaDevolucionReal IS NULL THEN 1 ELSE 0 END), 0) as prestamos_activos
+           CASE WHEN COUNT(p.idPrestamo) IS NULL THEN 0 ELSE COUNT(p.idPrestamo) END as total_prestamos,
+           CASE WHEN SUM(CASE WHEN p.fechaDevolucionReal IS NULL THEN 1 ELSE 0 END) IS NULL THEN 0 ELSE SUM(CASE WHEN p.fechaDevolucionReal IS NULL THEN 1 ELSE 0 END) END as prestamos_activos
     FROM Libros l 
     INNER JOIN Categorias c ON l.idCategoria = c.idCategoria 
     LEFT JOIN Prestamos p ON l.idLibro = p.idLibro
@@ -528,8 +528,8 @@ BEGIN
         UPDATE Prestamos 
         SET fechaDevolucionReal = NOW(),
             estado = 'Devuelto',
-            observaciones = CONCAT(COALESCE(v_observaciones_actuales, ''), 
-                                 IF(p_observaciones IS NOT NULL, CONCAT(' | Devolución: ', p_observaciones), ''))
+            observaciones = CONCAT(CASE WHEN v_observaciones_actuales IS NULL THEN '' ELSE v_observaciones_actuales END, 
+                                 CASE WHEN p_observaciones IS NOT NULL THEN CONCAT(' | Devolución: ', p_observaciones) ELSE '' END)
         WHERE idPrestamo = p_idPrestamo;
         
         -- Actualizar stock
@@ -551,7 +551,7 @@ BEGIN
         COUNT(*) as total,
         SUM(CASE WHEN fechaDevolucionReal IS NULL THEN 1 ELSE 0 END) as activos,
         SUM(CASE WHEN fechaDevolucionReal IS NOT NULL THEN 1 ELSE 0 END) as devueltos,
-        SUM(CASE WHEN fechaDevolucionReal IS NULL AND fechaDevolucionEsperada < CURDATE() THEN 1 ELSE 0 END) as vencidos
+        SUM(CASE WHEN fechaDevolucionReal IS NULL AND fechaDevolucionEsperada < CURRENT_DATE THEN 1 ELSE 0 END) as vencidos
     FROM Prestamos;
 END //
 
@@ -751,7 +751,7 @@ BEGIN
         SUM(CASE WHEN estado = 'Aprobada' THEN 1 ELSE 0 END) as aprobadas,
         SUM(CASE WHEN estado = 'Rechazada' THEN 1 ELSE 0 END) as rechazadas,
         SUM(CASE WHEN estado = 'Convertida' THEN 1 ELSE 0 END) as convertidas,
-        SUM(CASE WHEN DATE(fecha_solicitud) = CURDATE() THEN 1 ELSE 0 END) as solicitudes_hoy
+        SUM(CASE WHEN DATE(fecha_solicitud) = CURRENT_DATE THEN 1 ELSE 0 END) as solicitudes_hoy
     FROM solicitudes_prestamo;
 END //
 
@@ -841,7 +841,7 @@ BEGIN
         -- Actualizar fecha de devolución
         UPDATE Prestamos
         SET fechaDevolucionEsperada = DATE_ADD(v_fecha_actual, INTERVAL v_dias_adicionales DAY),
-            observaciones = CONCAT(COALESCE(observaciones, ''), ' | Ampliación: Ampliado por ', v_dias_adicionales, ' días. Motivo: ', p_respuesta)
+            observaciones = CONCAT(CASE WHEN observaciones IS NULL THEN '' ELSE observaciones END, ' | Ampliación: Ampliado por ', v_dias_adicionales, ' días. Motivo: ', p_respuesta)
         WHERE idPrestamo = v_prestamo_id;
         
         -- Actualizar solicitud
@@ -906,7 +906,7 @@ SELECT
     l.autor as libro_autor,
     l.isbn as libro_isbn,
     c.nombre as categoria_nombre,
-    DATEDIFF(p.fechaDevolucionEsperada, CURDATE()) as dias_restantes
+    DATEDIFF(p.fechaDevolucionEsperada, CURRENT_DATE) as dias_restantes
 FROM Prestamos p
 INNER JOIN Usuarios u ON p.idUsuario = u.idUsuario
 INNER JOIN Libros l ON p.idLibro = l.idLibro
@@ -921,7 +921,7 @@ SELECT
     (SELECT COUNT(*) FROM Prestamos) as total_prestamos,
     (SELECT COUNT(*) FROM Prestamos WHERE fechaDevolucionReal IS NULL) as prestamos_activos,
     (SELECT COUNT(*) FROM Prestamos WHERE fechaDevolucionReal IS NOT NULL) as prestamos_devueltos,
-    (SELECT COUNT(*) FROM Prestamos WHERE fechaDevolucionReal IS NULL AND fechaDevolucionEsperada < CURDATE()) as prestamos_vencidos,
+    (SELECT COUNT(*) FROM Prestamos WHERE fechaDevolucionReal IS NULL AND fechaDevolucionEsperada < CURRENT_DATE) as prestamos_vencidos,
     (SELECT COUNT(*) FROM solicitudes_prestamo) as total_solicitudes,
     (SELECT COUNT(*) FROM solicitudes_prestamo WHERE estado = 'Pendiente') as solicitudes_pendientes;
 
