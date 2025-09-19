@@ -366,7 +366,7 @@ BEGIN
     INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
     WHERE l.disponible > 0 AND l.activo = TRUE
     ORDER BY l.titulo
-    LIMIT IFNULL(p_limite, 1000);
+    LIMIT COALESCE(p_limite, 1000);
 END //
 
 -- Buscar libros por título o autor
@@ -528,7 +528,7 @@ BEGIN
         UPDATE Prestamos 
         SET fechaDevolucionReal = NOW(),
             estado = 'Devuelto',
-            observaciones = CONCAT(IFNULL(v_observaciones_actuales, ''), 
+            observaciones = CONCAT(COALESCE(v_observaciones_actuales, ''), 
                                  IF(p_observaciones IS NOT NULL, CONCAT(' | Devolución: ', p_observaciones), ''))
         WHERE idPrestamo = p_idPrestamo;
         
@@ -841,7 +841,7 @@ BEGIN
         -- Actualizar fecha de devolución
         UPDATE Prestamos
         SET fechaDevolucionEsperada = DATE_ADD(v_fecha_actual, INTERVAL v_dias_adicionales DAY),
-            observaciones = CONCAT(IFNULL(observaciones, ''), ' | Ampliación: Ampliado por ', v_dias_adicionales, ' días. Motivo: ', p_respuesta)
+            observaciones = CONCAT(COALESCE(observaciones, ''), ' | Ampliación: Ampliado por ', v_dias_adicionales, ' días. Motivo: ', p_respuesta)
         WHERE idPrestamo = v_prestamo_id;
         
         -- Actualizar solicitud
