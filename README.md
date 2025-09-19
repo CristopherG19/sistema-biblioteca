@@ -72,8 +72,8 @@ SISTEMA_BIBLIOTECA/
 
 2. **Configurar la base de datos:**
    - Crear una base de datos MySQL
-   - Importar el archivo `sql/database.sql`
-   - Ejecutar los procedimientos almacenados de `sql/procedimientos_almacenados_completos.sql`
+   - Ejecutar el script unificado `sql/sistema_biblioteca_completo.sql`
+   - Verificar la instalación con `sql/verificar_instalacion.sql`
 
 3. **Configurar la conexión:**
    - Copiar `config/database.example.php` a `config/database.php`

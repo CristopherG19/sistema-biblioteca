@@ -1,16 +1,16 @@
 # Archivos de configuración local
 config/database.php
 
-# Archivos temporales de prueba
-test_*.php
-*_test.php
-debug_*.php
-verificar_*.php
-actualizar_*.php
-corregir_*.php
-limpiar_*.php
-migrar_*.php
-diagnostico_*.php
+# Archivos temporales de prueba (ya eliminados)
+# test_*.php
+# *_test.php
+# debug_*.php
+# verificar_*.php
+# actualizar_*.php
+# corregir_*.php
+# limpiar_*.php
+# migrar_*.php
+# diagnostico_*.php
 
 # Archivos de backup
 *.backup
