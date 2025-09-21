@@ -398,6 +398,32 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* Estilos para tabla de libros */
+.table tbody tr {
+    height: 60px; /* Altura fija para todas las filas */
+    vertical-align: middle;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 8px 12px;
+}
+
+/* Controlar títulos largos */
+.table tbody td .fw-semibold {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+/* Asegurar que los badges mantengan su tamaño */
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+
 /* Animaciones de entrada */
 @keyframes fadeInUp {
     from {
