@@ -172,18 +172,18 @@ include __DIR__ . '/../partials/header.php';
                                 <tr>
                                     <td><span class="badge bg-light text-dark"><?php echo $libro['idLibro']; ?></span></td>
                                     <td>
-                                        <div class="book-title-container">
+                                        <div class="d-flex align-items-center">
                                             <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                                 <i class="fas fa-book text-primary"></i>
                                             </div>
                                             <div>
-                                                <div class="fw-semibold book-title" title="<?php echo htmlspecialchars($libro['titulo']); ?>"><?php echo htmlspecialchars($libro['titulo']); ?></div>
+                                                <div class="fw-semibold"><?php echo htmlspecialchars($libro['titulo']); ?></div>
                                                 <small class="text-muted">ISBN: <?php echo htmlspecialchars($libro['isbn']); ?></small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="book-author" title="<?php echo htmlspecialchars($libro['autor']); ?>"><?php echo htmlspecialchars($libro['autor']); ?></span></td>
-                                    <td><span class="book-publisher" title="<?php echo htmlspecialchars($libro['editorial']); ?>"><?php echo htmlspecialchars($libro['editorial']); ?></span></td>
+                                    <td><?php echo htmlspecialchars($libro['autor']); ?></td>
+                                    <td><?php echo htmlspecialchars($libro['editorial']); ?></td>
                                     <td><span class="badge bg-secondary"><?php echo htmlspecialchars($libro['anio']); ?></span></td>
                                     <td>
                                         <span class="badge bg-info">
