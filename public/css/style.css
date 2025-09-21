@@ -447,6 +447,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
+    padding: 8px 12px;
 }
 
 /* Título del libro con manejo de texto largo */
@@ -454,8 +455,9 @@ h1, h2, h3, h4, h5, h6 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 200px;
     display: inline-block;
+    line-height: 1.2;
 }
 
 .book-title:hover {
@@ -469,9 +471,10 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* Asegurar altura uniforme de filas */
+/* Asegurar altura uniforme de filas - altura original */
 .table tbody tr {
-    height: 60px;
+    height: auto;
+    min-height: 50px;
 }
 
 /* Autor con manejo de texto largo */
@@ -496,12 +499,13 @@ h1, h2, h3, h4, h5, h6 {
 .book-title-container {
     display: flex;
     align-items: center;
-    min-height: 40px;
+    min-height: auto;
 }
 
 .book-title-container .fw-semibold {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;
+    max-width: 180px;
+    line-height: 1.2;
 }
