@@ -435,3 +435,73 @@ h1, h2, h3, h4, h5, h6 {
     0% { left: -100%; }
     100% { left: 100%; }
 }
+
+/* ========================================
+   ESTILOS PARA TABLA DE LIBROS
+   ======================================== */
+
+/* Estilos para tabla de libros - Evitar saltos de línea */
+.table td {
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+/* Título del libro con manejo de texto largo */
+.book-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    display: inline-block;
+}
+
+.book-title:hover {
+    white-space: normal;
+    overflow: visible;
+    position: relative;
+    z-index: 10;
+    background: white;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Asegurar altura uniforme de filas */
+.table tbody tr {
+    height: 60px;
+}
+
+/* Autor con manejo de texto largo */
+.book-author {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: inline-block;
+}
+
+/* Editorial con manejo de texto largo */
+.book-publisher {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    display: inline-block;
+}
+
+/* Contenedor del título del libro */
+.book-title-container {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+.book-title-container .fw-semibold {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
