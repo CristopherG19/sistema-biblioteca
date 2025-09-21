@@ -1,7 +1,9 @@
 -- =====================================================
--- SISTEMA DE BIBLIOTECA COMPLETO - SCRIPT UNIFICADO
--- Generado automáticamente: 2025-09-21 21:27:21
--- Total de procedimientos: 66
+-- SISTEMA DE BIBLIOTECA COMPLETO - EXTRACCIÓN TOTAL
+-- Generado automáticamente: 2025-09-21 21:29:59
+-- Base de datos: biblioteca_db
+-- Tablas: 13 | Procedimientos: 66
+-- Funciones: 0 | Triggers: 3 | Vistas: 2
 -- =====================================================
 
 -- Configuración inicial
@@ -21,117 +23,292 @@ USE `biblioteca_db`;
 -- 2. CREACIÓN DE TABLAS
 -- =====================================================
 
--- Tabla Roles
-CREATE TABLE IF NOT EXISTS `Roles` (
-  `idRol` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` text,
-  PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla: categorias
+CREATE TABLE `categorias` (
+  `idCategoria` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `activa` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`idCategoria`),
+  UNIQUE KEY `nombre` (`nombre`),
+  KEY `idx_nombre` (`nombre`),
+  KEY `idx_activa` (`activa`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Usuarios
-CREATE TABLE IF NOT EXISTS `Usuarios` (
-  `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `apellido` varchar(100) NOT NULL,
-  `usuario` varchar(50) NOT NULL UNIQUE,
-  `password` varchar(255) NOT NULL,
-  `rol` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL UNIQUE,
-  `telefono` varchar(20),
-  `activo` boolean DEFAULT TRUE,
-  `fecha_registro` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `ultimo_acceso` timestamp NULL,
-  PRIMARY KEY (`idUsuario`),
-  FOREIGN KEY (`rol`) REFERENCES `Roles`(`idRol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla: historiallectura
+CREATE TABLE `historiallectura` (
+  `idHistorial` int NOT NULL AUTO_INCREMENT,
+  `idUsuario` int NOT NULL,
+  `idLibro` int NOT NULL,
+  `fecha_inicio` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_fin` datetime DEFAULT NULL,
+  `tipo` enum('Prestamo','Lectura','Reserva') COLLATE utf8mb4_unicode_ci DEFAULT 'Prestamo',
+  `calificacion` int DEFAULT NULL,
+  `comentario` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`idHistorial`),
+  KEY `idx_usuario` (`idUsuario`),
+  KEY `idx_libro` (`idLibro`),
+  KEY `idx_fecha_inicio` (`fecha_inicio`),
+  KEY `idx_tipo` (`tipo`),
+  CONSTRAINT `historiallectura_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
+  CONSTRAINT `historiallectura_ibfk_2` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE,
+  CONSTRAINT `historiallectura_chk_1` CHECK (((`calificacion` >= 1) and (`calificacion` <= 5)))
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Categorias
-CREATE TABLE IF NOT EXISTS `Categorias` (
-  `idCategoria` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `descripcion` text,
-  PRIMARY KEY (`idCategoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Tabla: interesesusuario
+CREATE TABLE `interesesusuario` (
+  `idInteresUsuario` int NOT NULL AUTO_INCREMENT,
+  `idUsuario` int NOT NULL,
+  `idCategoria` int NOT NULL,
+  `fecha_agregado` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idInteresUsuario`),
+  UNIQUE KEY `unique_interes` (`idUsuario`,`idCategoria`),
+  KEY `idx_usuario` (`idUsuario`),
+  KEY `idx_categoria` (`idCategoria`),
+  CONSTRAINT `interesesusuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
+  CONSTRAINT `interesesusuario_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Libros
-CREATE TABLE IF NOT EXISTS `Libros` (
-  `idLibro` int(11) NOT NULL AUTO_INCREMENT,
-  `idCategoria` int(11) NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `autor` varchar(255) NOT NULL,
-  `editorial` varchar(100),
-  `anio` int(4),
-  `isbn` varchar(20) UNIQUE,
-  `stock` int(11) DEFAULT 0,
-  `disponible` int(11) DEFAULT 0,
-  `descripcion` text,
-  `portada` varchar(255),
-  `archivo_pdf` varchar(255),
-  `numero_paginas` int(11),
-  `tamano_archivo` bigint(20),
-  `fecha_subida` timestamp NULL,
-  `fecha_registro` timestamp DEFAULT CURRENT_TIMESTAMP,
+-- Tabla: libros
+CREATE TABLE `libros` (
+  `idLibro` int NOT NULL AUTO_INCREMENT,
+  `idCategoria` int NOT NULL,
+  `titulo` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `autor` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `editorial` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `anio` int DEFAULT NULL,
+  `isbn` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stock` int NOT NULL DEFAULT '0',
+  `disponible` int NOT NULL DEFAULT '0',
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `portada` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `archivo_pdf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_adicion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `activo` tinyint(1) DEFAULT '1',
+  `numero_paginas` int DEFAULT NULL,
+  `tamano_archivo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_subida` datetime DEFAULT NULL,
   PRIMARY KEY (`idLibro`),
-  FOREIGN KEY (`idCategoria`) REFERENCES `Categorias`(`idCategoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `isbn` (`isbn`),
+  KEY `idx_titulo` (`titulo`),
+  KEY `idx_autor` (`autor`),
+  KEY `idx_isbn` (`isbn`),
+  KEY `idx_categoria` (`idCategoria`),
+  KEY `idx_disponible` (`disponible`),
+  KEY `idx_activo` (`activo`),
+  CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Prestamos
-CREATE TABLE IF NOT EXISTS `Prestamos` (
-  `idPrestamo` int(11) NOT NULL AUTO_INCREMENT,
-  `idLibro` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  `fechaPrestamo` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `fechaDevolucionEsperada` date NOT NULL,
-  `fechaDevolucionReal` timestamp NULL,
-  `estado` enum('Activo','Devuelto','Vencido') DEFAULT 'Activo',
-  `observaciones` text,
+-- Tabla: librosfavoritos
+CREATE TABLE `librosfavoritos` (
+  `idFavorito` int NOT NULL AUTO_INCREMENT,
+  `idUsuario` int NOT NULL,
+  `idLibro` int NOT NULL,
+  `fecha_agregado` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idFavorito`),
+  UNIQUE KEY `unique_favorito` (`idUsuario`,`idLibro`),
+  KEY `idx_usuario` (`idUsuario`),
+  KEY `idx_libro` (`idLibro`),
+  CONSTRAINT `librosfavoritos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
+  CONSTRAINT `librosfavoritos_ibfk_2` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla: multas
+CREATE TABLE `multas` (
+  `idMulta` int NOT NULL AUTO_INCREMENT,
+  `idPrestamo` int NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `pagada` tinyint(1) DEFAULT '0',
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_pago` datetime DEFAULT NULL,
+  PRIMARY KEY (`idMulta`),
+  KEY `idx_prestamo` (`idPrestamo`),
+  KEY `idx_pagada` (`pagada`),
+  KEY `idx_fecha_creacion` (`fecha_creacion`),
+  CONSTRAINT `multas_ibfk_1` FOREIGN KEY (`idPrestamo`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla: prestamos
+CREATE TABLE `prestamos` (
+  `idPrestamo` int NOT NULL AUTO_INCREMENT,
+  `idLibro` int NOT NULL,
+  `idUsuario` int NOT NULL,
+  `fechaPrestamo` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fechaDevolucionEsperada` datetime NOT NULL,
+  `fechaDevolucionReal` datetime DEFAULT NULL,
+  `estado` enum('Activo','Devuelto','Vencido') COLLATE utf8mb4_unicode_ci DEFAULT 'Activo',
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `multa` decimal(10,2) DEFAULT '0.00',
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idPrestamo`),
-  FOREIGN KEY (`idLibro`) REFERENCES `Libros`(`idLibro`),
-  FOREIGN KEY (`idUsuario`) REFERENCES `Usuarios`(`idUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `idx_libro` (`idLibro`),
+  KEY `idx_usuario` (`idUsuario`),
+  KEY `idx_estado` (`estado`),
+  KEY `idx_fecha_prestamo` (`fechaPrestamo`),
+  KEY `idx_fecha_devolucion` (`fechaDevolucionEsperada`),
+  KEY `idx_prestamos_usuario_estado` (`idUsuario`,`estado`),
+  KEY `idx_prestamos_libro_estado` (`idLibro`,`estado`),
+  KEY `idx_prestamos_fecha_estado` (`fechaPrestamo`,`estado`),
+  CONSTRAINT `prestamos_ibfk_1` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE RESTRICT,
+  CONSTRAINT `prestamos_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Solicitudes de Préstamo
-CREATE TABLE IF NOT EXISTS `solicitudes_prestamo` (
-  `idSolicitud` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
-  `libro_id` int(11) NOT NULL,
-  `fecha_solicitud` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `estado` enum('Pendiente','Aprobada','Rechazada','Convertida') DEFAULT 'Pendiente',
-  `observaciones_usuario` text,
-  `bibliotecario_id` int(11),
-  `fecha_respuesta` timestamp NULL,
-  `observaciones_bibliotecario` text,
+-- Tabla: roles
+CREATE TABLE `roles` (
+  `idRol` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idRol`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla: solicitudes_prestamo
+CREATE TABLE `solicitudes_prestamo` (
+  `idSolicitud` int NOT NULL AUTO_INCREMENT,
+  `usuario_id` int NOT NULL,
+  `libro_id` int NOT NULL,
+  `fecha_solicitud` datetime DEFAULT CURRENT_TIMESTAMP,
+  `estado` enum('Pendiente','Aprobada','Rechazada','Convertida') COLLATE utf8mb4_unicode_ci DEFAULT 'Pendiente',
+  `observaciones_usuario` text COLLATE utf8mb4_unicode_ci,
+  `observaciones_bibliotecario` text COLLATE utf8mb4_unicode_ci,
+  `fecha_respuesta` datetime DEFAULT NULL,
+  `bibliotecario_id` int DEFAULT NULL,
+  `prestamo_id` int DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idSolicitud`),
-  FOREIGN KEY (`usuario_id`) REFERENCES `Usuarios`(`idUsuario`),
-  FOREIGN KEY (`libro_id`) REFERENCES `Libros`(`idLibro`),
-  FOREIGN KEY (`bibliotecario_id`) REFERENCES `Usuarios`(`idUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `prestamo_id` (`prestamo_id`),
+  KEY `idx_estado` (`estado`),
+  KEY `idx_fecha_solicitud` (`fecha_solicitud`),
+  KEY `idx_usuario` (`usuario_id`),
+  KEY `idx_libro` (`libro_id`),
+  KEY `idx_bibliotecario` (`bibliotecario_id`),
+  KEY `idx_solicitudes_estado_fecha` (`estado`,`fecha_solicitud`),
+  CONSTRAINT `solicitudes_prestamo_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
+  CONSTRAINT `solicitudes_prestamo_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE,
+  CONSTRAINT `solicitudes_prestamo_ibfk_3` FOREIGN KEY (`bibliotecario_id`) REFERENCES `usuarios` (`idUsuario`) ON DELETE SET NULL,
+  CONSTRAINT `solicitudes_prestamo_ibfk_4` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla: solicitudesampliacion
+CREATE TABLE `solicitudesampliacion` (
+  `idSolicitud` int NOT NULL AUTO_INCREMENT,
+  `idPrestamo` int NOT NULL,
+  `diasAdicionales` int NOT NULL DEFAULT '7',
+  `motivo` text COLLATE utf8mb4_unicode_ci,
+  `fechaSolicitud` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechaRespuesta` datetime DEFAULT NULL,
+  `estado` enum('Pendiente','Aprobada','Rechazada') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pendiente',
+  `respuestaBibliotecario` text COLLATE utf8mb4_unicode_ci,
+  `idBibliotecario` int DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idSolicitud`),
+  KEY `idx_prestamo` (`idPrestamo`),
+  KEY `idx_estado` (`estado`),
+  KEY `idx_fecha_solicitud` (`fechaSolicitud`),
+  KEY `idx_bibliotecario` (`idBibliotecario`),
+  KEY `idx_ampliaciones_estado_fecha` (`estado`,`fechaSolicitud`),
+  CONSTRAINT `solicitudesampliacion_ibfk_1` FOREIGN KEY (`idPrestamo`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE CASCADE,
+  CONSTRAINT `solicitudesampliacion_ibfk_2` FOREIGN KEY (`idBibliotecario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla: usuarios
+CREATE TABLE `usuarios` (
+  `idUsuario` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usuario` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rol` int NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` text COLLATE utf8mb4_unicode_ci,
+  `fecha_registro` datetime DEFAULT CURRENT_TIMESTAMP,
+  `ultimo_acceso` datetime DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE KEY `usuario` (`usuario`),
+  UNIQUE KEY `email` (`email`),
+  KEY `idx_usuario` (`usuario`),
+  KEY `idx_email` (`email`),
+  KEY `idx_rol` (`rol`),
+  KEY `idx_activo` (`activo`),
+  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`rol`) REFERENCES `roles` (`idRol`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
 -- 3. DATOS INICIALES
 -- =====================================================
 
--- Insertar roles
-INSERT INTO `Roles` (`idRol`, `nombre`, `descripcion`) VALUES
-(1, 'Administrador', 'Acceso completo al sistema'),
-(2, 'Bibliotecario', 'Gestión de libros y préstamos'),
-(3, 'Lector', 'Solo consulta y solicitudes');
+-- Datos de tabla: categorias (10 registros)
+INSERT INTO `categorias` (`idCategoria`, `nombre`, `descripcion`, `fecha_creacion`, `activa`) VALUES
+('1', 'Ficción', 'Novelas y cuentos de ficción', '2025-09-19 03:20:05', '1'),
+('2', 'Ciencia', 'Libros de ciencias exactas y naturales', '2025-09-19 03:20:05', '1'),
+('3', 'Historia', 'Libros de historia universal y local', '2025-09-19 03:20:05', '1'),
+('4', 'Tecnología', 'Libros sobre tecnología e informática', '2025-09-19 03:20:05', '1'),
+('5', 'Matemáticas', 'Libros de matemáticas y estadística', '2025-09-19 03:20:05', '1'),
+('6', 'Literatura', 'Obras literarias clásicas y contemporáneas', '2025-09-19 03:20:05', '1'),
+('7', 'Filosofía', 'Libros de filosofía y ética', '2025-09-19 03:20:05', '1'),
+('8', 'Arte', 'Libros sobre arte, música y cultura', '2025-09-19 03:20:05', '1'),
+('9', 'Deportes', 'Libros sobre deportes y actividad física', '2025-09-19 03:20:05', '1'),
+('10', 'categoria de prueba', 'dddddddd', '2025-09-18 22:49:15', '1');
 
--- Insertar usuario administrador
-INSERT INTO `Usuarios` (`nombre`, `apellido`, `usuario`, `password`, `rol`, `email`, `telefono`) VALUES
-('Administrador', 'Sistema', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1, 'admin@biblioteca.com', '123456789');
+-- Datos de tabla: historiallectura (2 registros)
+INSERT INTO `historiallectura` (`idHistorial`, `idUsuario`, `idLibro`, `fecha_inicio`, `fecha_fin`, `tipo`, `calificacion`, `comentario`) VALUES
+('1', '1', '8', '2025-09-18 22:55:13', NULL, 'Lectura', NULL, NULL),
+('2', '1', '11', '2025-09-18 23:21:36', NULL, 'Lectura', NULL, NULL);
 
--- Insertar categorías
-INSERT INTO `Categorias` (`nombre`, `descripcion`) VALUES
-('Ficción', 'Novelas y literatura de ficción'),
-('Ciencia', 'Libros de ciencias naturales'),
-('Historia', 'Libros de historia y biografías'),
-('Tecnología', 'Libros de tecnología e informática'),
-('Filosofía', 'Libros de filosofía y pensamiento'),
-('Matemáticas', 'Libros de matemáticas y estadística'),
-('Literatura', 'Literatura clásica y contemporánea'),
-('Deportes', 'Libros de deportes y actividad física');
+-- Datos de tabla: libros (11 registros)
+INSERT INTO `libros` (`idLibro`, `idCategoria`, `titulo`, `autor`, `editorial`, `anio`, `isbn`, `stock`, `disponible`, `descripcion`, `portada`, `archivo_pdf`, `fecha_adicion`, `fecha_actualizacion`, `activo`, `numero_paginas`, `tamano_archivo`, `fecha_subida`) VALUES
+('1', '1', 'Cien años de soledad', 'Gabriel García Márquez', 'Editorial Sudamericana', '1967', '978-84-376-0494-7', '5', '5', 'Una de las obras más importantes de la literatura hispanoamericana del siglo XX. Narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('2', '2', 'Sapiens: De animales a dioses', 'Yuval Noah Harari', 'Debate', '2011', '978-84-9992-424-0', '3', '3', 'Un fascinante relato de cómo el Homo sapiens llegó a dominar el mundo. Una exploración de cómo la evolución de la humanidad ha dado forma al mundo moderno.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('3', '3', 'Breve historia del tiempo', 'Stephen Hawking', 'Crítica', '1988', '978-84-7423-842-0', '4', '4', 'Una exploración de los conceptos fundamentales de la física moderna, desde la teoría de la relatividad hasta la mecánica cuántica.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('4', '4', 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 'Prentice Hall', '2008', '978-0-13-235088-4', '6', '6', 'Una guía práctica para escribir código limpio y mantenible. Incluye principios, patrones y prácticas para mejorar la calidad del código.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('5', '5', 'El mundo de Sofía', 'Jostein Gaarder', 'Siruela', '1991', '978-84-7844-445-2', '3', '1', 'Una novela que introduce a la filosofía de manera accesible a través de la historia de Sofía, una joven que recibe lecciones de filosofía.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 23:28:46', '1', NULL, NULL, NULL),
+('6', '6', 'La historia del arte', 'E.H. Gombrich', 'Phaidon', '1950', '978-0-7148-3247-0', '2', '2', 'Una introducción completa y accesible al arte occidental, desde la prehistoria hasta el siglo XX.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('7', '7', 'El hombre que calculaba', 'Malba Tahan', 'Zahar', '1938', '978-85-378-0001-1', '4', '4', 'Una obra que combina matemáticas con literatura, presentando problemas matemáticos de manera entretenida a través de historias.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('8', '9', '1984', 'George Orwell', 'Debolsillo', '1949', '978-84-9908-567-1', '5', '3', 'Una distopía clásica que describe una sociedad totalitaria donde el Gran Hermano vigila constantemente a los ciudadanos.', NULL, 'libro_8_1758254106.pdf', '2025-09-18 22:46:17', '2025-09-18 23:01:03', '1', '1', '235971', '2025-09-18 22:55:08'),
+('9', '9', 'Fútbol: La filosofía de vida', 'Jorge Valdano', 'Aguilar', '2014', '978-84-03-01345-6', '3', '3', 'Una reflexión sobre el fútbol como fenómeno social y cultural, escrita por uno de los grandes pensadores del deporte.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('10', '1', 'Don Quijote de la Mancha', 'Miguel de Cervantes', 'Real Academia Española', '1605', '978-84-239-7434-8', '7', '7', 'La obra cumbre de la literatura española y una de las más importantes de la literatura universal. Narra las aventuras de Alonso Quijano.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
+('11', '2', 'libro prueba', 'autor', 'editorial', '2025', '3213231', '12', '12', 'dsadas', NULL, 'libro_11_1758255685.pdf', '2025-09-18 23:21:25', '2025-09-18 23:21:25', '1', '12', '141049', '2025-09-18 23:21:25');
+
+-- Datos de tabla: prestamos (4 registros)
+INSERT INTO `prestamos` (`idPrestamo`, `idLibro`, `idUsuario`, `fechaPrestamo`, `fechaDevolucionEsperada`, `fechaDevolucionReal`, `estado`, `observaciones`, `multa`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+('1', '8', '2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'ssssssss', '0.00', '2025-09-18 23:00:15', '2025-09-18 23:00:15'),
+('2', '5', '2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'kk', '0.00', '2025-09-18 23:00:39', '2025-09-18 23:00:39'),
+('3', '8', '1', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'Préstamo de prueba del sistema', '0.00', '2025-09-18 23:01:03', '2025-09-18 23:01:03'),
+('4', '5', '2', '2025-09-18 23:28:46', '2025-10-04 00:00:00', NULL, 'Activo', 'calla ctmre', '0.00', '2025-09-18 23:28:46', '2025-09-18 23:28:46');
+
+-- Datos de tabla: roles (2 registros)
+INSERT INTO `roles` (`idRol`, `nombre`, `descripcion`, `fecha_creacion`) VALUES
+('1', 'Bibliotecario', 'Administrador del sistema con acceso completo', '2025-09-19 03:20:05'),
+('2', 'Lector', 'Usuario que puede solicitar y gestionar préstamos', '2025-09-19 03:20:05');
+
+-- Datos de tabla: solicitudes_prestamo (1 registros)
+INSERT INTO `solicitudes_prestamo` (`idSolicitud`, `usuario_id`, `libro_id`, `fecha_solicitud`, `estado`, `observaciones_usuario`, `observaciones_bibliotecario`, `fecha_respuesta`, `bibliotecario_id`, `prestamo_id`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+('1', '2', '5', '2025-09-18 23:28:28', 'Convertida', '', 'calla ctmre', '2025-09-18 23:28:46', '1', '4', '2025-09-18 23:28:28', '2025-09-18 23:28:46');
+
+-- Datos de tabla: usuarios (2 registros)
+INSERT INTO `usuarios` (`idUsuario`, `nombre`, `apellido`, `usuario`, `password`, `rol`, `email`, `telefono`, `direccion`, `fecha_registro`, `ultimo_acceso`, `activo`) VALUES
+('1', 'Administrador', 'Sistema', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '1', 'admin@biblioteca.com', '123456789', NULL, '2025-09-19 03:20:05', '2025-09-18 22:20:15', '1'),
+('2', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'usuario', '$2y$10$XGE4DHu799eXFCgbm/xZ3.ZO6/50ySsd0fecEZhYJbl.dDTvTJn66', '2', 'cgch_1996@hotmail.com', '945628098', NULL, '2025-09-18 22:45:00', '2025-09-18 22:45:19', '1');
+
+-- Datos de tabla: vista_estadisticas_generales (1 registros)
+INSERT INTO `vista_estadisticas_generales` (`total_usuarios`, `total_libros`, `total_prestamos`, `prestamos_activos`, `prestamos_devueltos`, `prestamos_vencidos`, `total_solicitudes`, `solicitudes_pendientes`) VALUES
+('2', '11', '4', '4', '0', '0', '1', '0');
+
+-- Datos de tabla: vista_prestamos_activos (4 registros)
+INSERT INTO `vista_prestamos_activos` (`idPrestamo`, `fechaPrestamo`, `fechaDevolucionEsperada`, `observaciones`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `libro_titulo`, `libro_autor`, `libro_isbn`, `categoria_nombre`, `dias_restantes`) VALUES
+('1', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'ssssssss', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', '1984', 'George Orwell', '978-84-9908-567-1', 'Deportes', '12'),
+('2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'kk', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', 'El mundo de Sofía', 'Jostein Gaarder', '978-84-7844-445-2', 'Matemáticas', '12'),
+('3', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'Préstamo de prueba del sistema', 'Administrador', 'Sistema', 'admin@biblioteca.com', '1984', 'George Orwell', '978-84-9908-567-1', 'Deportes', '12'),
+('4', '2025-09-18 23:28:46', '2025-10-04 00:00:00', 'calla ctmre', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', 'El mundo de Sofía', 'Jostein Gaarder', '978-84-7844-445-2', 'Matemáticas', '13');
 
 -- =====================================================
 -- 4. PROCEDIMIENTOS ALMACENADOS
@@ -1350,6 +1527,35 @@ BEGIN
     FROM Usuarios
     WHERE usuario = p_usuario AND activo = TRUE;
 END
+
+-- =====================================================
+-- 6. TRIGGERS
+-- =====================================================
+
+-- Trigger: tr_libros_actualizar_fecha
+CREATE DEFINER=`root`@`localhost` TRIGGER `tr_libros_actualizar_fecha` BEFORE UPDATE ON `libros` FOR EACH ROW BEGIN
+    SET NEW.fecha_actualizacion = NOW();
+END
+
+-- Trigger: tr_prestamos_actualizar_fecha
+CREATE DEFINER=`root`@`localhost` TRIGGER `tr_prestamos_actualizar_fecha` BEFORE UPDATE ON `prestamos` FOR EACH ROW BEGIN
+    SET NEW.fecha_actualizacion = NOW();
+END
+
+-- Trigger: tr_solicitudes_actualizar_fecha
+CREATE DEFINER=`root`@`localhost` TRIGGER `tr_solicitudes_actualizar_fecha` BEFORE UPDATE ON `solicitudes_prestamo` FOR EACH ROW BEGIN
+    SET NEW.fecha_actualizacion = NOW();
+END
+
+-- =====================================================
+-- 7. VISTAS
+-- =====================================================
+
+-- Vista: vista_estadisticas_generales
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_estadisticas_generales` AS select (select count(0) from `usuarios` where (`usuarios`.`activo` = true)) AS `total_usuarios`,(select count(0) from `libros` where (`libros`.`activo` = true)) AS `total_libros`,(select count(0) from `prestamos`) AS `total_prestamos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is null)) AS `prestamos_activos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is not null)) AS `prestamos_devueltos`,(select count(0) from `prestamos` where ((`prestamos`.`fechaDevolucionReal` is null) and (`prestamos`.`fechaDevolucionEsperada` < curdate()))) AS `prestamos_vencidos`,(select count(0) from `solicitudes_prestamo`) AS `total_solicitudes`,(select count(0) from `solicitudes_prestamo` where (`solicitudes_prestamo`.`estado` = 'Pendiente')) AS `solicitudes_pendientes`;
+
+-- Vista: vista_prestamos_activos
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_prestamos_activos` AS select `p`.`idPrestamo` AS `idPrestamo`,`p`.`fechaPrestamo` AS `fechaPrestamo`,`p`.`fechaDevolucionEsperada` AS `fechaDevolucionEsperada`,`p`.`observaciones` AS `observaciones`,`u`.`nombre` AS `usuario_nombre`,`u`.`apellido` AS `usuario_apellido`,`u`.`email` AS `usuario_email`,`l`.`titulo` AS `libro_titulo`,`l`.`autor` AS `libro_autor`,`l`.`isbn` AS `libro_isbn`,`c`.`nombre` AS `categoria_nombre`,(to_days(`p`.`fechaDevolucionEsperada`) - to_days(curdate())) AS `dias_restantes` from (((`prestamos` `p` join `usuarios` `u` on((`p`.`idUsuario` = `u`.`idUsuario`))) join `libros` `l` on((`p`.`idLibro` = `l`.`idLibro`))) join `categorias` `c` on((`l`.`idCategoria` = `c`.`idCategoria`))) where (`p`.`fechaDevolucionReal` is null);
 
 DELIMITER ;
 
