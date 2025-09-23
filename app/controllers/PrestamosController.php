@@ -888,7 +888,7 @@ class PrestamosController {
     public function ampliarDuracionPrestamo() {
         // Solo bibliotecarios pueden ampliar duración
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('No tienes permisos para ampliar duración'));
+            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para ampliar duración'));
             exit;
         }
         
@@ -897,7 +897,7 @@ class PrestamosController {
         $motivo = $_POST['motivo'] ?? '';
         
         if (empty($prestamo_id) || empty($dias_adicionales)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Datos incompletos'));
+            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Datos incompletos'));
             exit;
         }
         
@@ -906,7 +906,7 @@ class PrestamosController {
             $prestamo = $this->prestamoModel->getById($prestamo_id);
             
             if (!$prestamo) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Préstamo no encontrado'));
+                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
                 exit;
             }
             
@@ -917,7 +917,7 @@ class PrestamosController {
             // Actualizar la fecha de devolución esperada
             $conexion = obtenerConexion();
             $stmt = $conexion->prepare("
-                UPDATE Prestamos 
+                UPDATE prestamos 
                 SET fechaDevolucionEsperada = ?,
                     observaciones = CASE 
                         WHEN observaciones IS NOT NULL 
@@ -930,11 +930,11 @@ class PrestamosController {
             $observacion_ampliacion = "Ampliado por " . $dias_adicionales . " días. Motivo: " . $motivo;
             $stmt->execute([$nueva_fecha, $observacion_ampliacion, $observacion_ampliacion, $prestamo_id]);
             
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&mensaje=' . urlencode('Duración del préstamo ampliada exitosamente'));
+            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Duración del préstamo ampliada exitosamente'));
             
         } catch (Exception $e) {
             error_log("Error en PrestamosController::ampliarDuracionPrestamo: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al ampliar la duración'));
+            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al ampliar la duración'));
         }
         exit;
     }
