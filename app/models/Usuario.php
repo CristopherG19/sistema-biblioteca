@@ -145,11 +145,40 @@ class Usuario {
     public function actualizarUltimoAcceso($id) {
         
             $stmt = $this->conexion->prepare("CALL sp_usuario_actualizar_ultimo_acceso(?)");
+
             $stmt->execute([$id]);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
             return $resultado['affected_rows'] > 0;
         
+    }
+    
+    // Activar usuario
+    public function activar($id) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario_activar(?)");
+            $stmt->execute([$id]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $resultado['affected_rows'] > 0;
+        } catch (Exception $e) {
+            error_log("Error al activar usuario: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    // Desactivar usuario
+    public function desactivar($id) {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario_desactivar(?)");
+            $stmt->execute([$id]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+            return $resultado['affected_rows'] > 0;
+        } catch (Exception $e) {
+            error_log("Error al desactivar usuario: " . $e->getMessage());
+            return false;
+        }
     }
 }
 ?>

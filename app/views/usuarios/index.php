@@ -155,6 +155,7 @@ include __DIR__ . '/../partials/header.php';
                                 <th><i class="fas fa-phone me-1"></i>Teléfono</th>
                                 <th><i class="fas fa-user-tag me-1"></i>Rol</th>
                                 <th><i class="fas fa-calendar me-1"></i>Fecha Registro</th>
+                                <th><i class="fas fa-toggle-on me-1"></i>Estado</th>
                                 <th class="text-center"><i class="fas fa-cogs me-1"></i>Acciones</th>
                             </tr>
                         </thead>
@@ -190,17 +191,36 @@ include __DIR__ . '/../partials/header.php';
                                             <?php echo date('d/m/Y', strtotime($usuario['fecha_registro'])); ?>
                                         </small>
                                     </td>
+                                    <td>
+                                        <?php if ($usuario['activo'] == 1): ?>
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle me-1"></i>Activo
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-times-circle me-1"></i>Inactivo
+                                            </span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm" role="group">
                                             <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=editar&id=<?php echo $usuario['idUsuario']; ?>" 
                                                class="btn btn-outline-primary" title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=eliminar&id=<?php echo $usuario['idUsuario']; ?>" 
-                                               class="btn btn-outline-danger" title="Eliminar"
-                                               onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <?php if ($usuario['activo'] == 1): ?>
+                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=desactivar&id=<?php echo $usuario['idUsuario']; ?>" 
+                                                   class="btn btn-outline-warning" title="Desactivar"
+                                                   onclick="return confirm('¿Estás seguro de que deseas desactivar este usuario?')">
+                                                    <i class="fas fa-user-times"></i>
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=activar&id=<?php echo $usuario['idUsuario']; ?>" 
+                                                   class="btn btn-outline-success" title="Activar"
+                                                   onclick="return confirm('¿Estás seguro de que deseas activar este usuario?')">
+                                                    <i class="fas fa-user-check"></i>
+                                                </a>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>

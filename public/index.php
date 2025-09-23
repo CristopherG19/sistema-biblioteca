@@ -125,6 +125,10 @@ switch ($page) {
             $controller->buscar();
         } elseif ($action === 'filtrarPorRol') {
             $controller->filtrarPorRol();
+        } elseif ($action === 'activar') {
+            $controller->activar();
+        } elseif ($action === 'desactivar') {
+            $controller->desactivar();
         } else {
             $controller->index();
         }

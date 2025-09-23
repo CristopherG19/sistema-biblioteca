@@ -172,6 +172,34 @@ class UsuariosController {
         include __DIR__ . '/../views/usuarios/index.php';
     }
     
+    // Activar usuario
+    public function activar() {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            
+            if ($this->usuarioModel->activar($id)) {
+                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario activado exitosamente');
+            } else {
+                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Error al activar el usuario');
+            }
+            exit;
+        }
+    }
+    
+    // Desactivar usuario
+    public function desactivar() {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            
+            if ($this->usuarioModel->desactivar($id)) {
+                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario desactivado exitosamente');
+            } else {
+                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Error al desactivar el usuario');
+            }
+            exit;
+        }
+    }
+    
     // Validar datos del formulario
     private function validarDatos($datos, $esEdicion = false) {
         $errores = [];

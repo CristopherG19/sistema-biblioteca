@@ -3,7 +3,7 @@
         'name' => 'sistema/biblioteca',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1a144d47d88f97801828b25a122efd48803a4599',
+        'reference' => 'e2537bf9ff8a6098734a969398d231360e01a6cf',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'sistema/biblioteca' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1a144d47d88f97801828b25a122efd48803a4599',
+            'reference' => 'e2537bf9ff8a6098734a969398d231360e01a6cf',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
