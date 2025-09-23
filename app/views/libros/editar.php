@@ -168,6 +168,38 @@ include __DIR__ . '/../partials/header.php';
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stockInput = document.getElementById('stock');
+    const disponibleInput = document.getElementById('disponible');
+    
+    // Función para sincronizar disponible con stock
+    function sincronizarDisponible() {
+        const stockValue = parseInt(stockInput.value) || 0;
+        const disponibleValue = parseInt(disponibleInput.value) || 0;
+        
+        // Si el stock es mayor que el disponible, ajustar disponible al stock
+        if (stockValue > disponibleValue) {
+            disponibleInput.value = stockValue;
+        }
+    }
+    
+    // Sincronizar cuando cambie el stock
+    stockInput.addEventListener('input', sincronizarDisponible);
+    
+    // Validar que disponible no sea mayor que stock
+    disponibleInput.addEventListener('input', function() {
+        const stockValue = parseInt(stockInput.value) || 0;
+        const disponibleValue = parseInt(this.value) || 0;
+        
+        if (disponibleValue > stockValue) {
+            this.value = stockValue;
+            alert('Los ejemplares disponibles no pueden ser mayores al stock total');
+        }
+    });
+});
+</script>
+
 <?php
 include __DIR__ . '/../partials/footer.php';
 ?>
