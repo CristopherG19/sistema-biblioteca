@@ -110,11 +110,23 @@ class UsuariosController {
                         $datos['password'] = $usuarioActual['password'];
                     }
                     
-                    if ($this->usuarioModel->actualizar($id, $datos)) {
-                        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario actualizado exitosamente');
-                        exit;
-                    } else {
-                        $errores[] = "Error al actualizar el usuario";
+                    try {
+                        if ($this->usuarioModel->actualizar($id, $datos)) {
+                            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario actualizado exitosamente');
+                            exit;
+                        } else {
+                            $errores[] = "Error al actualizar el usuario. Verifique que los datos sean válidos.";
+                        }
+                    } catch (PDOException $e) {
+                        error_log("Error PDO en actualizar usuario: " . $e->getMessage());
+                        if ($e->getCode() == 23000) {
+                            $errores[] = "Error: El email o nombre de usuario ya está registrado por otro usuario.";
+                        } else {
+                            $errores[] = "Error de base de datos: " . $e->getMessage();
+                        }
+                    } catch (Exception $e) {
+                        error_log("Error en actualizar usuario: " . $e->getMessage());
+                        $errores[] = "Error: " . $e->getMessage();
                     }
                 }
             }

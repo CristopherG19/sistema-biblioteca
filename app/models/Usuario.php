@@ -103,18 +103,25 @@ class Usuario {
         $stmt->execute([$usuario]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
+        
+        // Si hay un ID para excluir, verificar que no sea el mismo usuario
+        if ($excluir_id && $resultado['existe'] > 0) {
+            $usuarioActual = $this->getById($excluir_id);
+            if ($usuarioActual && $usuarioActual['usuario'] === $usuario) {
+                return false; // Es el mismo usuario, no hay duplicado
+            }
+        }
+        
         return $resultado['existe'] > 0;
     }
     
     // Verificar si email ya existe (actualizado a procedimiento)
     public function emailExiste($email, $excluir_id = null) {
-        
-            $stmt = $this->conexion->prepare("CALL sp_usuario_verificar_email(?, ?)");
-            $stmt->execute([$email, $excluir_id]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            $stmt->closeCursor();
-            return $resultado['existe'] > 0;
-        
+        $stmt = $this->conexion->prepare("CALL sp_usuario_verificar_email(?, ?)");
+        $stmt->execute([$email, $excluir_id]);
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $resultado['existe'] > 0;
     }
     
     // Obtener estadísticas de usuarios (actualizado a procedimiento)
