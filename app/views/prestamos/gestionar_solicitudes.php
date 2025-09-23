@@ -65,20 +65,6 @@
             </div>
         </div>
         
-        <div class="col-md-2 mb-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <div class="text-success mb-2">
-                        <i class="fas fa-check fa-2x"></i>
-                    </div>
-                    <h3 class="card-title text-dark fw-bold mb-1">
-                        <?php echo $estadisticas['aprobadas']; ?>
-                    </h3>
-                    <p class="card-text text-muted small mb-0">Aprobadas</p>
-                </div>
-            </div>
-        </div>
-        
         <div class="col-md-3 mb-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body text-center">
@@ -121,10 +107,6 @@
                         <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&estado=Pendiente" 
                            class="btn btn-outline-warning <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Pendiente') ? 'active' : ''; ?>">
                             Pendientes
-                        </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&estado=Aprobada" 
-                           class="btn btn-outline-success <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Aprobada') ? 'active' : ''; ?>">
-                            Aprobadas
                         </a>
                         <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&estado=Convertida" 
                            class="btn btn-outline-info <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Convertida') ? 'active' : ''; ?>">
@@ -178,9 +160,6 @@
                                     case 'Pendiente':
                                         $badgeClass = 'bg-warning';
                                         break;
-                                    case 'Aprobada':
-                                        $badgeClass = 'bg-success';
-                                        break;
                                     case 'Rechazada':
                                         $badgeClass = 'bg-danger';
                                         break;
@@ -196,9 +175,6 @@
                                 switch($solicitud['estado']) {
                                     case 'Pendiente':
                                         $iconClass = 'fas fa-clock';
-                                        break;
-                                    case 'Aprobada':
-                                        $iconClass = 'fas fa-check';
                                         break;
                                     case 'Rechazada':
                                         $iconClass = 'fas fa-times';

@@ -111,7 +111,6 @@ class SolicitudPrestamo {
             return [
                 'total_solicitudes' => 0,
                 'pendientes' => 0,
-                'aprobadas' => 0,
                 'rechazadas' => 0,
                 'convertidas' => 0,
                 'solicitudes_hoy' => 0
