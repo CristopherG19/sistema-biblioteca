@@ -163,9 +163,6 @@ include __DIR__ . '/../partials/header.php';
                             <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
-                            <button type="reset" class="btn btn-outline-warning">
-                                <i class="fas fa-undo me-2"></i>Restaurar
-                            </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-2"></i>Actualizar Usuario
                             </button>

@@ -185,9 +185,6 @@ include __DIR__ . '/../partials/header.php';
                             <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
-                            <button type="reset" class="btn btn-outline-warning">
-                                <i class="fas fa-undo me-2"></i>Limpiar
-                            </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-2"></i>Guardar Libro
                             </button>
@@ -281,12 +278,7 @@ function mostrarInfoArchivo(input) {
     }
 }
 
-// Limpiar información del archivo cuando se resetea el formulario
-document.querySelector('button[type="reset"]').addEventListener('click', function() {
-    setTimeout(() => {
-        document.getElementById('infoArchivo').classList.add('d-none');
-    }, 100);
-});
+// JavaScript para manejo de archivos PDF
 </script>
 
 <?php
