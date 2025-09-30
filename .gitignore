@@ -1,52 +1,47 @@
-# Archivos de configuración local
-config/database.php
-
-# Archivos temporales de prueba (ya eliminados)
-# test_*.php
-# *_test.php
-# debug_*.php
-# verificar_*.php
-# actualizar_*.php
-# corregir_*.php
-# limpiar_*.php
-# migrar_*.php
-# diagnostico_*.php
-
-# Archivos de backup
-*.backup
-*.bak
-*.sql.backup
-
-# Archivos de log
-*.log
-error.log
-access.log
-
 # Archivos del sistema
 .DS_Store
 Thumbs.db
-desktop.ini
+*.tmp
+*.temp
+
+# Archivos de configuración local
+config/database.local.php
+.env
+.env.local
+
+# Archivos de logs
+*.log
+logs/
+
+# Archivos de cache
+cache/
+tmp/
 
 # Archivos de IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# Archivos de PHP
-*.tmp
-*.temp
+# Archivos de Composer
+vendor/
+composer.lock
+
+# Archivos de uploads (excepto estructura)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Archivos de base de datos local
+*.sqlite
+*.db
+
+# Archivos de backup
+*.bak
+*.backup
 
 # Archivos de sesión
 sessions/
 
-# Archivos de cache
-cache/
-tmp/
-
-# Archivos de uploads (si los hay)
-uploads/temp/
-
-# Archivos de configuración de XAMPP
-xampp/
+# Archivos de error
+error_log
+php_errors.log
