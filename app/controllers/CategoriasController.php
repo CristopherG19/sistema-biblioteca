@@ -15,7 +15,7 @@ class CategoriasController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Categoria::insertar($_POST);
         }
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=categorias');
+        header('Location: index.php?page=categorias');
         exit;
     }
 
@@ -30,14 +30,14 @@ class CategoriasController {
             $id = $_POST['id'];
             Categoria::actualizar($id, $_POST);
         }
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=categorias');
+        header('Location: index.php?page=categorias');
         exit;
     }
 
     public function eliminar() {
         $id = $_GET['id'];
         Categoria::eliminar($id);
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=categorias');
+        header('Location: index.php?page=categorias');
         exit;
     }
 }

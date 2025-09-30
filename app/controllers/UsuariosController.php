@@ -47,7 +47,7 @@ class UsuariosController {
                     ];
                     
                     if ($this->usuarioModel->insertar($datos)) {
-                        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario agregado exitosamente');
+                        header('Location: index.php?page=usuarios&mensaje=Usuario agregado exitosamente');
                         exit;
                     } else {
                         $errores[] = "Error al agregar el usuario";
@@ -71,7 +71,7 @@ class UsuariosController {
             if ($usuario) {
                 include __DIR__ . '/../views/usuarios/editar.php';
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Usuario no encontrado');
+                header('Location: index.php?page=usuarios&error=Usuario no encontrado');
                 exit;
             }
         }
@@ -112,7 +112,7 @@ class UsuariosController {
                     
                     try {
                         if ($this->usuarioModel->actualizar($id, $datos)) {
-                            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario actualizado exitosamente');
+                            header('Location: index.php?page=usuarios&mensaje=Usuario actualizado exitosamente');
                             exit;
                         } else {
                             $errores[] = "Error al actualizar el usuario. Verifique que los datos sean válidos.";
@@ -144,9 +144,9 @@ class UsuariosController {
             $id = $_GET['id'];
             
             if ($this->usuarioModel->eliminar($id)) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario eliminado exitosamente');
+                header('Location: index.php?page=usuarios&mensaje=Usuario eliminado exitosamente');
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Error al eliminar el usuario');
+                header('Location: index.php?page=usuarios&error=Error al eliminar el usuario');
             }
             exit;
         }
@@ -190,9 +190,9 @@ class UsuariosController {
             $id = $_GET['id'];
             
             if ($this->usuarioModel->activar($id)) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario activado exitosamente');
+                header('Location: index.php?page=usuarios&mensaje=Usuario activado exitosamente');
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Error al activar el usuario');
+                header('Location: index.php?page=usuarios&error=Error al activar el usuario');
             }
             exit;
         }
@@ -204,9 +204,9 @@ class UsuariosController {
             $id = $_GET['id'];
             
             if ($this->usuarioModel->desactivar($id)) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&mensaje=Usuario desactivado exitosamente');
+                header('Location: index.php?page=usuarios&mensaje=Usuario desactivado exitosamente');
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&error=Error al desactivar el usuario');
+                header('Location: index.php?page=usuarios&error=Error al desactivar el usuario');
             }
             exit;
         }

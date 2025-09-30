@@ -95,15 +95,15 @@ class LibrosController {
                             $actualizacionExitosa = Libro::actualizarConPDF($idLibro, $datosActualizacion);
                             
                             if ($actualizacionExitosa) {
-                                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&mensaje=' . 
+                                header('Location: index.php?page=libros&mensaje=' . 
                                        urlencode('Libro agregado exitosamente con archivo PDF'));
                             } else {
-                                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+                                header('Location: index.php?page=libros&error=' . 
                                        urlencode('Libro agregado pero error al actualizar información del PDF'));
                             }
                         } else {
                             // Si falla el PDF, mantener el libro pero mostrar error
-                            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+                            header('Location: index.php?page=libros&error=' . 
                                    urlencode('Libro agregado pero error con PDF: ' . $resultadoPDF['mensaje']));
                         }
                     } else {
@@ -112,7 +112,7 @@ class LibrosController {
                 } else {
                     // Libro sin PDF
                     if (Libro::insertar($_POST)) {
-                        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&mensaje=' . 
+                        header('Location: index.php?page=libros&mensaje=' . 
                                urlencode('Libro agregado exitosamente'));
                     } else {
                         throw new Exception('Error al insertar el libro');
@@ -120,11 +120,11 @@ class LibrosController {
                 }
             } catch (Exception $e) {
                 error_log("Error en LibrosController::guardar: " . $e->getMessage());
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+                header('Location: index.php?page=libros&error=' . 
                        urlencode('Error al guardar el libro: ' . $e->getMessage()));
             }
         } else {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros');
+            header('Location: index.php?page=libros');
         }
         exit;
     }
@@ -141,7 +141,7 @@ class LibrosController {
             $id = $_POST['id'];
             Libro::actualizar($id, $_POST);
         }
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros');
+        header('Location: index.php?page=libros');
         exit;
     }
 
@@ -159,14 +159,14 @@ class LibrosController {
             
             // Eliminar libro de la base de datos
             if (Libro::eliminar($id)) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&mensaje=' . 
+                header('Location: index.php?page=libros&mensaje=' . 
                        urlencode('Libro eliminado exitosamente'));
             } else {
                 throw new Exception('Error al eliminar el libro de la base de datos');
             }
         } catch (Exception $e) {
             error_log("Error en LibrosController::eliminar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('Error al eliminar el libro: ' . $e->getMessage()));
         }
         exit;
@@ -175,7 +175,7 @@ class LibrosController {
     // Nuevo método para mostrar detalles del libro
     public function detalle() {
         if (!isset($_GET['id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('ID de libro no especificado'));
             exit;
         }
@@ -184,7 +184,7 @@ class LibrosController {
         $libro = Libro::getLibroConDetallePDF($id);
         
         if (!$libro) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('Libro no encontrado'));
             exit;
         }
@@ -212,13 +212,13 @@ class LibrosController {
         error_log("CRITICAL DEBUG: ID final seleccionado = " . var_export($id, true));
         
         if (!$id) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('ID de libro no especificado'));
+            header('Location: index.php?page=libros&error=' . urlencode('ID de libro no especificado'));
             exit;
         }
 
         $libro = Libro::getById($id);
         if (!$libro) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('Libro no encontrado'));
+            header('Location: index.php?page=libros&error=' . urlencode('Libro no encontrado'));
             exit;
         }
 
@@ -240,9 +240,9 @@ class LibrosController {
 
                 $actualizacion = Libro::actualizarConPDF($id, $datosActualizacion);
                 if ($actualizacion) {
-                    header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=' . $id . '&mensaje=' . urlencode('PDF subido correctamente'));
+                    header('Location: index.php?page=libros&action=detalle&id=' . $id . '&mensaje=' . urlencode('PDF subido correctamente'));
                 } else {
-                    header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=' . $id . '&error=' . urlencode('Error al guardar información del PDF'));
+                    header('Location: index.php?page=libros&action=detalle&id=' . $id . '&error=' . urlencode('Error al guardar información del PDF'));
                 }
             } else {
                 $error = 'Error al procesar PDF: ' . $resultadoPDF['mensaje'];
@@ -263,7 +263,7 @@ class LibrosController {
     // Método para mostrar visor PDF
     public function leerPDF() {
         if (!isset($_GET['id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('ID de libro no especificado'));
             exit;
         }
@@ -272,7 +272,7 @@ class LibrosController {
         $libro = Libro::getLibroConDetallePDF($id);
         
         if (!$libro || empty($libro['archivo_pdf'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('PDF no encontrado'));
             exit;
         }
@@ -280,7 +280,7 @@ class LibrosController {
         $urlPDF = $this->pdfHandler->obtenerURLArchivo($libro['archivo_pdf']);
         
         if (!$urlPDF) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . 
+            header('Location: index.php?page=libros&error=' . 
                    urlencode('El archivo PDF no existe'));
             exit;
         }

@@ -14,7 +14,7 @@ class HomeController {
         $usuario = AuthController::getUsuarioActual();
         
         if (!$usuario) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=login');
+            header('Location: index.php?page=login');
             exit;
         }
         

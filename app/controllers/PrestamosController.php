@@ -16,7 +16,7 @@ class PrestamosController {
         
         // Verificar que el usuario esté autenticado
         if (!isset($_SESSION['usuario_id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=auth&action=login');
+            header('Location: index.php?page=auth&action=login');
             exit;
         }
     }
@@ -77,7 +77,7 @@ class PrestamosController {
     public function agregar() {
         // Solo bibliotecarios pueden crear préstamos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para crear préstamos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para crear préstamos'));
             exit;
         }
         
@@ -88,7 +88,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/agregar.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::agregar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar el formulario'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar el formulario'));
             exit;
         }
     }
@@ -97,7 +97,7 @@ class PrestamosController {
     public function guardar() {
         // Solo bibliotecarios pueden crear préstamos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para crear préstamos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para crear préstamos'));
             exit;
         }
         
@@ -162,15 +162,15 @@ class PrestamosController {
             // Debug: registrar resultado completo y mensaje de error
             error_log("[DEBUG PrestamosController] Resultado insertar: " . print_r($resultado, true));
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Préstamo registrado exitosamente'));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode('Préstamo registrado exitosamente'));
             } else {
                 $mensaje_error = isset($resultado['message']) ? $resultado['message'] : 'Error al registrar el préstamo';
                 error_log("[DEBUG PrestamosController] Mensaje enviado a vista: " . $mensaje_error);
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($mensaje_error));
+                header('Location: index.php?page=prestamos&error=' . urlencode($mensaje_error));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::guardar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar el préstamo'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar el préstamo'));
         }
         exit;
     }
@@ -179,14 +179,14 @@ class PrestamosController {
     public function editar() {
         // Solo bibliotecarios pueden editar préstamos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para editar préstamos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para editar préstamos'));
             exit;
         }
         
         $id = $_GET['id'] ?? '';
         
         if (empty($id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -194,7 +194,7 @@ class PrestamosController {
             $prestamo = $this->prestamoModel->getById($id);
             
             if (!$prestamo) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
+                header('Location: index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
                 exit;
             }
             
@@ -204,7 +204,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/editar.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::editar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar el préstamo'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar el préstamo'));
             exit;
         }
     }
@@ -213,7 +213,7 @@ class PrestamosController {
     public function actualizar() {
         // Solo bibliotecarios pueden actualizar préstamos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para actualizar préstamos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para actualizar préstamos'));
             exit;
         }
         
@@ -221,7 +221,7 @@ class PrestamosController {
         $errores = [];
         
         if (empty($id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -265,14 +265,14 @@ class PrestamosController {
             $resultado = $this->prestamoModel->actualizar($id, $datos);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Préstamo actualizado exitosamente'));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode('Préstamo actualizado exitosamente'));
             } else {
                 $mensaje_error = isset($resultado['message']) ? $resultado['message'] : 'Error al actualizar el préstamo';
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($mensaje_error));
+                header('Location: index.php?page=prestamos&error=' . urlencode($mensaje_error));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::actualizar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar la actualización'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar la actualización'));
         }
         exit;
     }
@@ -281,7 +281,7 @@ class PrestamosController {
     public function devolver() {
         // Solo bibliotecarios pueden registrar devoluciones
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para registrar devoluciones'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para registrar devoluciones'));
             exit;
         }
         
@@ -289,7 +289,7 @@ class PrestamosController {
         $observaciones_devolucion = $_POST['observaciones_devolucion'] ?? '';
         
         if (empty($id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -297,14 +297,14 @@ class PrestamosController {
             $resultado = $this->prestamoModel->registrarDevolucion($id, $observaciones_devolucion);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Devolución registrada exitosamente'));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode('Devolución registrada exitosamente'));
             } else {
                 $mensaje_error = isset($resultado['message']) ? $resultado['message'] : 'Error al registrar la devolución';
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($mensaje_error));
+                header('Location: index.php?page=prestamos&error=' . urlencode($mensaje_error));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::devolver: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar la devolución'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar la devolución'));
         }
         exit;
     }
@@ -313,14 +313,14 @@ class PrestamosController {
     public function eliminar() {
         // Solo bibliotecarios pueden eliminar préstamos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para eliminar préstamos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para eliminar préstamos'));
             exit;
         }
         
         $id = $_GET['id'] ?? '';
         
         if (empty($id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -328,14 +328,14 @@ class PrestamosController {
             $resultado = $this->prestamoModel->eliminar($id);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Préstamo eliminado exitosamente'));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode('Préstamo eliminado exitosamente'));
             } else {
                 $mensaje_error = isset($resultado['message']) ? $resultado['message'] : 'Error al eliminar el préstamo';
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($mensaje_error));
+                header('Location: index.php?page=prestamos&error=' . urlencode($mensaje_error));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::eliminar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar la eliminación'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar la eliminación'));
         }
         exit;
     }
@@ -387,7 +387,7 @@ class PrestamosController {
     public function vencidos() {
         // Solo bibliotecarios pueden ver préstamos vencidos de todos
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para ver esta información'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para ver esta información'));
             exit;
         }
         
@@ -406,7 +406,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/vencidos.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::vencidos: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar préstamos vencidos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar préstamos vencidos'));
             exit;
         }
     }
@@ -451,7 +451,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/solicitar.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::solicitar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar el formulario'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar el formulario'));
             exit;
         }
     }
@@ -481,13 +481,13 @@ class PrestamosController {
             $resultado = $this->solicitudModel->insertar($_SESSION['usuario_id'], $libro_id, $observaciones);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&mensaje=' . urlencode($resultado['message'] ?? 'Solicitud enviada exitosamente'));
+                header('Location: index.php?page=prestamos&action=misSolicitudes&mensaje=' . urlencode($resultado['message'] ?? 'Solicitud enviada exitosamente'));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar&error=' . urlencode($resultado['message'] ?? 'Error al procesar solicitud'));
+                header('Location: index.php?page=prestamos&action=solicitar&error=' . urlencode($resultado['message'] ?? 'Error al procesar solicitud'));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::procesarSolicitud: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar&error=' . urlencode('Error al procesar la solicitud'));
+            header('Location: index.php?page=prestamos&action=solicitar&error=' . urlencode('Error al procesar la solicitud'));
         }
         exit;
     }
@@ -516,7 +516,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/mis_solicitudes.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::misSolicitudes: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=dashboard&error=' . urlencode('Error al cargar las solicitudes'));
+            header('Location: index.php?page=dashboard&error=' . urlencode('Error al cargar las solicitudes'));
             exit;
         }
     }
@@ -526,7 +526,7 @@ class PrestamosController {
         $solicitud_id = $_GET['id'] ?? '';
         
         if (empty($solicitud_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('ID de solicitud no válido'));
+            header('Location: index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('ID de solicitud no válido'));
             exit;
         }
         
@@ -534,13 +534,13 @@ class PrestamosController {
             $resultado = $this->solicitudModel->cancelar($solicitud_id, $_SESSION['usuario_id']);
             
             if ($resultado) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&mensaje=' . urlencode('Solicitud cancelada exitosamente'));
+                header('Location: index.php?page=prestamos&action=misSolicitudes&mensaje=' . urlencode('Solicitud cancelada exitosamente'));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('No se pudo cancelar la solicitud'));
+                header('Location: index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('No se pudo cancelar la solicitud'));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::cancelarSolicitud: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('Error al procesar la cancelación'));
+            header('Location: index.php?page=prestamos&action=misSolicitudes&error=' . urlencode('Error al procesar la cancelación'));
         }
         exit;
     }
@@ -549,7 +549,7 @@ class PrestamosController {
     public function gestionarSolicitudes() {
         // Solo bibliotecarios pueden gestionar solicitudes
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para gestionar solicitudes'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para gestionar solicitudes'));
             exit;
         }
         
@@ -561,7 +561,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/gestionar_solicitudes.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::gestionarSolicitudes: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar las solicitudes'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar las solicitudes'));
             exit;
         }
     }
@@ -570,7 +570,7 @@ class PrestamosController {
     public function aprobarSolicitud() {
         // Solo bibliotecarios pueden aprobar solicitudes
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para aprobar solicitudes'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para aprobar solicitudes'));
             exit;
         }
         
@@ -579,7 +579,7 @@ class PrestamosController {
         $observaciones = $_POST['observaciones'] ?? '';
         
         if (empty($solicitud_id) || empty($fecha_devolucion)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Datos incompletos'));
+            header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Datos incompletos'));
             exit;
         }
         
@@ -587,13 +587,13 @@ class PrestamosController {
             $resultado = $this->solicitudModel->aprobarYCrearPrestamo($solicitud_id, $_SESSION['usuario_id'], $fecha_devolucion, $observaciones);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&mensaje=' . urlencode('Solicitud aprobada y préstamo creado exitosamente'));
+                header('Location: index.php?page=prestamos&action=gestionarSolicitudes&mensaje=' . urlencode('Solicitud aprobada y préstamo creado exitosamente'));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode($resultado['message'] ?? 'Error al aprobar la solicitud. El libro podría no estar disponible.'));
+                header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode($resultado['message'] ?? 'Error al aprobar la solicitud. El libro podría no estar disponible.'));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::aprobarSolicitud: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al procesar la aprobación'));
+            header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al procesar la aprobación'));
         }
         exit;
     }
@@ -602,7 +602,7 @@ class PrestamosController {
     public function rechazarSolicitud() {
         // Solo bibliotecarios pueden rechazar solicitudes
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para rechazar solicitudes'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para rechazar solicitudes'));
             exit;
         }
         
@@ -610,7 +610,7 @@ class PrestamosController {
         $observaciones = $_POST['observaciones'] ?? '';
         
         if (empty($solicitud_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('ID de solicitud no válido'));
+            header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('ID de solicitud no válido'));
             exit;
         }
         
@@ -618,13 +618,13 @@ class PrestamosController {
             $resultado = $this->solicitudModel->responder($solicitud_id, 'Rechazada', $_SESSION['usuario_id'], $observaciones);
             
             if ($resultado) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&mensaje=' . urlencode('Solicitud rechazada exitosamente'));
+                header('Location: index.php?page=prestamos&action=gestionarSolicitudes&mensaje=' . urlencode('Solicitud rechazada exitosamente'));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al rechazar la solicitud'));
+                header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al rechazar la solicitud'));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::rechazarSolicitud: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al procesar el rechazo'));
+            header('Location: index.php?page=prestamos&action=gestionarSolicitudes&error=' . urlencode('Error al procesar el rechazo'));
         }
         exit;
     }
@@ -633,12 +633,12 @@ class PrestamosController {
     public function gestionar() {
         // Verificar que sea bibliotecario
         if ($_SESSION['usuario_rol'] != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('No tiene permisos para esta acción'));
+            header('Location: index.php?page=libros&error=' . urlencode('No tiene permisos para esta acción'));
             exit;
         }
         
         if (!isset($_GET['libro_id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('ID de libro no especificado'));
+            header('Location: index.php?page=libros&error=' . urlencode('ID de libro no especificado'));
             exit;
         }
         
@@ -658,7 +658,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/otorgar.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::gestionar: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('Error al cargar el formulario'));
+            header('Location: index.php?page=libros&error=' . urlencode('Error al cargar el formulario'));
             exit;
         }
     }
@@ -667,12 +667,12 @@ class PrestamosController {
     public function procesar_otorgar() {
         // Verificar que sea bibliotecario
         if ($_SESSION['usuario_rol'] != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros&error=' . urlencode('No tiene permisos para esta acción'));
+            header('Location: index.php?page=libros&error=' . urlencode('No tiene permisos para esta acción'));
             exit;
         }
         
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=libros');
+            header('Location: index.php?page=libros');
             exit;
         }
         
@@ -730,7 +730,7 @@ class PrestamosController {
             $resultado = $prestamo->insertar($datosPrestamo);
             
             if ($resultado) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . 
+                header('Location: index.php?page=prestamos&mensaje=' . 
                        urlencode('Préstamo otorgado exitosamente'));
             } else {
                 throw new Exception('Error al crear el préstamo');
@@ -750,7 +750,7 @@ class PrestamosController {
         $prestamo_id = $_POST['prestamo_id'] ?? $_GET['id'] ?? '';
         
         if (empty($prestamo_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -758,13 +758,13 @@ class PrestamosController {
             $resultado = $this->prestamoModel->autodevolverPrestamo($prestamo_id);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode($resultado['message']));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&error=' . urlencode($resultado['message']));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::autodevolverLibro: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar la devolución'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar la devolución'));
         }
         exit;
     }
@@ -776,7 +776,7 @@ class PrestamosController {
         $motivo = $_POST['motivo'] ?? '';
         
         if (empty($prestamo_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -784,13 +784,13 @@ class PrestamosController {
             $resultado = $this->prestamoModel->solicitarAmpliacion($prestamo_id, $dias_adicionales, $motivo);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&mensaje=' . urlencode($resultado['message']));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&error=' . urlencode($resultado['message']));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::solicitarAmpliacion: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al procesar la solicitud de ampliación'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al procesar la solicitud de ampliación'));
         }
         exit;
     }
@@ -799,7 +799,7 @@ class PrestamosController {
     public function gestionarAmpliaciones() {
         // Solo bibliotecarios pueden gestionar ampliaciones
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para gestionar ampliaciones'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para gestionar ampliaciones'));
             exit;
         }
         
@@ -809,7 +809,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/gestionar_ampliaciones.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::gestionarAmpliaciones: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar las solicitudes'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar las solicitudes'));
             exit;
         }
     }
@@ -818,7 +818,7 @@ class PrestamosController {
     public function aprobarAmpliacion() {
         // Solo bibliotecarios pueden aprobar ampliaciones
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para aprobar ampliaciones'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para aprobar ampliaciones'));
             exit;
         }
         
@@ -826,7 +826,7 @@ class PrestamosController {
         $respuesta = $_POST['respuesta'] ?? '';
         
         if (empty($solicitud_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('ID de solicitud no válido'));
+            header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('ID de solicitud no válido'));
             exit;
         }
         
@@ -836,14 +836,14 @@ class PrestamosController {
             if ($resultado['success']) {
                 // Asegurar codificación UTF-8 en el header
                 header('Content-Type: text/html; charset=UTF-8');
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&mensaje=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&mensaje=' . urlencode($resultado['message']));
             } else {
                 header('Content-Type: text/html; charset=UTF-8');
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode($resultado['message']));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::aprobarAmpliacion: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('Error al procesar la aprobación'));
+            header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('Error al procesar la aprobación'));
         }
         exit;
     }
@@ -852,7 +852,7 @@ class PrestamosController {
     public function rechazarAmpliacion() {
         // Solo bibliotecarios pueden rechazar ampliaciones
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para rechazar ampliaciones'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para rechazar ampliaciones'));
             exit;
         }
         
@@ -860,12 +860,12 @@ class PrestamosController {
         $respuesta = $_POST['respuesta'] ?? '';
         
         if (empty($solicitud_id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('ID de solicitud no válido'));
+            header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('ID de solicitud no válido'));
             exit;
         }
         
         if (empty($respuesta)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('El motivo del rechazo es obligatorio'));
+            header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('El motivo del rechazo es obligatorio'));
             exit;
         }
         
@@ -873,13 +873,13 @@ class PrestamosController {
             $resultado = $this->prestamoModel->rechazarSolicitudAmpliacion($solicitud_id, $_SESSION['usuario_id'], $respuesta);
             
             if ($resultado['success']) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&mensaje=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&mensaje=' . urlencode($resultado['message']));
             } else {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode($resultado['message']));
+                header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode($resultado['message']));
             }
         } catch (Exception $e) {
             error_log("Error en PrestamosController::rechazarAmpliacion: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('Error al procesar el rechazo'));
+            header('Location: index.php?page=prestamos&action=gestionarAmpliaciones&error=' . urlencode('Error al procesar el rechazo'));
         }
         exit;
     }
@@ -888,7 +888,7 @@ class PrestamosController {
     public function ampliarDuracionPrestamo() {
         // Solo bibliotecarios pueden ampliar duración
         if (($_SESSION['usuario_rol'] ?? 0) != 1) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('No tienes permisos para ampliar duración'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('No tienes permisos para ampliar duración'));
             exit;
         }
         
@@ -897,7 +897,7 @@ class PrestamosController {
         $motivo = $_POST['motivo'] ?? '';
         
         if (empty($prestamo_id) || empty($dias_adicionales)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Datos incompletos'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Datos incompletos'));
             exit;
         }
         
@@ -906,7 +906,7 @@ class PrestamosController {
             $prestamo = $this->prestamoModel->getById($prestamo_id);
             
             if (!$prestamo) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
+                header('Location: index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
                 exit;
             }
             
@@ -930,11 +930,11 @@ class PrestamosController {
             $observacion_ampliacion = "Ampliado por " . $dias_adicionales . " días. Motivo: " . $motivo;
             $stmt->execute([$nueva_fecha, $observacion_ampliacion, $observacion_ampliacion, $prestamo_id]);
             
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&mensaje=' . urlencode('Duración del préstamo ampliada exitosamente'));
+            header('Location: index.php?page=prestamos&mensaje=' . urlencode('Duración del préstamo ampliada exitosamente'));
             
         } catch (Exception $e) {
             error_log("Error en PrestamosController::ampliarDuracionPrestamo: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al ampliar la duración'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al ampliar la duración'));
         }
         exit;
     }
@@ -944,7 +944,7 @@ class PrestamosController {
         $id = $_GET['id'] ?? '';
         
         if (empty($id)) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('ID de préstamo no válido'));
             exit;
         }
         
@@ -952,7 +952,7 @@ class PrestamosController {
             $prestamo = $this->prestamoModel->getById($id);
             
             if (!$prestamo) {
-                header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
+                header('Location: index.php?page=prestamos&error=' . urlencode('Préstamo no encontrado'));
                 exit;
             }
             
@@ -963,7 +963,7 @@ class PrestamosController {
             include __DIR__ . '/../views/prestamos/ver_detalles.php';
         } catch (Exception $e) {
             error_log("Error en PrestamosController::verDetalles: " . $e->getMessage());
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&error=' . urlencode('Error al cargar los detalles del préstamo'));
+            header('Location: index.php?page=prestamos&error=' . urlencode('Error al cargar los detalles del préstamo'));
             exit;
         }
     }
