@@ -45,9 +45,10 @@ class SolicitudPrestamo {
             $stmt->closeCursor();
             
             if ($resultado['status'] === 'success') {
-                return ['success' => true, 'id' => $resultado['idSolicitud'], 'message' => $resultado['message']];
+                return ['success' => true, 'id' => $resultado['idSolicitud'], 'message' => 'Solicitud enviada exitosamente'];
             } else {
-                return ['success' => false, 'message' => $resultado['message']];
+                $mensaje = $resultado['status'] === 'no_disponible' ? 'El libro no está disponible para préstamo' : 'Error al procesar solicitud';
+                return ['success' => false, 'message' => $mensaje];
             }
         } catch (PDOException $e) {
             error_log("Error al insertar solicitud: " . $e->getMessage());
@@ -63,7 +64,8 @@ class SolicitudPrestamo {
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
             
-            return $resultado['status'] === 'success';
+            // El procedimiento devuelve ROW_COUNT() as affected_rows
+            return $resultado['affected_rows'] > 0;
         } catch (PDOException $e) {
             // Fallback a consulta directa
             error_log("Procedimiento no encontrado, usando fallback: " . $e->getMessage());
