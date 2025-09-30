@@ -150,14 +150,15 @@ class Usuario {
     
     // Actualizar último acceso del usuario (actualizado a procedimiento)
     public function actualizarUltimoAcceso($id) {
-        
+        try {
             $stmt = $this->conexion->prepare("CALL sp_usuario_actualizar_ultimo_acceso(?)");
-
             $stmt->execute([$id]);
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
-            return $resultado['affected_rows'] > 0;
-        
+            return true; // El procedimiento se ejecutó correctamente
+        } catch (Exception $e) {
+            error_log("Error al actualizar último acceso: " . $e->getMessage());
+            return false;
+        }
     }
     
     // Activar usuario

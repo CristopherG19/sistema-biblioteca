@@ -98,7 +98,7 @@
                         <i class="fas fa-book-open me-2"></i>
                         Libros Agregados Recientemente
                     </h5>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-sm btn-outline-primary">
+                    <a href="index.php?page=libros" class="btn btn-sm btn-outline-primary">
                         <i class="fas fa-eye me-1"></i>Ver Todos
                     </a>
                 </div>
@@ -157,7 +157,7 @@
                                 <i class="fas fa-book fa-4x text-muted mb-3"></i>
                                 <h5 class="text-muted">No hay libros registrados aún</h5>
                                 <p class="text-muted mb-4">Comienza agregando el primer libro al catálogo</p>
-                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=agregar" class="btn btn-primary btn-lg">
+                                <a href="index.php?page=libros&action=agregar" class="btn btn-primary btn-lg">
                                     <i class="fas fa-plus me-2"></i>Agregar Primer Libro
                                 </a>
                             </div>
@@ -179,43 +179,43 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="d-grid gap-3">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=agregar" 
+                        <a href="index.php?page=libros&action=agregar" 
                            class="btn btn-primary btn-lg rounded-3">
                             <i class="fas fa-book-medical me-2"></i>
                             Agregar Libro
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=agregar" 
+                        <a href="index.php?page=usuarios&action=agregar" 
                            class="btn btn-success btn-lg rounded-3">
                             <i class="fas fa-user-plus me-2"></i>
                             Registrar Usuario
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=agregar" 
+                        <a href="index.php?page=categorias&action=agregar" 
                            class="btn btn-info btn-lg rounded-3">
                             <i class="fas fa-tag me-2"></i>
                             Nueva Categoría
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar"
+                        <a href="index.php?page=prestamos&action=agregar"
                            class="btn btn-warning btn-lg text-white rounded-3">
                             <i class="fas fa-handshake me-2"></i>
                             Nuevo Préstamo
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes"
+                        <a href="index.php?page=prestamos&action=gestionarSolicitudes"
                            class="btn btn-info btn-lg rounded-3">
                             <i class="fas fa-tasks me-2"></i>
                             Gestionar Solicitudes
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones"
+                        <a href="index.php?page=prestamos&action=gestionarAmpliaciones"
                            class="btn btn-warning btn-lg text-white rounded-3">
                             <i class="fas fa-clock me-2"></i>
                             Gestionar Ampliaciones
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=vencidos"
+                        <a href="index.php?page=prestamos&action=vencidos"
                            class="btn btn-danger btn-lg rounded-3">
                             <i class="fas fa-exclamation-triangle me-2"></i>
                             Préstamos Vencidos

@@ -11,7 +11,7 @@ include __DIR__ . '/../partials/header.php';
                     <h2><i class="fas fa-book-open text-primary me-2"></i>Editar Libro</h2>
                     <p class="text-muted mb-0">Modifica la información del libro: <strong><?php echo htmlspecialchars($libro['titulo']); ?></strong></p>
                 </div>
-                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                <a href="index.php?page=libros" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>Volver
                 </a>
             </div>
@@ -35,7 +35,7 @@ include __DIR__ . '/../partials/header.php';
                     <h5 class="mb-0"><i class="fas fa-book me-2"></i>Información del Libro</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=actualizar">
+                    <form method="POST" action="index.php?page=libros&action=actualizar">
                         <input type="hidden" name="id" value="<?= $libro['idLibro'] ?>">
                         
                         <div class="row">
@@ -151,7 +151,7 @@ include __DIR__ . '/../partials/header.php';
                         <!-- Botones -->
                         <hr>
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                            <a href="index.php?page=libros" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">

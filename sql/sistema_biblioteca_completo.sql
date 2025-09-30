@@ -1,51 +1,69 @@
--- =====================================================
--- SISTEMA DE BIBLIOTECA COMPLETO - EXTRACCIÓN TOTAL
--- Generado automáticamente: 2025-09-21 21:29:59
--- Base de datos: biblioteca_db
--- Tablas: 13 | Procedimientos: 66
--- Funciones: 0 | Triggers: 3 | Vistas: 2
--- =====================================================
-
--- Configuración inicial
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
--- =====================================================
--- 1. CREACIÓN DE BASE DE DATOS
--- =====================================================
-
-CREATE DATABASE IF NOT EXISTS `biblioteca_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE  IF NOT EXISTS `biblioteca_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `biblioteca_db`;
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+--
+-- Host: localhost    Database: biblioteca_db
+-- ------------------------------------------------------
+-- Server version	8.0.42
 
--- =====================================================
--- 2. CREACIÓN DE TABLAS
--- =====================================================
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Tabla: categorias
+--
+-- Table structure for table `categorias`
+--
+
+DROP TABLE IF EXISTS `categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorias` (
   `idCategoria` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `activa` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`idCategoria`),
   UNIQUE KEY `nombre` (`nombre`),
   KEY `idx_nombre` (`nombre`),
   KEY `idx_activa` (`activa`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: historiallectura
+--
+-- Dumping data for table `categorias`
+--
+
+LOCK TABLES `categorias` WRITE;
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` VALUES (1,'Ficción','Novelas y obras de ficción','2025-09-23 21:00:25','2025-09-23 21:50:38',1),(2,'Ciencia','Libros de ciencias naturales','2025-09-23 21:00:25','2025-09-23 21:50:38',1),(3,'Historia','Libros de historia universal','2025-09-23 21:00:25','2025-09-23 21:50:38',1),(4,'Tecnología','Libros de tecnología e informática','2025-09-23 21:00:25','2025-09-23 21:50:38',1),(5,'Matemáticas','Libros de matemáticas y estadística','2025-09-23 21:00:25','2025-09-23 21:50:38',1),(11,'CATEGORIA PRUEBA','DESCRIP PRUEBA2 ACTUALIZADO','2025-09-23 21:35:36','2025-09-23 21:51:02',0);
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `historiallectura`
+--
+
+DROP TABLE IF EXISTS `historiallectura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `historiallectura` (
   `idHistorial` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int NOT NULL,
   `idLibro` int NOT NULL,
   `fecha_inicio` datetime DEFAULT CURRENT_TIMESTAMP,
   `fecha_fin` datetime DEFAULT NULL,
-  `tipo` enum('Prestamo','Lectura','Reserva') COLLATE utf8mb4_unicode_ci DEFAULT 'Prestamo',
+  `tipo` enum('Prestamo','Lectura','Reserva') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Prestamo',
   `calificacion` int DEFAULT NULL,
-  `comentario` text COLLATE utf8mb4_unicode_ci,
+  `comentario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`idHistorial`),
   KEY `idx_usuario` (`idUsuario`),
   KEY `idx_libro` (`idLibro`),
@@ -54,9 +72,26 @@ CREATE TABLE `historiallectura` (
   CONSTRAINT `historiallectura_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
   CONSTRAINT `historiallectura_ibfk_2` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE,
   CONSTRAINT `historiallectura_chk_1` CHECK (((`calificacion` >= 1) and (`calificacion` <= 5)))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: interesesusuario
+--
+-- Dumping data for table `historiallectura`
+--
+
+LOCK TABLES `historiallectura` WRITE;
+/*!40000 ALTER TABLE `historiallectura` DISABLE KEYS */;
+INSERT INTO `historiallectura` VALUES (4,6,18,'2025-09-23 21:34:04',NULL,'Lectura',NULL,NULL);
+/*!40000 ALTER TABLE `historiallectura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `interesesusuario`
+--
+
+DROP TABLE IF EXISTS `interesesusuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `interesesusuario` (
   `idInteresUsuario` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int NOT NULL,
@@ -69,26 +104,42 @@ CREATE TABLE `interesesusuario` (
   CONSTRAINT `interesesusuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
   CONSTRAINT `interesesusuario_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: libros
+--
+-- Dumping data for table `interesesusuario`
+--
+
+LOCK TABLES `interesesusuario` WRITE;
+/*!40000 ALTER TABLE `interesesusuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `interesesusuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `libros`
+--
+
+DROP TABLE IF EXISTS `libros`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `libros` (
   `idLibro` int NOT NULL AUTO_INCREMENT,
   `idCategoria` int NOT NULL,
-  `titulo` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `autor` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `editorial` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `titulo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `autor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `editorial` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `anio` int DEFAULT NULL,
-  `isbn` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isbn` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stock` int NOT NULL DEFAULT '0',
   `disponible` int NOT NULL DEFAULT '0',
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
-  `portada` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `archivo_pdf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `portada` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `archivo_pdf` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_adicion` datetime DEFAULT CURRENT_TIMESTAMP,
   `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `activo` tinyint(1) DEFAULT '1',
   `numero_paginas` int DEFAULT NULL,
-  `tamano_archivo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tamano_archivo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_subida` datetime DEFAULT NULL,
   PRIMARY KEY (`idLibro`),
   UNIQUE KEY `isbn` (`isbn`),
@@ -99,9 +150,26 @@ CREATE TABLE `libros` (
   KEY `idx_disponible` (`disponible`),
   KEY `idx_activo` (`activo`),
   CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categorias` (`idCategoria`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: librosfavoritos
+--
+-- Dumping data for table `libros`
+--
+
+LOCK TABLES `libros` WRITE;
+/*!40000 ALTER TABLE `libros` DISABLE KEYS */;
+INSERT INTO `libros` VALUES (13,1,'1984','George Orwell','Debolsillo',1949,'978-84-9908-567-1',10,10,'Una novela distópica que describe una sociedad totalitaria donde el Gran Hermano vigila constantemente a los ciudadanos.',NULL,NULL,'2025-09-23 21:00:25','2025-09-23 21:56:28',1,NULL,NULL,NULL),(14,2,'El origen de las especies','Charles Darwin','Alianza Editorial',1859,'978-84-206-5600-2',2,2,'Obra fundamental de la biología que presenta la teoría de la evolución por selección natural.',NULL,NULL,'2025-09-23 21:00:25','2025-09-23 21:00:25',1,NULL,NULL,NULL),(15,3,'Sapiens: De animales a dioses','Yuval Noah Harari','Debate',2011,'978-84-9992-622-3',4,4,'Una exploración fascinante de cómo el Homo sapiens llegó a dominar el mundo.',NULL,NULL,'2025-09-23 21:00:25','2025-09-23 21:00:25',1,NULL,NULL,NULL),(16,4,'Clean Code','Robert C. Martin','Prentice Hall',2008,'978-0-13-235088-4',2,2,'Una guía para escribir código limpio y mantenible en programación.',NULL,NULL,'2025-09-23 21:00:25','2025-09-23 21:00:25',1,NULL,NULL,NULL),(17,5,'Cálculo Diferencial e Integral','Luis Leithold','McGraw-Hill',1998,'978-970-10-2754-5',3,3,'Libro de texto clásico para el estudio del cálculo diferencial e integral.',NULL,NULL,'2025-09-23 21:00:25','2025-09-23 21:00:25',1,NULL,NULL,NULL),(18,1,'LIBRO DE PRUEBA','AUTOR PRUEBA','EDITORIAL PRUEBA',2025,'123-4-56-789101-1',20,20,'DESCRIPCION LIBRO PUEBA',NULL,'libro_18_1758681227.pdf','2025-09-23 21:33:07','2025-09-23 21:34:58',0,1,'235971','2025-09-23 21:33:47'),(20,11,'LIBRO DE PRUEBA1','AUTOR PRUEBA','EDITORIAL PRUEBA',2025,'123-4-56-789101-112',10,9,'DDDDD',NULL,'libro_20_1758681681.pdf','2025-09-23 21:41:21','2025-09-23 21:41:54',1,1,'235971','2025-09-23 21:41:21');
+/*!40000 ALTER TABLE `libros` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `librosfavoritos`
+--
+
+DROP TABLE IF EXISTS `librosfavoritos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `librosfavoritos` (
   `idFavorito` int NOT NULL AUTO_INCREMENT,
   `idUsuario` int NOT NULL,
@@ -114,13 +182,29 @@ CREATE TABLE `librosfavoritos` (
   CONSTRAINT `librosfavoritos_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE,
   CONSTRAINT `librosfavoritos_ibfk_2` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: multas
+--
+-- Dumping data for table `librosfavoritos`
+--
+
+LOCK TABLES `librosfavoritos` WRITE;
+/*!40000 ALTER TABLE `librosfavoritos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `librosfavoritos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `multas`
+--
+
+DROP TABLE IF EXISTS `multas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `multas` (
   `idMulta` int NOT NULL AUTO_INCREMENT,
   `idPrestamo` int NOT NULL,
   `monto` decimal(10,2) NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `pagada` tinyint(1) DEFAULT '0',
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   `fecha_pago` datetime DEFAULT NULL,
@@ -130,8 +214,24 @@ CREATE TABLE `multas` (
   KEY `idx_fecha_creacion` (`fecha_creacion`),
   CONSTRAINT `multas_ibfk_1` FOREIGN KEY (`idPrestamo`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: prestamos
+--
+-- Dumping data for table `multas`
+--
+
+LOCK TABLES `multas` WRITE;
+/*!40000 ALTER TABLE `multas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `multas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prestamos`
+--
+
+DROP TABLE IF EXISTS `prestamos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prestamos` (
   `idPrestamo` int NOT NULL AUTO_INCREMENT,
   `idLibro` int NOT NULL,
@@ -139,8 +239,8 @@ CREATE TABLE `prestamos` (
   `fechaPrestamo` datetime DEFAULT CURRENT_TIMESTAMP,
   `fechaDevolucionEsperada` datetime NOT NULL,
   `fechaDevolucionReal` datetime DEFAULT NULL,
-  `estado` enum('Activo','Devuelto','Vencido') COLLATE utf8mb4_unicode_ci DEFAULT 'Activo',
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `estado` enum('Activo','Devuelto','Vencido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Activo',
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `multa` decimal(10,2) DEFAULT '0.00',
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -155,27 +255,61 @@ CREATE TABLE `prestamos` (
   KEY `idx_prestamos_fecha_estado` (`fechaPrestamo`,`estado`),
   CONSTRAINT `prestamos_ibfk_1` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE RESTRICT,
   CONSTRAINT `prestamos_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: roles
+--
+-- Dumping data for table `prestamos`
+--
+
+LOCK TABLES `prestamos` WRITE;
+/*!40000 ALTER TABLE `prestamos` DISABLE KEYS */;
+INSERT INTO `prestamos` VALUES (6,13,7,'2025-09-23 00:00:00','2025-09-27 00:00:00',NULL,'Activo','LIBRO PRESTADO PRUEBA',0.00,'2025-09-23 21:37:29','2025-09-23 21:37:29'),(7,13,7,'2025-09-23 21:40:11','2025-10-09 00:00:00',NULL,'Activo','',0.00,'2025-09-23 21:40:11','2025-09-23 21:40:11'),(8,13,7,'2025-09-23 21:40:16','2025-10-09 00:00:00',NULL,'Activo','',0.00,'2025-09-23 21:40:16','2025-09-23 21:40:16'),(9,20,7,'2025-09-23 21:41:54','2025-10-09 00:00:00',NULL,'Activo','DDDDDD',0.00,'2025-09-23 21:41:54','2025-09-23 21:41:54');
+/*!40000 ALTER TABLE `prestamos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `idRol` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idRol`),
   UNIQUE KEY `nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: solicitudes_prestamo
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Bibliotecario','Administrador del sistema','2025-09-23 20:56:02'),(2,'Lector','Usuario que puede solicitar préstamos','2025-09-23 20:56:02');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `solicitudes_prestamo`
+--
+
+DROP TABLE IF EXISTS `solicitudes_prestamo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `solicitudes_prestamo` (
   `idSolicitud` int NOT NULL AUTO_INCREMENT,
   `usuario_id` int NOT NULL,
   `libro_id` int NOT NULL,
   `fecha_solicitud` datetime DEFAULT CURRENT_TIMESTAMP,
-  `estado` enum('Pendiente','Aprobada','Rechazada','Convertida') COLLATE utf8mb4_unicode_ci DEFAULT 'Pendiente',
-  `observaciones_usuario` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_bibliotecario` text COLLATE utf8mb4_unicode_ci,
+  `estado` enum('Pendiente','Aprobada','Rechazada','Convertida') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Pendiente',
+  `observaciones_usuario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_bibliotecario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_respuesta` datetime DEFAULT NULL,
   `bibliotecario_id` int DEFAULT NULL,
   `prestamo_id` int DEFAULT NULL,
@@ -193,18 +327,35 @@ CREATE TABLE `solicitudes_prestamo` (
   CONSTRAINT `solicitudes_prestamo_ibfk_2` FOREIGN KEY (`libro_id`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE,
   CONSTRAINT `solicitudes_prestamo_ibfk_3` FOREIGN KEY (`bibliotecario_id`) REFERENCES `usuarios` (`idUsuario`) ON DELETE SET NULL,
   CONSTRAINT `solicitudes_prestamo_ibfk_4` FOREIGN KEY (`prestamo_id`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: solicitudesampliacion
+--
+-- Dumping data for table `solicitudes_prestamo`
+--
+
+LOCK TABLES `solicitudes_prestamo` WRITE;
+/*!40000 ALTER TABLE `solicitudes_prestamo` DISABLE KEYS */;
+INSERT INTO `solicitudes_prestamo` VALUES (2,7,13,'2025-09-23 21:14:40','Convertida','','','2025-09-23 21:40:11',6,7,'2025-09-23 21:14:40','2025-09-23 21:40:11'),(3,7,13,'2025-09-23 21:39:46','Convertida','','','2025-09-23 21:40:16',6,8,'2025-09-23 21:39:46','2025-09-23 21:40:16'),(4,7,20,'2025-09-23 21:41:35','Convertida','','DDDDDD','2025-09-23 21:41:54',6,9,'2025-09-23 21:41:35','2025-09-23 21:41:54');
+/*!40000 ALTER TABLE `solicitudes_prestamo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `solicitudesampliacion`
+--
+
+DROP TABLE IF EXISTS `solicitudesampliacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `solicitudesampliacion` (
   `idSolicitud` int NOT NULL AUTO_INCREMENT,
   `idPrestamo` int NOT NULL,
   `diasAdicionales` int NOT NULL DEFAULT '7',
-  `motivo` text COLLATE utf8mb4_unicode_ci,
+  `motivo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fechaSolicitud` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fechaRespuesta` datetime DEFAULT NULL,
-  `estado` enum('Pendiente','Aprobada','Rechazada') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pendiente',
-  `respuestaBibliotecario` text COLLATE utf8mb4_unicode_ci,
+  `estado` enum('Pendiente','Aprobada','Rechazada') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pendiente',
+  `respuestaBibliotecario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `idBibliotecario` int DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
   `fecha_actualizacion` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -217,18 +368,34 @@ CREATE TABLE `solicitudesampliacion` (
   CONSTRAINT `solicitudesampliacion_ibfk_1` FOREIGN KEY (`idPrestamo`) REFERENCES `prestamos` (`idPrestamo`) ON DELETE CASCADE,
   CONSTRAINT `solicitudesampliacion_ibfk_2` FOREIGN KEY (`idBibliotecario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Tabla: usuarios
+--
+-- Dumping data for table `solicitudesampliacion`
+--
+
+LOCK TABLES `solicitudesampliacion` WRITE;
+/*!40000 ALTER TABLE `solicitudesampliacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `solicitudesampliacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `idUsuario` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellido` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `usuario` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usuario` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `rol` int NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` text COLLATE utf8mb4_unicode_ci,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_registro` datetime DEFAULT CURRENT_TIMESTAMP,
   `ultimo_acceso` datetime DEFAULT NULL,
   `activo` tinyint(1) DEFAULT '1',
@@ -240,83 +407,74 @@ CREATE TABLE `usuarios` (
   KEY `idx_rol` (`rol`),
   KEY `idx_activo` (`activo`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`rol`) REFERENCES `roles` (`idRol`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- =====================================================
--- 3. DATOS INICIALES
--- =====================================================
+--
+-- Dumping data for table `usuarios`
+--
 
--- Datos de tabla: categorias (10 registros)
-INSERT INTO `categorias` (`idCategoria`, `nombre`, `descripcion`, `fecha_creacion`, `activa`) VALUES
-('1', 'Ficción', 'Novelas y cuentos de ficción', '2025-09-19 03:20:05', '1'),
-('2', 'Ciencia', 'Libros de ciencias exactas y naturales', '2025-09-19 03:20:05', '1'),
-('3', 'Historia', 'Libros de historia universal y local', '2025-09-19 03:20:05', '1'),
-('4', 'Tecnología', 'Libros sobre tecnología e informática', '2025-09-19 03:20:05', '1'),
-('5', 'Matemáticas', 'Libros de matemáticas y estadística', '2025-09-19 03:20:05', '1'),
-('6', 'Literatura', 'Obras literarias clásicas y contemporáneas', '2025-09-19 03:20:05', '1'),
-('7', 'Filosofía', 'Libros de filosofía y ética', '2025-09-19 03:20:05', '1'),
-('8', 'Arte', 'Libros sobre arte, música y cultura', '2025-09-19 03:20:05', '1'),
-('9', 'Deportes', 'Libros sobre deportes y actividad física', '2025-09-19 03:20:05', '1'),
-('10', 'categoria de prueba', 'dddddddd', '2025-09-18 22:49:15', '1');
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (6,'Administrador','Sistema','admin','$2y$10$K9zaWrnglkewrYSGVvXjae39lPJnFz6ttmHw7VBZ/IC.KOfOHFovi',1,'admin@biblioteca.com','123456789',NULL,'2025-09-23 20:56:02','2025-09-23 21:29:06',1),(7,'Usuario','Prueba','usuario','$2y$10$0QTrhZs6FIXYQGLi0bxWpemWFpNz5Nf3xCCGYHNUGitMyhqYQRvem',2,'usuario@biblioteca.com','987654321',NULL,'2025-09-23 20:56:02','2025-09-23 21:30:20',1),(8,'USUARIO PRUEBA',NULL,'USERPRUEBA','$2y$10$l1SXtrkr8k497TVaV3PTY.OZybAPVqx.5Fm42Kh.QurRCTNYEd38G',2,'USER@GMAIL.COM','987466421',NULL,'2025-09-23 21:43:33','2025-09-23 21:43:49',1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- Datos de tabla: historiallectura (2 registros)
-INSERT INTO `historiallectura` (`idHistorial`, `idUsuario`, `idLibro`, `fecha_inicio`, `fecha_fin`, `tipo`, `calificacion`, `comentario`) VALUES
-('1', '1', '8', '2025-09-18 22:55:13', NULL, 'Lectura', NULL, NULL),
-('2', '1', '11', '2025-09-18 23:21:36', NULL, 'Lectura', NULL, NULL);
+--
+-- Temporary view structure for view `vista_estadisticas_generales`
+--
 
--- Datos de tabla: libros (11 registros)
-INSERT INTO `libros` (`idLibro`, `idCategoria`, `titulo`, `autor`, `editorial`, `anio`, `isbn`, `stock`, `disponible`, `descripcion`, `portada`, `archivo_pdf`, `fecha_adicion`, `fecha_actualizacion`, `activo`, `numero_paginas`, `tamano_archivo`, `fecha_subida`) VALUES
-('1', '1', 'Cien años de soledad', 'Gabriel García Márquez', 'Editorial Sudamericana', '1967', '978-84-376-0494-7', '5', '5', 'Una de las obras más importantes de la literatura hispanoamericana del siglo XX. Narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('2', '2', 'Sapiens: De animales a dioses', 'Yuval Noah Harari', 'Debate', '2011', '978-84-9992-424-0', '3', '3', 'Un fascinante relato de cómo el Homo sapiens llegó a dominar el mundo. Una exploración de cómo la evolución de la humanidad ha dado forma al mundo moderno.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('3', '3', 'Breve historia del tiempo', 'Stephen Hawking', 'Crítica', '1988', '978-84-7423-842-0', '4', '4', 'Una exploración de los conceptos fundamentales de la física moderna, desde la teoría de la relatividad hasta la mecánica cuántica.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('4', '4', 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 'Prentice Hall', '2008', '978-0-13-235088-4', '6', '6', 'Una guía práctica para escribir código limpio y mantenible. Incluye principios, patrones y prácticas para mejorar la calidad del código.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('5', '5', 'El mundo de Sofía', 'Jostein Gaarder', 'Siruela', '1991', '978-84-7844-445-2', '3', '1', 'Una novela que introduce a la filosofía de manera accesible a través de la historia de Sofía, una joven que recibe lecciones de filosofía.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 23:28:46', '1', NULL, NULL, NULL),
-('6', '6', 'La historia del arte', 'E.H. Gombrich', 'Phaidon', '1950', '978-0-7148-3247-0', '2', '2', 'Una introducción completa y accesible al arte occidental, desde la prehistoria hasta el siglo XX.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('7', '7', 'El hombre que calculaba', 'Malba Tahan', 'Zahar', '1938', '978-85-378-0001-1', '4', '4', 'Una obra que combina matemáticas con literatura, presentando problemas matemáticos de manera entretenida a través de historias.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('8', '9', '1984', 'George Orwell', 'Debolsillo', '1949', '978-84-9908-567-1', '5', '3', 'Una distopía clásica que describe una sociedad totalitaria donde el Gran Hermano vigila constantemente a los ciudadanos.', NULL, 'libro_8_1758254106.pdf', '2025-09-18 22:46:17', '2025-09-18 23:01:03', '1', '1', '235971', '2025-09-18 22:55:08'),
-('9', '9', 'Fútbol: La filosofía de vida', 'Jorge Valdano', 'Aguilar', '2014', '978-84-03-01345-6', '3', '3', 'Una reflexión sobre el fútbol como fenómeno social y cultural, escrita por uno de los grandes pensadores del deporte.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('10', '1', 'Don Quijote de la Mancha', 'Miguel de Cervantes', 'Real Academia Española', '1605', '978-84-239-7434-8', '7', '7', 'La obra cumbre de la literatura española y una de las más importantes de la literatura universal. Narra las aventuras de Alonso Quijano.', NULL, NULL, '2025-09-18 22:46:17', '2025-09-18 22:46:17', '1', NULL, NULL, NULL),
-('11', '2', 'libro prueba', 'autor', 'editorial', '2025', '3213231', '12', '12', 'dsadas', NULL, 'libro_11_1758255685.pdf', '2025-09-18 23:21:25', '2025-09-18 23:21:25', '1', '12', '141049', '2025-09-18 23:21:25');
+DROP TABLE IF EXISTS `vista_estadisticas_generales`;
+/*!50001 DROP VIEW IF EXISTS `vista_estadisticas_generales`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vista_estadisticas_generales` AS SELECT 
+ 1 AS `total_usuarios`,
+ 1 AS `total_libros`,
+ 1 AS `total_prestamos`,
+ 1 AS `prestamos_activos`,
+ 1 AS `prestamos_devueltos`,
+ 1 AS `prestamos_vencidos`,
+ 1 AS `total_solicitudes`,
+ 1 AS `solicitudes_pendientes`*/;
+SET character_set_client = @saved_cs_client;
 
--- Datos de tabla: prestamos (4 registros)
-INSERT INTO `prestamos` (`idPrestamo`, `idLibro`, `idUsuario`, `fechaPrestamo`, `fechaDevolucionEsperada`, `fechaDevolucionReal`, `estado`, `observaciones`, `multa`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-('1', '8', '2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'ssssssss', '0.00', '2025-09-18 23:00:15', '2025-09-18 23:00:15'),
-('2', '5', '2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'kk', '0.00', '2025-09-18 23:00:39', '2025-09-18 23:00:39'),
-('3', '8', '1', '2025-09-19 00:00:00', '2025-10-03 00:00:00', NULL, 'Activo', 'Préstamo de prueba del sistema', '0.00', '2025-09-18 23:01:03', '2025-09-18 23:01:03'),
-('4', '5', '2', '2025-09-18 23:28:46', '2025-10-04 00:00:00', NULL, 'Activo', 'calla ctmre', '0.00', '2025-09-18 23:28:46', '2025-09-18 23:28:46');
+--
+-- Temporary view structure for view `vista_prestamos_activos`
+--
 
--- Datos de tabla: roles (2 registros)
-INSERT INTO `roles` (`idRol`, `nombre`, `descripcion`, `fecha_creacion`) VALUES
-('1', 'Bibliotecario', 'Administrador del sistema con acceso completo', '2025-09-19 03:20:05'),
-('2', 'Lector', 'Usuario que puede solicitar y gestionar préstamos', '2025-09-19 03:20:05');
+DROP TABLE IF EXISTS `vista_prestamos_activos`;
+/*!50001 DROP VIEW IF EXISTS `vista_prestamos_activos`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vista_prestamos_activos` AS SELECT 
+ 1 AS `idPrestamo`,
+ 1 AS `fechaPrestamo`,
+ 1 AS `fechaDevolucionEsperada`,
+ 1 AS `observaciones`,
+ 1 AS `usuario_nombre`,
+ 1 AS `usuario_apellido`,
+ 1 AS `usuario_email`,
+ 1 AS `libro_titulo`,
+ 1 AS `libro_autor`,
+ 1 AS `libro_isbn`,
+ 1 AS `categoria_nombre`,
+ 1 AS `dias_restantes`*/;
+SET character_set_client = @saved_cs_client;
 
--- Datos de tabla: solicitudes_prestamo (1 registros)
-INSERT INTO `solicitudes_prestamo` (`idSolicitud`, `usuario_id`, `libro_id`, `fecha_solicitud`, `estado`, `observaciones_usuario`, `observaciones_bibliotecario`, `fecha_respuesta`, `bibliotecario_id`, `prestamo_id`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-('1', '2', '5', '2025-09-18 23:28:28', 'Convertida', '', 'calla ctmre', '2025-09-18 23:28:46', '1', '4', '2025-09-18 23:28:28', '2025-09-18 23:28:46');
-
--- Datos de tabla: usuarios (2 registros)
-INSERT INTO `usuarios` (`idUsuario`, `nombre`, `apellido`, `usuario`, `password`, `rol`, `email`, `telefono`, `direccion`, `fecha_registro`, `ultimo_acceso`, `activo`) VALUES
-('1', 'Administrador', 'Sistema', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '1', 'admin@biblioteca.com', '123456789', NULL, '2025-09-19 03:20:05', '2025-09-18 22:20:15', '1'),
-('2', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'usuario', '$2y$10$XGE4DHu799eXFCgbm/xZ3.ZO6/50ySsd0fecEZhYJbl.dDTvTJn66', '2', 'cgch_1996@hotmail.com', '945628098', NULL, '2025-09-18 22:45:00', '2025-09-18 22:45:19', '1');
-
--- Datos de tabla: vista_estadisticas_generales (1 registros)
-INSERT INTO `vista_estadisticas_generales` (`total_usuarios`, `total_libros`, `total_prestamos`, `prestamos_activos`, `prestamos_devueltos`, `prestamos_vencidos`, `total_solicitudes`, `solicitudes_pendientes`) VALUES
-('2', '11', '4', '4', '0', '0', '1', '0');
-
--- Datos de tabla: vista_prestamos_activos (4 registros)
-INSERT INTO `vista_prestamos_activos` (`idPrestamo`, `fechaPrestamo`, `fechaDevolucionEsperada`, `observaciones`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `libro_titulo`, `libro_autor`, `libro_isbn`, `categoria_nombre`, `dias_restantes`) VALUES
-('1', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'ssssssss', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', '1984', 'George Orwell', '978-84-9908-567-1', 'Deportes', '12'),
-('2', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'kk', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', 'El mundo de Sofía', 'Jostein Gaarder', '978-84-7844-445-2', 'Matemáticas', '12'),
-('3', '2025-09-19 00:00:00', '2025-10-03 00:00:00', 'Préstamo de prueba del sistema', 'Administrador', 'Sistema', 'admin@biblioteca.com', '1984', 'George Orwell', '978-84-9908-567-1', 'Deportes', '12'),
-('4', '2025-09-18 23:28:46', '2025-10-04 00:00:00', 'calla ctmre', 'Cristopher Alvaro Gutierrez Chuquiyuri', NULL, 'cgch_1996@hotmail.com', 'El mundo de Sofía', 'Jostein Gaarder', '978-84-7844-445-2', 'Matemáticas', '13');
-
--- =====================================================
--- 4. PROCEDIMIENTOS ALMACENADOS
--- =====================================================
-
-DELIMITER //
-
--- Procedimiento: sp_actualizar_categoria
+--
+-- Dumping routines for database 'biblioteca_db'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `sp_actualizar_categoria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_categoria`(
                 IN p_id INT,
                 IN p_nombre VARCHAR(100),
@@ -329,9 +487,22 @@ BEGIN
                     fecha_actualizacion = NOW()
                 WHERE idCategoria = p_id;
                 SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_actualizar_libro
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_actualizar_libro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_libro`(
                 IN p_id INT,
                 IN p_idCategoria INT,
@@ -358,32 +529,82 @@ BEGIN
                     fecha_actualizacion = NOW()
                 WHERE idLibro = p_id;
                 SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_actualizar_usuario
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_actualizar_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_usuario`(
-                IN p_id INT,
-                IN p_nombre VARCHAR(100),
-                IN p_usuario VARCHAR(50),
-                IN p_password VARCHAR(255),
-                IN p_rol INT,
-                IN p_email VARCHAR(100),
-                IN p_telefono VARCHAR(20)
-            )
+    IN p_id INT,
+    IN p_nombre VARCHAR(100),
+    IN p_usuario VARCHAR(50),
+    IN p_password VARCHAR(255),
+    IN p_rol INT,
+    IN p_email VARCHAR(100),
+    IN p_telefono VARCHAR(20)
+)
 BEGIN
-                UPDATE Usuarios 
-                SET nombre = p_nombre,
-                    usuario = p_usuario,
-                    password = p_password,
-                    rol = p_rol,
-                    email = p_email,
-                    telefono = p_telefono,
-                    fecha_actualizacion = NOW()
-                WHERE idUsuario = p_id;
-                SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_ampliacion_aprobar
+    DECLARE v_usuario_existe INT DEFAULT 0;
+    DECLARE v_email_existe INT DEFAULT 0;
+    DECLARE v_error_message VARCHAR(255) DEFAULT '';
+    
+    -- Verificar si el nombre de usuario ya existe en otro registro
+    SELECT COUNT(*) INTO v_usuario_existe
+    FROM Usuarios 
+    WHERE usuario = p_usuario AND idUsuario != p_id;
+    
+    -- Verificar si el email ya existe en otro registro
+    SELECT COUNT(*) INTO v_email_existe
+    FROM Usuarios 
+    WHERE email = p_email AND idUsuario != p_id;
+    
+    -- Si hay duplicados, devolver error
+    IF v_usuario_existe > 0 THEN
+        SET v_error_message = 'El nombre de usuario ya está registrado por otro usuario';
+        SELECT 0 as success, v_error_message as message;
+    ELSEIF v_email_existe > 0 THEN
+        SET v_error_message = 'El email ya está registrado por otro usuario';
+        SELECT 0 as success, v_error_message as message;
+    ELSE
+        -- Actualizar el usuario (sin fecha_actualizacion que no existe)
+        UPDATE Usuarios 
+        SET nombre = p_nombre,
+            usuario = p_usuario,
+            password = p_password,
+            rol = p_rol,
+            email = p_email,
+            telefono = p_telefono
+        WHERE idUsuario = p_id;
+        
+        SELECT 1 as success, 'Usuario actualizado exitosamente' as message, ROW_COUNT() as affected_rows;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ampliacion_aprobar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ampliacion_aprobar`(
     IN p_solicitud_id INT,
     IN p_bibliotecario_id INT,
@@ -396,36 +617,49 @@ BEGIN
     
     -- Obtener datos de la solicitud
     SELECT idPrestamo, diasAdicionales INTO v_prestamo_id, v_dias_adicionales
-    FROM SolicitudesAmpliacion
+    FROM solicitudesampliacion
     WHERE idSolicitud = p_solicitud_id AND estado = 'Pendiente';
     
     IF v_prestamo_id IS NOT NULL THEN
         -- Obtener fecha actual de devolución
         SELECT fechaDevolucionEsperada INTO v_fecha_actual
-        FROM Prestamos
+        FROM prestamos
         WHERE idPrestamo = v_prestamo_id;
         
         -- Actualizar fecha de devolución
-        UPDATE Prestamos
+        UPDATE prestamos
         SET fechaDevolucionEsperada = DATE_ADD(v_fecha_actual, INTERVAL v_dias_adicionales DAY),
             observaciones = CONCAT(COALESCE(observaciones, ''), ' | Ampliación: Ampliado por ', v_dias_adicionales, ' días. Motivo: ', p_respuesta)
         WHERE idPrestamo = v_prestamo_id;
         
         -- Actualizar solicitud
-        UPDATE SolicitudesAmpliacion
+        UPDATE solicitudesampliacion
         SET estado = 'Aprobada',
             idBibliotecario = p_bibliotecario_id,
             respuestaBibliotecario = p_respuesta,
             fechaRespuesta = NOW()
         WHERE idSolicitud = p_solicitud_id;
         
-        SELECT 'success' as status, CONVERT('Ampliación aprobada exitosamente' USING utf8mb4) as message;
+        SELECT 'success' as status, 'Ampliación aprobada exitosamente' as message;
     ELSE
         SELECT 'error' as status, 'Solicitud no encontrada o ya procesada' as message;
     END IF;
-END
-
--- Procedimiento: sp_ampliacion_obtener_solicitudes
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ampliacion_obtener_solicitudes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ampliacion_obtener_solicitudes`(IN p_estado VARCHAR(20))
 BEGIN
     SELECT 
@@ -434,48 +668,66 @@ BEGIN
         sa.diasAdicionales,
         sa.motivo,
         sa.fechaSolicitud,
-        sa.fechaRespuesta,
         sa.estado,
         sa.respuestaBibliotecario,
-        sa.idBibliotecario,
-        p.idUsuario,
+        sa.fechaRespuesta,
+        p.fechaDevolucionEsperada,
         u.nombre as usuario_nombre,
         u.apellido as usuario_apellido,
-        u.email as usuario_email,
         l.titulo as libro_titulo,
-        l.autor as libro_autor,
-        l.isbn as libro_isbn,
-        p.fechaPrestamo,
-        p.fechaDevolucionEsperada,
-        b.nombre as bibliotecario_nombre,
-        b.apellido as bibliotecario_apellido
-    FROM SolicitudesAmpliacion sa
-    INNER JOIN Prestamos p ON sa.idPrestamo = p.idPrestamo
-    INNER JOIN Usuarios u ON p.idUsuario = u.idUsuario
-    INNER JOIN Libros l ON p.idLibro = l.idLibro
-    LEFT JOIN Usuarios b ON sa.idBibliotecario = b.idUsuario
+        l.autor as libro_autor
+    FROM solicitudesampliacion sa
+    INNER JOIN prestamos p ON sa.idPrestamo = p.idPrestamo
+    INNER JOIN usuarios u ON p.idUsuario = u.idUsuario
+    INNER JOIN libros l ON p.idLibro = l.idLibro
     WHERE (p_estado IS NULL OR sa.estado = p_estado)
     ORDER BY sa.fechaSolicitud DESC;
-END
-
--- Procedimiento: sp_ampliacion_rechazar
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ampliacion_rechazar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ampliacion_rechazar`(
     IN p_solicitud_id INT,
     IN p_bibliotecario_id INT,
     IN p_respuesta TEXT
 )
 BEGIN
-    UPDATE SolicitudesAmpliacion
+    UPDATE solicitudesampliacion
     SET estado = 'Rechazada',
         idBibliotecario = p_bibliotecario_id,
         respuestaBibliotecario = p_respuesta,
         fechaRespuesta = NOW()
     WHERE idSolicitud = p_solicitud_id AND estado = 'Pendiente';
     
-    SELECT ROW_COUNT() as affected_rows;
-END
-
--- Procedimiento: sp_ampliacion_solicitar
+    SELECT 'success' as status, 'Solicitud rechazada' as message;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ampliacion_solicitar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ampliacion_solicitar`(
     IN p_prestamo_id INT,
     IN p_dias_adicionales INT,
@@ -486,28 +738,54 @@ BEGIN
     
     -- Verificar que el préstamo existe y está activo
     SELECT COUNT(*) INTO v_existe
-    FROM Prestamos
+    FROM prestamos
     WHERE idPrestamo = p_prestamo_id AND fechaDevolucionReal IS NULL;
     
     IF v_existe > 0 THEN
-        INSERT INTO SolicitudesAmpliacion (idPrestamo, diasAdicionales, motivo, estado, fechaSolicitud)
+        INSERT INTO solicitudesampliacion (idPrestamo, diasAdicionales, motivo, estado, fechaSolicitud)
         VALUES (p_prestamo_id, p_dias_adicionales, p_motivo, 'Pendiente', NOW());
         
         SELECT LAST_INSERT_ID() as idSolicitud, 'success' as status, 'Solicitud de ampliación enviada' as message;
     ELSE
         SELECT 0 as idSolicitud, 'error' as status, 'Préstamo no encontrado o ya devuelto' as message;
     END IF;
-END
-
--- Procedimiento: sp_categoria_obtener_por_id
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_categoria_obtener_por_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_categoria_obtener_por_id`(IN p_id INT)
 BEGIN
                 SELECT idCategoria, nombre, descripcion, fecha_creacion, activa
                 FROM Categorias
                 WHERE idCategoria = p_id AND activa = TRUE;
-            END
-
--- Procedimiento: sp_eliminar_categoria
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_eliminar_categoria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_categoria`(IN p_id INT)
 BEGIN
                 UPDATE Categorias 
@@ -515,9 +793,22 @@ BEGIN
                     fecha_actualizacion = NOW()
                 WHERE idCategoria = p_id;
                 SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_eliminar_libro
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_eliminar_libro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_libro`(IN p_id INT)
 BEGIN
                 UPDATE Libros 
@@ -525,19 +816,44 @@ BEGIN
                     fecha_actualizacion = NOW()
                 WHERE idLibro = p_id;
                 SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_eliminar_usuario
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_eliminar_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_usuario`(IN p_id INT)
 BEGIN
-                UPDATE Usuarios 
-                SET activo = FALSE,
-                    fecha_actualizacion = NOW()
-                WHERE idUsuario = p_id;
-                SELECT ROW_COUNT() as affected_rows;
-            END
-
--- Procedimiento: sp_insertar_categoria
+    UPDATE Usuarios 
+    SET activo = FALSE
+    WHERE idUsuario = p_id;
+    SELECT ROW_COUNT() as affected_rows;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_categoria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_categoria`(
                 IN p_nombre VARCHAR(100),
                 IN p_descripcion TEXT
@@ -546,9 +862,22 @@ BEGIN
                 INSERT INTO Categorias (nombre, descripcion)
                 VALUES (p_nombre, p_descripcion);
                 SELECT LAST_INSERT_ID() as idCategoria;
-            END
-
--- Procedimiento: sp_insertar_libro
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_libro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_libro`(
                 IN p_idCategoria INT,
                 IN p_titulo VARCHAR(200),
@@ -564,9 +893,22 @@ BEGIN
                 INSERT INTO Libros (idCategoria, titulo, autor, editorial, anio, isbn, stock, disponible, descripcion)
                 VALUES (p_idCategoria, p_titulo, p_autor, p_editorial, p_anio, p_isbn, p_stock, p_disponible, p_descripcion);
                 SELECT LAST_INSERT_ID() as idLibro;
-            END
-
--- Procedimiento: sp_insertar_usuario
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_usuario`(
                 IN p_nombre VARCHAR(100),
                 IN p_usuario VARCHAR(50),
@@ -579,9 +921,22 @@ BEGIN
                 INSERT INTO Usuarios (nombre, usuario, password, rol, email, telefono)
                 VALUES (p_nombre, p_usuario, p_password, p_rol, p_email, p_telefono);
                 SELECT LAST_INSERT_ID() as idUsuario;
-            END
-
--- Procedimiento: sp_libros_disponibles_solicitud
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libros_disponibles_solicitud` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libros_disponibles_solicitud`()
 BEGIN
         SELECT 
@@ -598,9 +953,22 @@ BEGIN
         INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
         WHERE l.disponible > 0
         ORDER BY l.titulo;
-    END
-
--- Procedimiento: sp_libro_actualizar_pdf
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_actualizar_pdf` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_actualizar_pdf`(
         IN p_id INT,
         IN p_archivo_pdf VARCHAR(255),
@@ -617,9 +985,22 @@ BEGIN
         WHERE idLibro = p_id;
         
         SELECT ROW_COUNT() as affected_rows;
-    END
-
--- Procedimiento: sp_libro_actualizar_stock_devolucion
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_actualizar_stock_devolucion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_actualizar_stock_devolucion`(IN p_id INT)
 BEGIN
                 UPDATE Libros 
@@ -628,9 +1009,22 @@ BEGIN
                 WHERE idLibro = p_id;
                 
                 SELECT 'success' as status, 'Stock actualizado' as message;
-            END
-
--- Procedimiento: sp_libro_actualizar_stock_prestamo
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_actualizar_stock_prestamo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_actualizar_stock_prestamo`(IN p_id INT)
 BEGIN
                 DECLARE v_disponible INT DEFAULT 0;
@@ -649,9 +1043,22 @@ BEGIN
                 ELSE
                     SELECT 'error' as status, 'No hay ejemplares disponibles' as message;
                 END IF;
-            END
-
--- Procedimiento: sp_libro_buscar_por_titulo_autor
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_buscar_por_titulo_autor` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_buscar_por_titulo_autor`(IN p_termino VARCHAR(100))
 BEGIN
     SELECT l.*, c.nombre as categoria_nombre
@@ -662,9 +1069,22 @@ BEGIN
          OR l.autor LIKE CONCAT('%', p_termino, '%')
          OR l.isbn LIKE CONCAT('%', p_termino, '%'))
     ORDER BY l.titulo;
-END
-
--- Procedimiento: sp_libro_obtener_con_detalle_pdf
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_con_detalle_pdf` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_con_detalle_pdf`(IN p_id INT)
 BEGIN
         SELECT l.*, c.nombre as categoria_nombre,
@@ -676,9 +1096,22 @@ BEGIN
         FROM Libros l
         INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
         WHERE l.idLibro = p_id AND l.activo = TRUE;
-    END
-
--- Procedimiento: sp_libro_obtener_con_prestamos
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_con_prestamos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_con_prestamos`()
 BEGIN
     SELECT l.*, c.nombre as categoria,
@@ -690,9 +1123,22 @@ BEGIN
     WHERE l.activo = TRUE
     GROUP BY l.idLibro
     ORDER BY l.titulo;
-END
-
--- Procedimiento: sp_libro_obtener_disponibles
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_disponibles` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_disponibles`(IN p_limite INT)
 BEGIN
     DECLARE v_limite INT DEFAULT 1000;
@@ -706,9 +1152,22 @@ BEGIN
     WHERE l.disponible > 0 AND l.activo = TRUE
     ORDER BY l.titulo
     LIMIT v_limite;
-END
-
--- Procedimiento: sp_libro_obtener_estadisticas_pdf
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_estadisticas_pdf` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_estadisticas_pdf`()
 BEGIN
         SELECT 
@@ -721,27 +1180,66 @@ BEGIN
             END) as tamano_total_mb
         FROM Libros 
         WHERE activo = TRUE;
-    END
-
--- Procedimiento: sp_libro_obtener_por_id
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_por_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_por_id`(IN p_id INT)
 BEGIN
     SELECT l.*, c.nombre as categoria_nombre
     FROM Libros l
     INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
     WHERE l.idLibro = p_id AND l.activo = TRUE;
-END
-
--- Procedimiento: sp_libro_obtener_por_isbn
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_por_isbn` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_por_isbn`(IN p_isbn VARCHAR(20))
 BEGIN
                 SELECT l.*, c.nombre as categoria_nombre
                 FROM Libros l
                 INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
                 WHERE l.isbn = p_isbn AND l.activo = TRUE;
-            END
-
--- Procedimiento: sp_libro_obtener_recientes
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_obtener_recientes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_obtener_recientes`(IN p_limite INT)
 BEGIN
                 SELECT l.*, c.nombre as categoria_nombre
@@ -750,18 +1248,44 @@ BEGIN
                 WHERE l.activo = TRUE
                 ORDER BY l.idLibro DESC
                 LIMIT p_limite;
-            END
-
--- Procedimiento: sp_libro_registrar_lectura
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_registrar_lectura` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_registrar_lectura`(IN p_libro_id INT, IN p_usuario_id INT)
 BEGIN
     INSERT INTO HistorialLectura (idUsuario, idLibro, tipo)
     VALUES (p_usuario_id, p_libro_id, 'Lectura');
     
     SELECT LAST_INSERT_ID() as id_historial;
-END
-
--- Procedimiento: sp_libro_verificar_isbn_existe
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_libro_verificar_isbn_existe` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_libro_verificar_isbn_existe`(IN p_isbn VARCHAR(20), IN p_excluir_id INT)
 BEGIN
     SELECT COUNT(*) as existe
@@ -769,46 +1293,110 @@ BEGIN
     WHERE isbn = p_isbn 
     AND (p_excluir_id IS NULL OR idLibro != p_excluir_id)
     AND activo = TRUE;
-END
-
--- Procedimiento: sp_listar_categorias
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_listar_categorias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_categorias`()
 BEGIN
                 SELECT idCategoria, nombre, descripcion, fecha_creacion, activa
                 FROM Categorias
                 WHERE activa = TRUE
                 ORDER BY nombre;
-            END
-
--- Procedimiento: sp_listar_libros
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_listar_libros` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_libros`()
 BEGIN
-                SELECT l.*, c.nombre as categoria_nombre
-                FROM Libros l
-                INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
-                WHERE l.activo = TRUE
-                ORDER BY l.titulo;
-            END
-
--- Procedimiento: sp_listar_roles
+        SELECT l.*, c.nombre as categoria_nombre
+        FROM Libros l
+        INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
+        WHERE l.activo = TRUE
+        ORDER BY l.idLibro ASC;
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_listar_roles` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_roles`()
 BEGIN
                 SELECT idRol, nombre, descripcion, fecha_creacion
                 FROM Roles
                 ORDER BY idRol;
-            END
-
--- Procedimiento: sp_listar_usuarios
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_listar_usuarios` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_usuarios`()
 BEGIN
-                SELECT u.*, r.nombre as rol_nombre
-                FROM Usuarios u
-                INNER JOIN Roles r ON u.rol = r.idRol
-                WHERE u.activo = TRUE
-                ORDER BY u.nombre, u.apellido;
-            END
-
--- Procedimiento: sp_prestamo_actualizar
+    SELECT u.*, r.nombre as rol_nombre
+    FROM Usuarios u
+    INNER JOIN Roles r ON u.rol = r.idRol
+    ORDER BY u.nombre, u.apellido;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_actualizar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_actualizar`(
             IN p_id INT,
             IN p_fecha_devolucion_esperada DATE,
@@ -839,9 +1427,22 @@ BEGIN
             END IF;
             
             COMMIT;
-        END
-
--- Procedimiento: sp_prestamo_actualizar_observaciones
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_actualizar_observaciones` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_actualizar_observaciones`(
         IN p_prestamo_id INT,
         IN p_observaciones TEXT
@@ -866,9 +1467,22 @@ BEGIN
         END IF;
         
         COMMIT;
-    END
-
--- Procedimiento: sp_prestamo_auto_devolver
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_auto_devolver` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_auto_devolver`(IN p_prestamo_id INT)
 BEGIN
             DECLARE v_libro_id INT;
@@ -907,9 +1521,22 @@ BEGIN
             END IF;
             
             COMMIT;
-        END
-
--- Procedimiento: sp_prestamo_buscar
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_buscar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_buscar`(IN p_termino VARCHAR(255))
 BEGIN
             SELECT 
@@ -935,9 +1562,22 @@ BEGIN
                OR l.autor LIKE CONCAT('%', p_termino, '%')
                OR p.estado LIKE CONCAT('%', p_termino, '%')
             ORDER BY p.fechaPrestamo DESC;
-        END
-
--- Procedimiento: sp_prestamo_devolver_completo
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_devolver_completo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_devolver_completo`(IN p_id INT)
 BEGIN
                 DECLARE v_libro_id INT;
@@ -966,9 +1606,22 @@ BEGIN
                 ELSE
                     SELECT 'error' as status, 'Préstamo no encontrado o ya devuelto' as message, 0 as affected_rows;
                 END IF;
-            END
-
--- Procedimiento: sp_prestamo_eliminar
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_eliminar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_eliminar`(
         IN p_prestamo_id INT
     )
@@ -1010,9 +1663,22 @@ BEGIN
         END IF;
         
         COMMIT;
-    END
-
--- Procedimiento: sp_prestamo_insertar_completo
+    END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_insertar_completo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_insertar_completo`(
                 IN p_libro_id INT,
                 IN p_usuario_id INT,
@@ -1047,9 +1713,22 @@ BEGIN
                 ELSE
                     SELECT 'error' as status, 'El libro no está disponible para préstamo' as message, 0 as idPrestamo;
                 END IF;
-            END
-
--- Procedimiento: sp_prestamo_obtener_activos
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_activos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_activos`()
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido,
@@ -1059,20 +1738,46 @@ BEGIN
                 INNER JOIN Libros l ON p.idLibro = l.idLibro
                 WHERE p.fechaDevolucionReal IS NULL
                 ORDER BY p.fechaPrestamo DESC;
-            END
-
--- Procedimiento: sp_prestamo_obtener_estadisticas
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_estadisticas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_estadisticas`()
 BEGIN
-                SELECT 
-                    COUNT(*) as total_prestamos,
-                    COUNT(CASE WHEN fechaDevolucionReal IS NULL THEN 1 END) as prestamos_activos,
-                    COUNT(CASE WHEN fechaDevolucionReal IS NOT NULL THEN 1 END) as prestamos_devueltos,
-                    COUNT(CASE WHEN fechaDevolucionReal IS NULL AND fechaVencimiento < NOW() THEN 1 END) as prestamos_vencidos
-                FROM Prestamos;
-            END
-
--- Procedimiento: sp_prestamo_obtener_por_id
+    SELECT 
+        COUNT(*) as total,
+        COUNT(CASE WHEN fechaDevolucionReal IS NULL THEN 1 END) as activos,
+        COUNT(CASE WHEN fechaDevolucionReal IS NOT NULL THEN 1 END) as devueltos,
+        COUNT(CASE WHEN fechaDevolucionReal IS NULL AND fechaDevolucionEsperada < NOW() THEN 1 END) as vencidos
+    FROM Prestamos;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_por_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_por_id`(IN p_id INT)
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido,
@@ -1081,9 +1786,22 @@ BEGIN
                 INNER JOIN Usuarios u ON p.idUsuario = u.idUsuario
                 INNER JOIN Libros l ON p.idLibro = l.idLibro
                 WHERE p.idPrestamo = p_id;
-            END
-
--- Procedimiento: sp_prestamo_obtener_por_libro
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_por_libro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_por_libro`(IN p_libro_id INT)
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido
@@ -1091,9 +1809,22 @@ BEGIN
                 INNER JOIN Usuarios u ON p.idUsuario = u.idUsuario
                 WHERE p.idLibro = p_libro_id
                 ORDER BY p.fechaPrestamo DESC;
-            END
-
--- Procedimiento: sp_prestamo_obtener_por_usuario
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_por_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_por_usuario`(IN p_usuario_id INT)
 BEGIN
                 SELECT p.*, l.titulo as libro_titulo, l.autor as libro_autor
@@ -1101,9 +1832,22 @@ BEGIN
                 INNER JOIN Libros l ON p.idLibro = l.idLibro
                 WHERE p.idUsuario = p_usuario_id
                 ORDER BY p.fechaPrestamo DESC;
-            END
-
--- Procedimiento: sp_prestamo_obtener_todos
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_todos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_todos`()
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido,
@@ -1112,9 +1856,22 @@ BEGIN
                 INNER JOIN Usuarios u ON p.idUsuario = u.idUsuario
                 INNER JOIN Libros l ON p.idLibro = l.idLibro
                 ORDER BY p.fechaPrestamo DESC;
-            END
-
--- Procedimiento: sp_prestamo_obtener_usuario_libro
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_usuario_libro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_usuario_libro`(IN p_usuario_id INT, IN p_libro_id INT)
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido
@@ -1125,9 +1882,22 @@ BEGIN
                 AND p.fechaDevolucionReal IS NULL
                 ORDER BY p.fechaPrestamo DESC
                 LIMIT 1;
-            END
-
--- Procedimiento: sp_prestamo_obtener_vencidos
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_obtener_vencidos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_obtener_vencidos`()
 BEGIN
                 SELECT p.*, u.nombre as usuario_nombre, u.apellido as usuario_apellido,
@@ -1138,9 +1908,22 @@ BEGIN
                 WHERE p.fechaDevolucionReal IS NULL 
                 AND p.fechaDevolucionEsperada < NOW()
                 ORDER BY p.fechaDevolucionEsperada ASC;
-            END
-
--- Procedimiento: sp_prestamo_registrar_devolucion
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_registrar_devolucion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_registrar_devolucion`(
             IN p_prestamo_id INT,
             IN p_observaciones TEXT
@@ -1177,9 +1960,22 @@ BEGIN
             END IF;
             
             COMMIT;
-        END
-
--- Procedimiento: sp_prestamo_validar_disponibilidad
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_prestamo_validar_disponibilidad` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prestamo_validar_disponibilidad`(IN p_libro_id INT)
 BEGIN
                 DECLARE v_disponible INT DEFAULT 0;
@@ -1194,9 +1990,22 @@ BEGIN
                 ELSE
                     SELECT 0 as disponible;
                 END IF;
-            END
-
--- Procedimiento: sp_solicitudes_estadisticas
+            END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitudes_estadisticas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitudes_estadisticas`()
 BEGIN
     SELECT 
@@ -1207,9 +2016,22 @@ BEGIN
         SUM(CASE WHEN estado = 'Convertida' THEN 1 ELSE 0 END) as convertidas,
         SUM(CASE WHEN DATE(fecha_solicitud) = CURDATE() THEN 1 ELSE 0 END) as solicitudes_hoy
     FROM solicitudes_prestamo;
-END
-
--- Procedimiento: sp_solicitudes_estadisticas_usuario
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitudes_estadisticas_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitudes_estadisticas_usuario`(IN p_usuario_id INT)
 BEGIN
             SELECT 
@@ -1220,9 +2042,22 @@ BEGIN
                 SUM(CASE WHEN estado = 'Convertida' THEN 1 ELSE 0 END) as convertidas
             FROM solicitudes_prestamo
             WHERE usuario_id = p_usuario_id;
-        END
-
--- Procedimiento: sp_solicitudes_listar
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitudes_listar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitudes_listar`(IN p_estado VARCHAR(20))
 BEGIN
     SELECT 
@@ -1261,9 +2096,22 @@ BEGIN
             WHEN 'Convertida' THEN 4
         END,
         s.fecha_solicitud DESC;
-END
-
--- Procedimiento: sp_solicitudes_usuario
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitudes_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitudes_usuario`(IN p_usuario_id INT)
 BEGIN
     SELECT 
@@ -1289,9 +2137,22 @@ BEGIN
     LEFT JOIN Usuarios b ON s.bibliotecario_id = b.idUsuario
     WHERE s.usuario_id = p_usuario_id
     ORDER BY s.fecha_solicitud DESC;
-END
-
--- Procedimiento: sp_solicitud_aprobar_y_crear_prestamo
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitud_aprobar_y_crear_prestamo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitud_aprobar_y_crear_prestamo`(
     IN p_solicitud_id INT,
     IN p_bibliotecario_id INT,
@@ -1344,9 +2205,22 @@ BEGIN
     ELSE
         SELECT 'error' as status, 0 as prestamo_id, 'Solicitud no encontrada o ya procesada' as message;
     END IF;
-END
-
--- Procedimiento: sp_solicitud_cancelar
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitud_cancelar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitud_cancelar`(
             IN p_solicitud_id INT,
             IN p_usuario_id INT
@@ -1375,9 +2249,22 @@ BEGIN
             END IF;
             
             COMMIT;
-        END
-
--- Procedimiento: sp_solicitud_insertar
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitud_insertar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitud_insertar`(
     IN p_usuario_id INT,
     IN p_libro_id INT,
@@ -1400,9 +2287,22 @@ BEGIN
     ELSE
         SELECT 0 as idSolicitud, 'no_disponible' as status;
     END IF;
-END
-
--- Procedimiento: sp_solicitud_obtener_por_id
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitud_obtener_por_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitud_obtener_por_id`(IN p_id INT)
 BEGIN
             SELECT 
@@ -1426,9 +2326,22 @@ BEGIN
             INNER JOIN Libros l ON s.libro_id = l.idLibro
             INNER JOIN Categorias c ON l.idCategoria = c.idCategoria
             WHERE s.idSolicitud = p_id;
-        END
-
--- Procedimiento: sp_solicitud_responder
+        END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_solicitud_responder` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_solicitud_responder`(
     IN p_solicitud_id INT,
     IN p_estado VARCHAR(20),
@@ -1446,17 +2359,65 @@ BEGIN
     AND estado = 'Pendiente';
     
     SELECT ROW_COUNT() as affected_rows;
-END
-
--- Procedimiento: sp_usuario_actualizar_ultimo_acceso
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_activar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_activar`(IN p_id INT)
+BEGIN
+    UPDATE Usuarios 
+    SET activo = TRUE
+    WHERE idUsuario = p_id;
+    SELECT ROW_COUNT() as affected_rows;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_actualizar_ultimo_acceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_actualizar_ultimo_acceso`(IN p_id INT)
 BEGIN
     UPDATE Usuarios 
     SET ultimo_acceso = NOW() 
     WHERE idUsuario = p_id;
-END
-
--- Procedimiento: sp_usuario_buscar
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_buscar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_buscar`(IN p_termino VARCHAR(100))
 BEGIN
     SELECT u.*, r.nombre as rol_nombre
@@ -1468,9 +2429,44 @@ BEGIN
          OR u.usuario LIKE CONCAT('%', p_termino, '%')
          OR u.email LIKE CONCAT('%', p_termino, '%'))
     ORDER BY u.nombre, u.apellido;
-END
-
--- Procedimiento: sp_usuario_estadisticas
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_desactivar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_desactivar`(IN p_id INT)
+BEGIN
+    UPDATE Usuarios 
+    SET activo = FALSE
+    WHERE idUsuario = p_id;
+    SELECT ROW_COUNT() as affected_rows;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_estadisticas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_estadisticas`()
 BEGIN
     SELECT 
@@ -1480,18 +2476,44 @@ BEGIN
         SUM(CASE WHEN DATE(fecha_registro) = CURDATE() THEN 1 ELSE 0 END) as nuevos_hoy
     FROM Usuarios
     WHERE activo = TRUE;
-END
-
--- Procedimiento: sp_usuario_obtener_por_id
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_obtener_por_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_obtener_por_id`(IN p_id INT)
 BEGIN
     SELECT u.*, r.nombre as rol_nombre
     FROM Usuarios u
     INNER JOIN Roles r ON u.rol = r.idRol
     WHERE u.idUsuario = p_id AND u.activo = TRUE;
-END
-
--- Procedimiento: sp_usuario_obtener_por_rol
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_obtener_por_rol` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_obtener_por_rol`(IN p_rol INT)
 BEGIN
     SELECT u.*, r.nombre as rol_nombre
@@ -1499,18 +2521,44 @@ BEGIN
     INNER JOIN Roles r ON u.rol = r.idRol
     WHERE u.rol = p_rol AND u.activo = TRUE
     ORDER BY u.nombre, u.apellido;
-END
-
--- Procedimiento: sp_usuario_obtener_por_username
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_obtener_por_username` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_obtener_por_username`(IN p_usuario VARCHAR(50))
 BEGIN
     SELECT u.*, r.nombre as rol_nombre
     FROM Usuarios u
     INNER JOIN Roles r ON u.rol = r.idRol
     WHERE u.usuario = p_usuario AND u.activo = TRUE;
-END
-
--- Procedimiento: sp_usuario_verificar_email
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_verificar_email` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_verificar_email`(IN p_email VARCHAR(100), IN p_excluir_id INT)
 BEGIN
     SELECT COUNT(*) as existe
@@ -1518,48 +2566,77 @@ BEGIN
     WHERE email = p_email 
     AND (p_excluir_id IS NULL OR idUsuario != p_excluir_id)
     AND activo = TRUE;
-END
-
--- Procedimiento: sp_usuario_verificar_existe
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_verificar_existe` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_verificar_existe`(IN p_usuario VARCHAR(50))
 BEGIN
     SELECT COUNT(*) as existe
     FROM Usuarios
     WHERE usuario = p_usuario AND activo = TRUE;
-END
-
--- =====================================================
--- 6. TRIGGERS
--- =====================================================
-
--- Trigger: tr_libros_actualizar_fecha
-CREATE DEFINER=`root`@`localhost` TRIGGER `tr_libros_actualizar_fecha` BEFORE UPDATE ON `libros` FOR EACH ROW BEGIN
-    SET NEW.fecha_actualizacion = NOW();
-END
-
--- Trigger: tr_prestamos_actualizar_fecha
-CREATE DEFINER=`root`@`localhost` TRIGGER `tr_prestamos_actualizar_fecha` BEFORE UPDATE ON `prestamos` FOR EACH ROW BEGIN
-    SET NEW.fecha_actualizacion = NOW();
-END
-
--- Trigger: tr_solicitudes_actualizar_fecha
-CREATE DEFINER=`root`@`localhost` TRIGGER `tr_solicitudes_actualizar_fecha` BEFORE UPDATE ON `solicitudes_prestamo` FOR EACH ROW BEGIN
-    SET NEW.fecha_actualizacion = NOW();
-END
-
--- =====================================================
--- 7. VISTAS
--- =====================================================
-
--- Vista: vista_estadisticas_generales
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_estadisticas_generales` AS select (select count(0) from `usuarios` where (`usuarios`.`activo` = true)) AS `total_usuarios`,(select count(0) from `libros` where (`libros`.`activo` = true)) AS `total_libros`,(select count(0) from `prestamos`) AS `total_prestamos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is null)) AS `prestamos_activos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is not null)) AS `prestamos_devueltos`,(select count(0) from `prestamos` where ((`prestamos`.`fechaDevolucionReal` is null) and (`prestamos`.`fechaDevolucionEsperada` < curdate()))) AS `prestamos_vencidos`,(select count(0) from `solicitudes_prestamo`) AS `total_solicitudes`,(select count(0) from `solicitudes_prestamo` where (`solicitudes_prestamo`.`estado` = 'Pendiente')) AS `solicitudes_pendientes`;
-
--- Vista: vista_prestamos_activos
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_prestamos_activos` AS select `p`.`idPrestamo` AS `idPrestamo`,`p`.`fechaPrestamo` AS `fechaPrestamo`,`p`.`fechaDevolucionEsperada` AS `fechaDevolucionEsperada`,`p`.`observaciones` AS `observaciones`,`u`.`nombre` AS `usuario_nombre`,`u`.`apellido` AS `usuario_apellido`,`u`.`email` AS `usuario_email`,`l`.`titulo` AS `libro_titulo`,`l`.`autor` AS `libro_autor`,`l`.`isbn` AS `libro_isbn`,`c`.`nombre` AS `categoria_nombre`,(to_days(`p`.`fechaDevolucionEsperada`) - to_days(curdate())) AS `dias_restantes` from (((`prestamos` `p` join `usuarios` `u` on((`p`.`idUsuario` = `u`.`idUsuario`))) join `libros` `l` on((`p`.`idLibro` = `l`.`idLibro`))) join `categorias` `c` on((`l`.`idCategoria` = `c`.`idCategoria`))) where (`p`.`fechaDevolucionReal` is null);
-
+END ;;
 DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
--- =====================================================
--- FIN DEL SCRIPT
--- =====================================================
-COMMIT;
+--
+-- Final view structure for view `vista_estadisticas_generales`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vista_estadisticas_generales`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vista_estadisticas_generales` AS select (select count(0) from `usuarios` where (`usuarios`.`activo` = true)) AS `total_usuarios`,(select count(0) from `libros` where (`libros`.`activo` = true)) AS `total_libros`,(select count(0) from `prestamos`) AS `total_prestamos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is null)) AS `prestamos_activos`,(select count(0) from `prestamos` where (`prestamos`.`fechaDevolucionReal` is not null)) AS `prestamos_devueltos`,(select count(0) from `prestamos` where ((`prestamos`.`fechaDevolucionReal` is null) and (`prestamos`.`fechaDevolucionEsperada` < curdate()))) AS `prestamos_vencidos`,(select count(0) from `solicitudes_prestamo`) AS `total_solicitudes`,(select count(0) from `solicitudes_prestamo` where (`solicitudes_prestamo`.`estado` = 'Pendiente')) AS `solicitudes_pendientes` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vista_prestamos_activos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vista_prestamos_activos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vista_prestamos_activos` AS select `p`.`idPrestamo` AS `idPrestamo`,`p`.`fechaPrestamo` AS `fechaPrestamo`,`p`.`fechaDevolucionEsperada` AS `fechaDevolucionEsperada`,`p`.`observaciones` AS `observaciones`,`u`.`nombre` AS `usuario_nombre`,`u`.`apellido` AS `usuario_apellido`,`u`.`email` AS `usuario_email`,`l`.`titulo` AS `libro_titulo`,`l`.`autor` AS `libro_autor`,`l`.`isbn` AS `libro_isbn`,`c`.`nombre` AS `categoria_nombre`,(to_days(`p`.`fechaDevolucionEsperada`) - to_days(curdate())) AS `dias_restantes` from (((`prestamos` `p` join `usuarios` `u` on((`p`.`idUsuario` = `u`.`idUsuario`))) join `libros` `l` on((`p`.`idLibro` = `l`.`idLibro`))) join `categorias` `c` on((`l`.`idCategoria` = `c`.`idCategoria`))) where (`p`.`fechaDevolucionReal` is null) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-09-23 21:59:47

@@ -12,7 +12,7 @@ include __DIR__ . '/../partials/header.php';
                     <p class="text-muted mb-0">Organiza y administra las categorías del catálogo</p>
                 </div>
                 <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=agregar" class="btn btn-primary">
+                    <a href="index.php?page=categorias&action=agregar" class="btn btn-primary">
                         <i class="fas fa-tag me-2"></i>Agregar Categoría
                     </a>
                 <?php endif; ?>
@@ -121,7 +121,7 @@ include __DIR__ . '/../partials/header.php';
                     <i class="fas fa-tags fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">No hay categorías registradas</h5>
                     <p class="text-muted">Comienza creando la primera categoría para organizar los libros</p>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=agregar" class="btn btn-primary">
+                    <a href="index.php?page=categorias&action=agregar" class="btn btn-primary">
                         <i class="fas fa-tag me-2"></i>Agregar Categoría
                     </a>
                 </div>
@@ -167,11 +167,11 @@ include __DIR__ . '/../partials/header.php';
                                     <td class="text-center">
                                         <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
                                             <div class="btn-group btn-group-sm" role="group">
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=editar&id=<?php echo $categoria['idCategoria']; ?>" 
+                                                <a href="index.php?page=categorias&action=editar&id=<?php echo $categoria['idCategoria']; ?>" 
                                                    class="btn btn-outline-primary" title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=eliminar&id=<?php echo $categoria['idCategoria']; ?>" 
+                                                <a href="index.php?page=categorias&action=eliminar&id=<?php echo $categoria['idCategoria']; ?>" 
                                                    class="btn btn-outline-danger" title="Eliminar"
                                                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?')">
                                                     <i class="fas fa-trash"></i>

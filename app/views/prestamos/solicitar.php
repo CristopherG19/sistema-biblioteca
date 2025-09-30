@@ -10,10 +10,10 @@
                     <p class="text-muted mb-0">Solicita un libro de la biblioteca para préstamo</p>
                 </div>
                 <div>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes" class="btn btn-outline-info me-2">
+                    <a href="index.php?page=prestamos&action=misSolicitudes" class="btn btn-outline-info me-2">
                         <i class="fas fa-list me-2"></i>Mis Solicitudes
                     </a>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                    <a href="index.php?page=libros" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-2"></i>Volver
                     </a>
                 </div>
@@ -46,7 +46,7 @@
                     <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Información de la Solicitud</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=procesarSolicitud">
+                    <form method="POST" action="index.php?page=prestamos&action=procesarSolicitud">
                         
                         <!-- Datos Principales -->
                         <div class="row">
@@ -112,7 +112,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-paper-plane me-2"></i>Enviar Solicitud
                             </button>
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                            <a href="index.php?page=libros" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
                             <button type="button" class="btn btn-outline-warning" onclick="limpiarFormulario()">

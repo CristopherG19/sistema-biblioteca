@@ -11,10 +11,10 @@
             <p class="text-muted mb-0">Libros que deben ser devueltos con urgencia</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-secondary me-2">
+            <a href="index.php?page=prestamos" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver
             </a>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar" 
+            <a href="index.php?page=prestamos&action=agregar" 
                class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Nuevo Préstamo
             </a>
@@ -256,7 +256,7 @@
                                                 <i class="fas fa-check"></i>
                                             </button>
                                             
-                                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=editar&id=<?php echo $prestamo['idPrestamo']; ?>" 
+                                            <a href="index.php?page=prestamos&action=editar&id=<?php echo $prestamo['idPrestamo']; ?>" 
                                                class="btn btn-sm btn-primary" 
                                                title="Editar">
                                                 <i class="fas fa-edit"></i>
@@ -299,7 +299,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="formDevolucion" method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=devolver">
+            <form id="formDevolucion" method="POST" action="index.php?page=prestamos&action=devolver">
                 <div class="modal-body">
                     <input type="hidden" id="devolucionPrestamoId" name="id">
                     <div class="alert alert-info border-0">
@@ -337,7 +337,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="formExtender" method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=actualizar">
+            <form id="formExtender" method="POST" action="index.php?page=prestamos&action=actualizar">
                 <div class="modal-body">
                     <input type="hidden" id="extenderPrestamoId" name="id">
                     <div class="mb-3">

@@ -7,7 +7,7 @@
             <h2><i class="fas fa-hand-holding text-success me-2"></i>Otorgar Préstamo</h2>
             <p class="text-muted mb-0">Gestionar préstamo directo del libro</p>
         </div>
-        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+        <a href="index.php?page=libros" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-2"></i>Volver al Catálogo
         </a>
     </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="card-body">
                     <?php if ($libro['disponible'] > 0): ?>
-                        <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=procesar_otorgar">
+                        <form method="POST" action="index.php?page=prestamos&action=procesar_otorgar">
                             <input type="hidden" name="idLibro" value="<?php echo $libro['idLibro']; ?>">
                             
                             <div class="mb-3">
@@ -132,7 +132,7 @@
                                 <button type="submit" class="btn btn-success btn-lg">
                                     <i class="fas fa-check me-2"></i>Otorgar Préstamo
                                 </button>
-                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                                <a href="index.php?page=libros" class="btn btn-outline-secondary">
                                     <i class="fas fa-times me-2"></i>Cancelar
                                 </a>
                             </div>
@@ -144,7 +144,7 @@
                             <p class="text-muted">
                                 Este libro no tiene ejemplares disponibles para préstamo.
                             </p>
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary">
+                            <a href="index.php?page=libros" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Volver al Catálogo
                             </a>
                         </div>

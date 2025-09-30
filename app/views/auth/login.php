@@ -6,7 +6,7 @@
     <title>Iniciar Sesión - Sistema Biblioteca</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="/SISTEMA_BIBLIOTECA/public/css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -153,7 +153,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=authenticate">
+                    <form method="POST" action="index.php?page=authenticate">
                         <div class="mb-3">
                             <label for="usuario" class="form-label fw-semibold">
                                 <i class="fas fa-user me-2"></i>Nombre de Usuario

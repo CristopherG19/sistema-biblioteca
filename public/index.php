@@ -13,6 +13,7 @@ require_once '../app/controllers/UsuariosController.php';
 require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/PrestamosController.php';
 require_once '../app/controllers/ReportesController.php';
+require_once '../app/controllers/ExportController.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -235,14 +236,30 @@ switch ($page) {
         }
         break;
         
+    case 'export':
+        // Verificar autenticación antes de acceder a exportaciones
+        AuthController::verificarAutenticacion();
+        $controller = new ExportController();
+        $action = isset($_GET['action']) ? $_GET['action'] : '';
+        
+        if ($action === 'excel') {
+            $controller->excel();
+        } elseif ($action === 'pdf') {
+            $controller->pdf();
+        } else {
+            header('Location: index.php?page=reportes&error=' . urlencode('Acción de exportación no válida'));
+            exit;
+        }
+        break;
+        
     case 'home':
     default:
         // Si no está logueado, redirigir al login
         if (!isset($_SESSION['usuario_id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=login');
+            header('Location: index.php?page=login');
             exit;
         }
         // Si está logueado, mostrar dashboard
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=dashboard');
+        header('Location: index.php?page=dashboard');
         exit;
 }

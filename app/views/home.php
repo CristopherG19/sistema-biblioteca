@@ -9,10 +9,10 @@ include 'partials/header.php';
                 <h1 class="display-4 fw-bold mb-3 text-white">Sistema de Gestión Bibliotecaria</h1>
                 <p class="lead mb-4 text-white">Plataforma integral para la administración eficiente de recursos bibliográficos, usuarios y servicios de préstamo.</p>
                 <div class="d-flex gap-3">
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-light btn-lg text-dark">
+                    <a href="index.php?page=libros" class="btn btn-light btn-lg text-dark">
                         <i class="fas fa-book me-2 text-primary"></i>Explorar Catálogo
                     </a>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias" class="btn btn-outline-light btn-lg text-white border-white">
+                    <a href="index.php?page=categorias" class="btn btn-outline-light btn-lg text-white border-white">
                         <i class="fas fa-tags me-2 text-white"></i>Ver Categorías
                     </a>
                 </div>
@@ -99,10 +99,10 @@ include 'partials/header.php';
                     </div>
                     <p class="card-text mb-4">Administra todo el catálogo de libros: agregar nuevos títulos, editar información, gestionar stock y disponibilidad.</p>
                     <div class="d-flex gap-2">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-primary">
+                        <a href="index.php?page=libros" class="btn btn-primary">
                             <i class="fas fa-eye me-1"></i>Ver Libros
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=agregar" class="btn btn-outline-primary">
+                        <a href="index.php?page=libros&action=agregar" class="btn btn-outline-primary">
                             <i class="fas fa-plus me-1"></i>Agregar
                         </a>
                     </div>
@@ -124,10 +124,10 @@ include 'partials/header.php';
                     </div>
                     <p class="card-text mb-4">Organiza la biblioteca con categorías temáticas. Facilita la búsqueda y clasificación de todos los recursos.</p>
                     <div class="d-flex gap-2">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias" class="btn btn-success">
+                        <a href="index.php?page=categorias" class="btn btn-success">
                             <i class="fas fa-eye me-1"></i>Ver Categorías
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=agregar" class="btn btn-outline-success">
+                        <a href="index.php?page=categorias&action=agregar" class="btn btn-outline-success">
                             <i class="fas fa-plus me-1"></i>Agregar
                         </a>
                     </div>
@@ -147,10 +147,10 @@ include 'partials/header.php';
                     <h5 class="card-title">Gestión de Usuarios</h5>
                     <p class="card-text">Administra lectores y bibliotecarios del sistema.</p>
                     <div class="d-flex gap-2 justify-content-center">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios" class="btn btn-info">
+                        <a href="index.php?page=usuarios" class="btn btn-info">
                             <i class="fas fa-eye me-1"></i>Ver Usuarios
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=agregar" class="btn btn-outline-info">
+                        <a href="index.php?page=usuarios&action=agregar" class="btn btn-outline-info">
                             <i class="fas fa-plus me-1"></i>Agregar
                         </a>
                     </div>

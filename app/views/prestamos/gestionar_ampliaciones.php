@@ -8,7 +8,7 @@
             <p class="text-muted mb-0">Revisa y gestiona las solicitudes de ampliación de préstamos</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-secondary">
+            <a href="index.php?page=prestamos" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-2"></i>Volver a Préstamos
             </a>
         </div>
@@ -89,19 +89,19 @@
                 <div class="col-md-6">
                     <h6 class="mb-2">Filtrar por estado:</h6>
                     <div class="btn-group" role="group">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones" 
+                        <a href="index.php?page=prestamos&action=gestionarAmpliaciones" 
                            class="btn btn-outline-primary <?php echo !isset($_GET['estado']) ? 'active' : ''; ?>">
                             Todas
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&estado=Pendiente" 
+                        <a href="index.php?page=prestamos&action=gestionarAmpliaciones&estado=Pendiente" 
                            class="btn btn-outline-warning <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Pendiente') ? 'active' : ''; ?>">
                             Pendientes
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&estado=Aprobada" 
+                        <a href="index.php?page=prestamos&action=gestionarAmpliaciones&estado=Aprobada" 
                            class="btn btn-outline-success <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Aprobada') ? 'active' : ''; ?>">
                             Aprobadas
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarAmpliaciones&estado=Rechazada" 
+                        <a href="index.php?page=prestamos&action=gestionarAmpliaciones&estado=Rechazada" 
                            class="btn btn-outline-danger <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Rechazada') ? 'active' : ''; ?>">
                             Rechazadas
                         </a>
@@ -277,7 +277,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=aprobarAmpliacion">
+            <form method="POST" action="index.php?page=prestamos&action=aprobarAmpliacion">
                 <div class="modal-body">
                     <input type="hidden" id="aprobarSolicitudId" name="solicitud_id">
                     
@@ -318,7 +318,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=rechazarAmpliacion">
+            <form method="POST" action="index.php?page=prestamos&action=rechazarAmpliacion">
                 <div class="modal-body">
                     <input type="hidden" id="rechazarSolicitudId" name="solicitud_id">
                     

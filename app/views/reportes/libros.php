@@ -11,7 +11,7 @@
             <p class="text-muted mb-0">Análisis del catálogo y categorías</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=reportes" class="btn btn-outline-secondary me-2">
+            <a href="index.php?page=reportes" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver a Reportes
             </a>
         </div>
@@ -79,12 +79,12 @@
                                     <td class="py-3"><?php echo htmlspecialchars($libro['isbn']); ?></td>
                                     <td class="py-3"><?php echo htmlspecialchars($libro['categoria_nombre'] ?? 'Sin categoría'); ?></td>
                                     <td class="py-3">
-                                        <span class="badge bg-success"><?php echo $libro['disponibles']; ?></span>
+                                        <span class="badge bg-success"><?php echo $libro['disponible']; ?></span>
                                     </td>
                                     <td class="py-3">
                                         <?php
-                                        $estado = $libro['disponibles'] > 0 ? 'Disponible' : 'No disponible';
-                                        $badgeClass = $libro['disponibles'] > 0 ? 'bg-success' : 'bg-danger';
+                                        $estado = $libro['disponible'] > 0 ? 'Disponible' : 'No disponible';
+                                        $badgeClass = $libro['disponible'] > 0 ? 'bg-success' : 'bg-danger';
                                         ?>
                                         <span class="badge <?php echo $badgeClass; ?>"><?php echo $estado; ?></span>
                                     </td>
@@ -134,7 +134,7 @@
                                         <div class="fw-bold"><?php echo htmlspecialchars($categoria['nombre']); ?></div>
                                     </td>
                                     <td class="py-3"><?php echo htmlspecialchars($categoria['descripcion'] ?? 'Sin descripción'); ?></td>
-                                    <td class="py-3"><?php echo date('d/m/Y', strtotime($categoria['fechaCreacion'])); ?></td>
+                                    <td class="py-3"><?php echo date('d/m/Y', strtotime($categoria['fecha_creacion'])); ?></td>
                                     <td class="py-3">
                                         <span class="badge bg-success">Activa</span>
                                     </td>
@@ -155,28 +155,47 @@
     </div>
 
     <!-- Botones de Acción -->
-    <div class="row mt-4">
+    <div class="row mt-4 no-print">
         <div class="col-12 text-center">
-            <button class="btn btn-success me-2" onclick="window.print()">
+            <button class="btn btn-success me-2" onclick="imprimirReporte()">
                 <i class="fas fa-print me-2"></i>Imprimir Reporte
             </button>
-            <button class="btn btn-primary me-2" onclick="exportarExcel()">
+            <a href="index.php?page=export&action=excel&tipo=libros" class="btn btn-primary me-2">
                 <i class="fas fa-file-excel me-2"></i>Exportar Excel
-            </button>
-            <button class="btn btn-info" onclick="exportarPDF()">
+            </a>
+            <a href="index.php?page=export&action=pdf&tipo=libros" class="btn btn-info" target="_blank">
                 <i class="fas fa-file-pdf me-2"></i>Exportar PDF
-            </button>
+            </a>
         </div>
     </div>
 </div>
 
-<script>
-function exportarExcel() {
-    alert('Función de exportación a Excel - Próximamente');
+<style>
+@media print {
+    .no-print { display: none !important; }
+    body { margin: 0; padding: 20px; }
+    .container { max-width: none !important; }
+    .card { border: none !important; box-shadow: none !important; }
+    .table { font-size: 12px; }
+    .btn { display: none !important; }
+    .navbar { display: none !important; }
+    .footer { display: none !important; }
+    .card-header { background-color: #f8f9fa !important; }
+    .badge { border: 1px solid #000 !important; }
 }
+</style>
 
-function exportarPDF() {
-    alert('Función de exportación a PDF - Próximamente');
+<script>
+function imprimirReporte() {
+    // Ocultar elementos no necesarios para impresión
+    const elementosNoImprimir = document.querySelectorAll('.no-print');
+    elementosNoImprimir.forEach(el => el.style.display = 'none');
+    
+    // Imprimir
+    window.print();
+    
+    // Restaurar elementos
+    elementosNoImprimir.forEach(el => el.style.display = '');
 }
 </script>
 

@@ -11,7 +11,7 @@ include __DIR__ . '/../partials/header.php';
                     <h2><i class="fas fa-tag text-primary me-2"></i>Agregar Categoría</h2>
                     <p class="text-muted mb-0">Crea una nueva categoría para organizar los libros</p>
                 </div>
-                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias" class="btn btn-outline-secondary">
+                <a href="index.php?page=categorias" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>Volver
                 </a>
             </div>
@@ -35,7 +35,7 @@ include __DIR__ . '/../partials/header.php';
                     <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Información de la Categoría</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias&action=guardar">
+                    <form method="POST" action="index.php?page=categorias&action=guardar">
                         <h6 class="text-primary mb-3"><i class="fas fa-info-circle me-2"></i>Datos de la Categoría</h6>
                         
                         <div class="mb-3">
@@ -74,7 +74,7 @@ include __DIR__ . '/../partials/header.php';
                         <!-- Botones -->
                         <hr>
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=categorias" class="btn btn-outline-secondary">
+                            <a href="index.php?page=categorias" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">

@@ -11,7 +11,7 @@
             <p class="text-muted mb-0">Análisis detallado de préstamos por período</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=reportes" class="btn btn-outline-secondary me-2">
+            <a href="index.php?page=reportes" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver a Reportes
             </a>
         </div>
@@ -40,7 +40,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search me-2"></i>Filtrar
                     </button>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=reportes&action=prestamos" class="btn btn-outline-secondary ms-2">
+                    <a href="index.php?page=reportes&action=prestamos" class="btn btn-outline-secondary ms-2">
                         <i class="fas fa-refresh me-2"></i>Limpiar
                     </a>
                 </div>
@@ -193,28 +193,47 @@
     </div>
 
     <!-- Botones de Acción -->
-    <div class="row mt-4">
+    <div class="row mt-4 no-print">
         <div class="col-12 text-center">
-            <button class="btn btn-success me-2" onclick="window.print()">
+            <button class="btn btn-success me-2" onclick="imprimirReporte()">
                 <i class="fas fa-print me-2"></i>Imprimir Reporte
             </button>
-            <button class="btn btn-primary me-2" onclick="exportarExcel()">
+            <a href="index.php?page=export&action=excel&tipo=prestamos&fecha_inicio=<?php echo urlencode($reportePrestamos['fecha_inicio']); ?>&fecha_fin=<?php echo urlencode($reportePrestamos['fecha_fin']); ?>" class="btn btn-primary me-2">
                 <i class="fas fa-file-excel me-2"></i>Exportar Excel
-            </button>
-            <button class="btn btn-info" onclick="exportarPDF()">
+            </a>
+            <a href="index.php?page=export&action=pdf&tipo=prestamos&fecha_inicio=<?php echo urlencode($reportePrestamos['fecha_inicio']); ?>&fecha_fin=<?php echo urlencode($reportePrestamos['fecha_fin']); ?>" class="btn btn-info" target="_blank">
                 <i class="fas fa-file-pdf me-2"></i>Exportar PDF
-            </button>
+            </a>
         </div>
     </div>
 </div>
 
-<script>
-function exportarExcel() {
-    alert('Función de exportación a Excel - Próximamente');
+<style>
+@media print {
+    .no-print { display: none !important; }
+    body { margin: 0; padding: 20px; }
+    .container { max-width: none !important; }
+    .card { border: none !important; box-shadow: none !important; }
+    .table { font-size: 12px; }
+    .btn { display: none !important; }
+    .navbar { display: none !important; }
+    .footer { display: none !important; }
+    .card-header { background-color: #f8f9fa !important; }
+    .badge { border: 1px solid #000 !important; }
 }
+</style>
 
-function exportarPDF() {
-    alert('Función de exportación a PDF - Próximamente');
+<script>
+function imprimirReporte() {
+    // Ocultar elementos no necesarios para impresión
+    const elementosNoImprimir = document.querySelectorAll('.no-print');
+    elementosNoImprimir.forEach(el => el.style.display = 'none');
+    
+    // Imprimir
+    window.print();
+    
+    // Restaurar elementos
+    elementosNoImprimir.forEach(el => el.style.display = '');
 }
 </script>
 

@@ -11,7 +11,7 @@
             <p class="text-muted mb-0">Revisa y gestiona las solicitudes de préstamo de los usuarios</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar" 
+            <a href="index.php?page=prestamos&action=agregar" 
                class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Nuevo Préstamo Directo
             </a>
@@ -100,15 +100,15 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="d-flex gap-2">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes" 
+                        <a href="index.php?page=prestamos&action=gestionarSolicitudes" 
                            class="btn btn-outline-primary <?php echo (!isset($_GET['estado'])) ? 'active' : ''; ?>">
                             Todas
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&estado=Pendiente" 
+                        <a href="index.php?page=prestamos&action=gestionarSolicitudes&estado=Pendiente" 
                            class="btn btn-outline-warning <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Pendiente') ? 'active' : ''; ?>">
                             Pendientes
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes&estado=Convertida" 
+                        <a href="index.php?page=prestamos&action=gestionarSolicitudes&estado=Convertida" 
                            class="btn btn-outline-info <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Convertida') ? 'active' : ''; ?>">
                             Convertidas
                         </a>
@@ -284,7 +284,7 @@
                                             <?php endif; ?>
                                             
                                             <?php if ($solicitud['estado'] === 'Convertida' && !empty($solicitud['prestamo_id'])): ?>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=verDetalles&id=<?php echo $solicitud['prestamo_id']; ?>" 
+                                                <a href="index.php?page=prestamos&action=verDetalles&id=<?php echo $solicitud['prestamo_id']; ?>" 
                                                    class="btn btn-sm btn-outline-primary" 
                                                    title="Ver detalles del préstamo">
                                                     <i class="fas fa-external-link-alt"></i>
@@ -351,7 +351,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=aprobarSolicitud">
+            <form method="POST" action="index.php?page=prestamos&action=aprobarSolicitud">
                 <div class="modal-body">
                     <input type="hidden" id="aprobarSolicitudId" name="solicitud_id">
                     
@@ -402,7 +402,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=rechazarSolicitud">
+            <form method="POST" action="index.php?page=prestamos&action=rechazarSolicitud">
                 <div class="modal-body">
                     <input type="hidden" id="rechazarSolicitudId" name="solicitud_id">
                     
@@ -440,7 +440,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=ampliarDuracionPrestamo">
+            <form method="POST" action="index.php?page=prestamos&action=ampliarDuracionPrestamo">
                 <div class="modal-body">
                     <input type="hidden" id="ampliarPrestamoId" name="prestamo_id">
                     

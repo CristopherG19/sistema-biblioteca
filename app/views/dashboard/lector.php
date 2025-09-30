@@ -83,7 +83,7 @@
                         <i class="fas fa-book me-2"></i>
                         Libros Disponibles para Préstamo
                     </h5>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-sm btn-outline-primary">
+                    <a href="index.php?page=libros" class="btn btn-sm btn-outline-primary">
                         <i class="fas fa-search me-1"></i>Explorar Catálogo
                     </a>
                 </div>
@@ -135,25 +135,25 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="d-grid gap-3">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" 
+                        <a href="index.php?page=libros" 
                            class="btn btn-primary btn-lg">
                             <i class="fas fa-search me-2"></i>
                             Buscar Libros
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" 
+                        <a href="index.php?page=prestamos&action=solicitar" 
                            class="btn btn-success btn-lg">
                             <i class="fas fa-paper-plane me-2"></i>
                             Solicitar Préstamo
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes" 
+                        <a href="index.php?page=prestamos&action=misSolicitudes" 
                            class="btn btn-info btn-lg">
                             <i class="fas fa-inbox me-2"></i>
                             Mis Solicitudes
                         </a>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos"
+                        <a href="index.php?page=prestamos"
                            class="btn btn-warning btn-lg text-white">
                             <i class="fas fa-handshake me-2"></i>
                             Mis Préstamos

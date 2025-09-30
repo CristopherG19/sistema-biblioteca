@@ -10,7 +10,7 @@
             </h2>
             <p class="text-muted mb-0">Registra un nuevo préstamo de libro</p>
         </div>
-        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-secondary">
+        <a href="index.php?page=prestamos" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-2"></i>Volver
         </a>
     </div>
@@ -40,7 +40,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=guardar">
+                    <form method="POST" action="index.php?page=prestamos&action=guardar">
                         <div class="row">
                             <!-- Usuario -->
                             <div class="col-md-6">
@@ -144,7 +144,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-2"></i>Registrar Préstamo
                             </button>
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-secondary">
+                            <a href="index.php?page=prestamos" class="btn btn-outline-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
                         </div>

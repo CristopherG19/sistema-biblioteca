@@ -10,7 +10,7 @@
             </h2>
             <p class="text-muted mb-0">Modifica la información del préstamo #<?php echo htmlspecialchars($prestamo['idPrestamo']); ?></p>
         </div>
-        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-secondary">
+        <a href="index.php?page=prestamos" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-2"></i>Volver
         </a>
     </div>
@@ -40,7 +40,7 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=actualizar" id="formPrestamo">
+                    <form method="POST" action="index.php?page=prestamos&action=actualizar" id="formPrestamo">
                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($prestamo['idPrestamo']); ?>">
                         
                         <div class="row">
@@ -136,7 +136,7 @@
 
                         <!-- Botones -->
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-secondary">
+                            <a href="index.php?page=prestamos" class="btn btn-secondary">
                                 <i class="fas fa-times me-2"></i>Cancelar
                             </a>
                             <button type="submit" class="btn btn-primary">
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (libroId && libroId !== libroOriginal) {
             // Verificar disponibilidad solo si es un libro diferente
-            fetch(`/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=getLibroInfo&libro_id=${libroId}`)
+            fetch(`index.php?page=prestamos&action=getLibroInfo&libro_id=${libroId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {

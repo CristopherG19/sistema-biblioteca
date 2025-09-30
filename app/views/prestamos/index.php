@@ -12,22 +12,22 @@
         </div>
         <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar" 
+            <a href="index.php?page=prestamos&action=agregar" 
                class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Nuevo Préstamo
             </a>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=vencidos" 
+            <a href="index.php?page=prestamos&action=vencidos" 
                class="btn btn-warning ms-2">
                 <i class="fas fa-exclamation-triangle me-2"></i>Vencidos
             </a>
         </div>
         <?php else: ?>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" 
+            <a href="index.php?page=prestamos&action=solicitar" 
                class="btn btn-success">
                 <i class="fas fa-paper-plane me-2"></i>Solicitar Préstamo
             </a>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes" 
+            <a href="index.php?page=prestamos&action=misSolicitudes" 
                class="btn btn-outline-info ms-2">
                 <i class="fas fa-list me-2"></i>Mis Solicitudes
             </a>
@@ -116,7 +116,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <form method="GET" action="/SISTEMA_BIBLIOTECA/public/index.php">
+                    <form method="GET" action="index.php">
                         <input type="hidden" name="page" value="prestamos">
                         <input type="hidden" name="action" value="buscar">
                         <div class="input-group">
@@ -294,16 +294,16 @@
                     <h5 class="text-muted">No hay préstamos registrados</h5>
                     <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
                         <p class="text-muted mb-3">Comienza agregando un nuevo préstamo</p>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar" class="btn btn-primary">
+                        <a href="index.php?page=prestamos&action=agregar" class="btn btn-primary">
                             <i class="fas fa-plus me-2"></i>Nuevo Préstamo
                         </a>
                     <?php else: ?>
                         <p class="text-muted mb-3">No tienes préstamos activos</p>
                         <div>
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" class="btn btn-success me-2">
+                            <a href="index.php?page=prestamos&action=solicitar" class="btn btn-success me-2">
                                 <i class="fas fa-paper-plane me-2"></i>Solicitar Préstamo
                             </a>
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-primary">
+                            <a href="index.php?page=libros" class="btn btn-outline-primary">
                                 <i class="fas fa-book me-2"></i>Ver Catálogo
                             </a>
                         </div>
@@ -325,7 +325,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="formDevolucion" method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=devolver">
+            <form id="formDevolucion" method="POST" action="index.php?page=prestamos&action=devolver">
                 <div class="modal-body">
                     <input type="hidden" id="devolucionPrestamoId" name="id">
                     <div class="mb-3">
@@ -370,7 +370,7 @@
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=autodevolverLibro" style="display: inline;">
+                <form method="POST" action="index.php?page=prestamos&action=autodevolverLibro" style="display: inline;">
                     <input type="hidden" id="prestamoIdDevolver" name="prestamo_id">
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-undo me-2"></i>Confirmar Devolución
@@ -392,7 +392,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitarAmpliacion">
+            <form method="POST" action="index.php?page=prestamos&action=solicitarAmpliacion">
                 <div class="modal-body">
                     <input type="hidden" id="prestamoIdAmpliacion" name="prestamo_id">
                     
@@ -443,7 +443,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=ampliarDuracionPrestamo">
+            <form method="POST" action="index.php?page=prestamos&action=ampliarDuracionPrestamo">
                 <div class="modal-body">
                     <input type="hidden" id="ampliarPrestamoId" name="prestamo_id">
                     
@@ -512,7 +512,7 @@ function registrarDevolucion(prestamoId) {
 // Función para confirmar eliminación
 function confirmarEliminacion(prestamoId) {
     if (confirm('¿Estás seguro de que quieres eliminar este préstamo?')) {
-        window.location.href = `/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=eliminar&id=${prestamoId}`;
+        window.location.href = `index.php?page=prestamos&action=eliminar&id=${prestamoId}`;
     }
 }
 

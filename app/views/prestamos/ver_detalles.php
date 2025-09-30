@@ -11,10 +11,10 @@
             <p class="text-muted mb-0">Información completa del préstamo #<?php echo htmlspecialchars($prestamo['idPrestamo']); ?></p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=gestionarSolicitudes" class="btn btn-outline-secondary me-2">
+            <a href="index.php?page=prestamos&action=gestionarSolicitudes" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver a Solicitudes
             </a>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" class="btn btn-outline-primary">
+            <a href="index.php?page=prestamos" class="btn btn-outline-primary">
                 <i class="fas fa-list me-2"></i>Ver Todos los Préstamos
             </a>
         </div>
@@ -272,7 +272,7 @@
                             </button>
                         <?php endif; ?>
                         
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos" 
+                        <a href="index.php?page=prestamos" 
                            class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-list me-2"></i>Ver Todos los Préstamos
                         </a>
@@ -294,7 +294,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=ampliarDuracionPrestamo">
+            <form method="POST" action="index.php?page=prestamos&action=ampliarDuracionPrestamo">
                 <div class="modal-body">
                     <input type="hidden" id="ampliarPrestamoId" name="prestamo_id">
                     

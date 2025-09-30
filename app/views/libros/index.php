@@ -14,12 +14,12 @@ include __DIR__ . '/../partials/header.php';
                 <div>
                     <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
                         <!-- Botones para Administradores -->
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=agregar" class="btn btn-primary">
+                        <a href="index.php?page=libros&action=agregar" class="btn btn-primary">
                             <i class="fas fa-book-medical me-2"></i>Agregar Libro
                         </a>
                     <?php else: ?>
                         <!-- Botones para Lectores -->
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" class="btn btn-success">
+                        <a href="index.php?page=prestamos&action=solicitar" class="btn btn-success">
                             <i class="fas fa-paper-plane me-2"></i>Solicitar Préstamo
                         </a>
                     <?php endif; ?>
@@ -141,12 +141,12 @@ include __DIR__ . '/../partials/header.php';
                     <h5 class="text-muted">No hay libros registrados</h5>
                     <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
                         <p class="text-muted">Comienza agregando el primer libro al catálogo</p>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=agregar" class="btn btn-primary">
+                        <a href="index.php?page=libros&action=agregar" class="btn btn-primary">
                             <i class="fas fa-book-medical me-2"></i>Agregar Libro
                         </a>
                     <?php else: ?>
                         <p class="text-muted">No hay libros disponibles en este momento</p>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes" class="btn btn-outline-info">
+                        <a href="index.php?page=prestamos&action=misSolicitudes" class="btn btn-outline-info">
                             <i class="fas fa-list me-2"></i>Ver Mis Solicitudes
                         </a>
                     <?php endif; ?>
@@ -205,31 +205,31 @@ include __DIR__ . '/../partials/header.php';
                                         <div class="btn-group btn-group-sm" role="group">
                                             <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 1): ?>
                                                 <!-- Solo bibliotecarios pueden editar y eliminar -->
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
+                                                <a href="index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-info" title="Ver Detalle">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=editar&id=<?php echo $libro['idLibro']; ?>" 
+                                                <a href="index.php?page=libros&action=editar&id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-primary" title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=agregar&libro_id=<?php echo $libro['idLibro']; ?>" 
+                                                <a href="index.php?page=prestamos&action=agregar&libro_id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-success" title="Otorgar Préstamo">
                                                     <i class="fas fa-hand-holding"></i>
                                                 </a>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=eliminar&id=<?php echo $libro['idLibro']; ?>" 
+                                                <a href="index.php?page=libros&action=eliminar&id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-danger" title="Eliminar"
                                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este libro?')">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             <?php else: ?>
                                                 <!-- Los lectores solo ven detalle -->
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
+                                                <a href="index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-info" title="Ver Detalle">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <?php if ($libro['disponible'] > 0): ?>
-                                                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
+                                                    <a href="index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
                                                        class="btn btn-outline-success" title="Solicitar Préstamo">
                                                         <i class="fas fa-hand-holding"></i>
                                                     </a>

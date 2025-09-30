@@ -11,7 +11,7 @@ include __DIR__ . '/../partials/header.php';
                     <h2><i class="fas fa-users text-primary me-2"></i>Gestión de Usuarios</h2>
                     <p class="text-muted mb-0">Administra lectores y bibliotecarios del sistema</p>
                 </div>
-                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=agregar" class="btn btn-primary">
+                <a href="index.php?page=usuarios&action=agregar" class="btn btn-primary">
                     <i class="fas fa-user-plus me-2"></i>Agregar Usuario
                 </a>
             </div>
@@ -89,7 +89,7 @@ include __DIR__ . '/../partials/header.php';
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <form method="GET" action="/SISTEMA_BIBLIOTECA/public/index.php">
+                    <form method="GET" action="index.php">
                         <input type="hidden" name="page" value="usuarios">
                         <input type="hidden" name="action" value="buscar">
                         <div class="input-group">
@@ -102,7 +102,7 @@ include __DIR__ . '/../partials/header.php';
                 </div>
                 
                 <div class="col-md-4">
-                    <form method="GET" action="/SISTEMA_BIBLIOTECA/public/index.php">
+                    <form method="GET" action="index.php">
                         <input type="hidden" name="page" value="usuarios">
                         <input type="hidden" name="action" value="filtrarPorRol">
                         <div class="input-group">
@@ -121,7 +121,7 @@ include __DIR__ . '/../partials/header.php';
                 </div>
                 
                 <div class="col-md-2">
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios" class="btn btn-outline-secondary w-100">
+                    <a href="index.php?page=usuarios" class="btn btn-outline-secondary w-100">
                         <i class="fas fa-refresh me-1"></i>Limpiar
                     </a>
                 </div>
@@ -140,7 +140,7 @@ include __DIR__ . '/../partials/header.php';
                     <i class="fas fa-users fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">No se encontraron usuarios</h5>
                     <p class="text-muted">Comienza agregando el primer usuario al sistema</p>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=agregar" class="btn btn-primary">
+                    <a href="index.php?page=usuarios&action=agregar" class="btn btn-primary">
                         <i class="fas fa-user-plus me-2"></i>Agregar Usuario
                     </a>
                 </div>
@@ -204,18 +204,18 @@ include __DIR__ . '/../partials/header.php';
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=editar&id=<?php echo $usuario['idUsuario']; ?>" 
+                                            <a href="index.php?page=usuarios&action=editar&id=<?php echo $usuario['idUsuario']; ?>" 
                                                class="btn btn-outline-primary" title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <?php if ($usuario['activo'] == 1): ?>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=desactivar&id=<?php echo $usuario['idUsuario']; ?>" 
+                                                <a href="index.php?page=usuarios&action=desactivar&id=<?php echo $usuario['idUsuario']; ?>" 
                                                    class="btn btn-outline-warning" title="Desactivar"
                                                    onclick="return confirm('¿Estás seguro de que deseas desactivar este usuario?')">
                                                     <i class="fas fa-user-times"></i>
                                                 </a>
                                             <?php else: ?>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=usuarios&action=activar&id=<?php echo $usuario['idUsuario']; ?>" 
+                                                <a href="index.php?page=usuarios&action=activar&id=<?php echo $usuario['idUsuario']; ?>" 
                                                    class="btn btn-outline-success" title="Activar"
                                                    onclick="return confirm('¿Estás seguro de que deseas activar este usuario?')">
                                                     <i class="fas fa-user-check"></i>

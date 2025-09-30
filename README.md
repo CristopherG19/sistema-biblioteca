@@ -44,15 +44,19 @@ Un sistema completo de gestión bibliotecaria desarrollado en PHP con arquitectu
 ## 📁 Estructura del Proyecto
 
 ```
-SISTEMA_BIBLIOTECA/
+sistema-biblioteca/
 ├── app/
 │   ├── controllers/     # Controladores MVC
 │   ├── models/         # Modelos de datos
-│   └── views/          # Vistas HTML
+│   ├── utils/          # Utilidades del sistema
+│   └── views/          # Vistas HTML organizadas
 ├── config/             # Configuración de BD
 ├── public/             # Punto de entrada público
+│   ├── css/            # Estilos CSS
+│   ├── img/            # Imágenes e iconos
+│   └── uploads/        # Archivos subidos
 ├── sql/                # Scripts de base de datos
-└── assets/             # Recursos estáticos
+└── vendor/             # Dependencias de Composer
 ```
 
 ## ⚙️ Instalación
@@ -71,13 +75,13 @@ SISTEMA_BIBLIOTECA/
    ```
 
 2. **Configurar la base de datos:**
-   - Crear una base de datos MySQL
-   - Ejecutar el script unificado `sql/sistema_biblioteca_completo.sql`
-   - Verificar la instalación con `sql/verificar_instalacion.sql`
+   - Crear una base de datos MySQL llamada `biblioteca_db`
+   - Ejecutar el script `sql/sistema_biblioteca_completo.sql`
+   - Verificar que se hayan creado las 13 tablas
 
 3. **Configurar la conexión:**
-   - Copiar `config/database.example.php` a `config/database.php`
-   - Configurar los datos de conexión a la base de datos
+   - Editar `config/database.php` con tus datos de conexión
+   - Configurar host, puerto, usuario y contraseña
 
 4. **Configurar el servidor web:**
    - Apuntar el DocumentRoot a la carpeta `public/`
@@ -143,9 +147,15 @@ ini_set('session.cookie_secure', 1); // Solo en HTTPS
 
 ## 📈 Roadmap
 
+### Características Implementadas
+- [x] **Exportación de reportes** a Excel/PDF
+- [x] **Gráficos interactivos** con Chart.js
+- [x] **Sistema de préstamos** completo
+- [x] **Dashboard** con estadísticas
+- [x] **Gestión de usuarios** por roles
+- [x] **Catálogo de libros** con búsqueda
+
 ### Próximas Características
-- [ ] **Exportación de reportes** a Excel/PDF
-- [ ] **Gráficos interactivos** con Chart.js
 - [ ] **Notificaciones** por email
 - [ ] **API REST** para integraciones
 - [ ] **App móvil** (React Native)

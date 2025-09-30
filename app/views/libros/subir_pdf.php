@@ -18,7 +18,7 @@
                 </div>
                 <div class="d-flex gap-2">
                     <button class="btn btn-success" type="submit">Subir PDF</button>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" class="btn btn-secondary">Cancelar</a>
+                    <a href="index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

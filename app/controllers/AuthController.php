@@ -17,7 +17,7 @@ class AuthController {
     public function login() {
         // Si ya está logueado, redirigir al dashboard
         if (isset($_SESSION['usuario_id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=dashboard');
+            header('Location: index.php?page=dashboard');
             exit;
         }
         
@@ -57,7 +57,7 @@ class AuthController {
                     $this->usuarioModel->actualizarUltimoAcceso($userData['idUsuario']);
                     
                     // Redirigir al dashboard
-                    header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=dashboard');
+                    header('Location: index.php?page=dashboard');
                     exit;
                 } else {
                     $errores[] = "Usuario o contraseña incorrectos";
@@ -76,14 +76,14 @@ class AuthController {
             session_start();
         }
         session_destroy();
-        header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=login&mensaje=Sesión cerrada exitosamente');
+        header('Location: index.php?page=login&mensaje=Sesión cerrada exitosamente');
         exit;
     }
     
     // Verificar si el usuario está autenticado
     public static function verificarAutenticacion() {
         if (!isset($_SESSION['usuario_id'])) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=login&error=Debe iniciar sesión para acceder');
+            header('Location: index.php?page=login&error=Debe iniciar sesión para acceder');
             exit;
         }
     }
@@ -93,7 +93,7 @@ class AuthController {
         self::verificarAutenticacion();
         
         if ($_SESSION['usuario_rol'] != $rolRequerido) {
-            header('Location: /SISTEMA_BIBLIOTECA/public/index.php?page=dashboard&error=No tienes permisos para acceder a esta sección');
+            header('Location: index.php?page=dashboard&error=No tienes permisos para acceder a esta sección');
             exit;
         }
     }

@@ -11,7 +11,7 @@
             <p class="text-muted mb-0">Revisa el estado de tus solicitudes de préstamo</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" 
+            <a href="index.php?page=prestamos&action=solicitar" 
                class="btn btn-primary">
                 <i class="fas fa-plus me-2"></i>Nueva Solicitud
             </a>
@@ -42,19 +42,19 @@
                 <div class="col-md-6">
                     <h6 class="mb-2">Filtrar por estado:</h6>
                     <div class="btn-group" role="group">
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes" 
+                        <a href="index.php?page=prestamos&action=misSolicitudes" 
                            class="btn btn-outline-primary <?php echo !isset($_GET['estado']) ? 'active' : ''; ?>">
                             Todas
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&estado=Pendiente" 
+                        <a href="index.php?page=prestamos&action=misSolicitudes&estado=Pendiente" 
                            class="btn btn-outline-warning <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Pendiente') ? 'active' : ''; ?>">
                             Pendientes
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&estado=Aprobada" 
+                        <a href="index.php?page=prestamos&action=misSolicitudes&estado=Aprobada" 
                            class="btn btn-outline-success <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Aprobada') ? 'active' : ''; ?>">
                             Aprobadas
                         </a>
-                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=misSolicitudes&estado=Convertida" 
+                        <a href="index.php?page=prestamos&action=misSolicitudes&estado=Convertida" 
                            class="btn btn-outline-info <?php echo (isset($_GET['estado']) && $_GET['estado'] == 'Convertida') ? 'active' : ''; ?>">
                             Convertidas
                         </a>
@@ -267,7 +267,7 @@
                                             <?php endif; ?>
                                             
                                             <?php if ($solicitud['estado'] === 'Convertida' && !empty($solicitud['prestamo_id'])): ?>
-                                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=verDetalles&id=<?php echo $solicitud['prestamo_id']; ?>" 
+                                                <a href="index.php?page=prestamos&action=verDetalles&id=<?php echo $solicitud['prestamo_id']; ?>" 
                                                    class="btn btn-sm btn-outline-success" 
                                                    title="Ver detalles del préstamo">
                                                     <i class="fas fa-external-link-alt"></i>
@@ -287,7 +287,7 @@
                     </div>
                     <h5 class="text-muted">No tienes solicitudes de préstamo</h5>
                     <p class="text-muted mb-3">Comienza solicitando tu primer libro</p>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar" 
+                    <a href="index.php?page=prestamos&action=solicitar" 
                        class="btn btn-primary">
                         <i class="fas fa-plus me-2"></i>Solicitar Préstamo
                     </a>
@@ -415,7 +415,7 @@ function verDetalles(solicitud) {
 // Función para cancelar solicitud
 function cancelarSolicitud(solicitudId) {
     if (confirm('¿Estás seguro de que quieres cancelar esta solicitud?')) {
-        window.location.href = `/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=cancelarSolicitud&id=${solicitudId}`;
+        window.location.href = `index.php?page=prestamos&action=cancelarSolicitud&id=${solicitudId}`;
     }
 }
 </script>

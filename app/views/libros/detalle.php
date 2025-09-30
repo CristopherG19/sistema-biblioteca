@@ -8,11 +8,11 @@
             <p class="text-muted mb-0">Información detallada del libro</p>
         </div>
         <div>
-            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" class="btn btn-outline-secondary me-2">
+            <a href="index.php?page=libros" class="btn btn-outline-secondary me-2">
                 <i class="fas fa-arrow-left me-2"></i>Volver al Catálogo
             </a>
             <?php if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 2 && $libro['disponible'] > 0): ?>
-                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
+                <a href="index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
                    class="btn btn-success">
                     <i class="fas fa-hand-holding me-2"></i>Solicitar Préstamo
                 </a>
@@ -164,7 +164,7 @@
                         
                         <div class="d-grid gap-2">
                             <?php if ($puedeAccederPDF): ?>
-                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=leerPDF&id=<?php echo $libro['idLibro']; ?>" 
+                                <a href="index.php?page=libros&action=leerPDF&id=<?php echo $libro['idLibro']; ?>" 
                                    class="btn btn-danger" target="_blank">
                                     <i class="fas fa-eye me-2"></i>Leer Online
                                 </a>
@@ -181,7 +181,7 @@
                                         <small>Necesitas solicitar un préstamo para acceder al contenido digital</small>
                                     </div>
                                     <?php if ($libro['disponible'] > 0): ?>
-                                        <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
+                                        <a href="index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
                                            class="btn btn-success btn-lg w-100">
                                             <i class="fas fa-hand-holding me-2"></i>Solicitar Préstamo
                                         </a>
@@ -222,18 +222,18 @@
                     </div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
-                            <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=editar&id=<?php echo $libro['idLibro']; ?>" 
+                            <a href="index.php?page=libros&action=editar&id=<?php echo $libro['idLibro']; ?>" 
                                class="btn btn-outline-primary">
                                 <i class="fas fa-edit me-2"></i>Editar Libro
                             </a>
                             
                             <?php if (!$libro['tiene_pdf']): ?>
-                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=subirPDF&id=<?php echo $libro['idLibro']; ?>" 
+                                <a href="index.php?page=libros&action=subirPDF&id=<?php echo $libro['idLibro']; ?>" 
                                    class="btn btn-outline-success">
                                     <i class="fas fa-upload me-2"></i>Subir PDF
                                 </a>
                             <?php else: ?>
-                                <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=actualizarPDF&id=<?php echo $libro['idLibro']; ?>" 
+                                <a href="index.php?page=libros&action=actualizarPDF&id=<?php echo $libro['idLibro']; ?>" 
                                    class="btn btn-outline-info">
                                     <i class="fas fa-sync me-2"></i>Actualizar PDF
                                 </a>
@@ -254,7 +254,7 @@
 <script>
 function confirmarEliminacion(libroId) {
     if (confirm('¿Estás seguro de que quieres eliminar este libro? Esta acción no se puede deshacer.')) {
-        window.location.href = `/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=eliminar&id=${libroId}`;
+        window.location.href = `index.php?page=libros&action=eliminar&id=${libroId}`;
     }
 }
 </script>

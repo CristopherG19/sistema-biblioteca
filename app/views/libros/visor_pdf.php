@@ -89,11 +89,11 @@
                     </small>
                 </div>
                 <div>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
+                    <a href="index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
                        class="btn btn-light btn-sm me-2">
                         <i class="fas fa-info-circle me-1"></i>Detalles
                     </a>
-                    <a href="/SISTEMA_BIBLIOTECA/public/index.php?page=libros" 
+                    <a href="index.php?page=libros" 
                        class="btn btn-outline-light btn-sm">
                         <i class="fas fa-times me-1"></i>Cerrar
                     </a>
