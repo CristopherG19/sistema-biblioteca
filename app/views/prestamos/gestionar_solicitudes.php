@@ -187,14 +187,17 @@
                                         break;
                                 }
                                 
-                                $diasEspera = ceil((time() - strtotime($solicitud['fecha_solicitud'])) / (60 * 60 * 24));
+                                $fechaSolicitud = strtotime($solicitud['fecha_solicitud']);
+                                $fechaHoy = strtotime(date('Y-m-d'));
+                                $diasEspera = floor((time() - $fechaSolicitud) / (60 * 60 * 24));
+                                $esHoy = date('Y-m-d', $fechaSolicitud) === date('Y-m-d');
                                 $urgenciaClass = $diasEspera > 3 ? 'text-danger' : ($diasEspera > 1 ? 'text-warning' : '');
                                 ?>
                                 <tr class="<?php echo $solicitud['estado'] === 'Pendiente' ? 'table-light' : ''; ?>">
                                     <td class="py-3">
                                         <div class="d-flex align-items-center">
                                             <span class="fw-semibold"><?php echo $solicitud['idSolicitud']; ?></span>
-                                            <?php if ($diasEspera > 2 && $solicitud['estado'] === 'Pendiente'): ?>
+                                            <?php if ($diasEspera > 2 && $solicitud['estado'] === 'Pendiente' && !$esHoy): ?>
                                                 <span class="badge bg-danger ms-2 small">Urgente</span>
                                             <?php endif; ?>
                                         </div>
@@ -234,7 +237,13 @@
                                             <?php echo date('d/m/Y', strtotime($solicitud['fecha_solicitud'])); ?>
                                         </div>
                                         <div class="small <?php echo $urgenciaClass; ?>">
-                                            Hace <?php echo $diasEspera; ?> día<?php echo $diasEspera != 1 ? 's' : ''; ?>
+                                            <?php if ($esHoy): ?>
+                                                <span class="text-success fw-semibold">Hoy</span>
+                                            <?php elseif ($diasEspera == 1): ?>
+                                                Ayer
+                                            <?php else: ?>
+                                                Hace <?php echo $diasEspera; ?> días
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                     <td class="py-3">
