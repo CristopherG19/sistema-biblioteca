@@ -13,9 +13,18 @@ class CategoriasController {
 
     public function guardar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            Categoria::insertar($_POST);
+            try {
+                if (Categoria::insertar($_POST)) {
+                    header('Location: index.php?page=categorias&mensaje=' . urlencode('Categoría agregada exitosamente'));
+                } else {
+                    header('Location: index.php?page=categorias&error=' . urlencode('Error al agregar la categoría'));
+                }
+            } catch (Exception $e) {
+                header('Location: index.php?page=categorias&error=' . urlencode('Error al agregar la categoría: ' . $e->getMessage()));
+            }
+        } else {
+            header('Location: index.php?page=categorias');
         }
-        header('Location: index.php?page=categorias');
         exit;
     }
 
@@ -27,17 +36,33 @@ class CategoriasController {
 
     public function actualizar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            Categoria::actualizar($id, $_POST);
+            try {
+                $id = $_POST['id'];
+                if (Categoria::actualizar($id, $_POST)) {
+                    header('Location: index.php?page=categorias&mensaje=' . urlencode('Categoría actualizada exitosamente'));
+                } else {
+                    header('Location: index.php?page=categorias&error=' . urlencode('Error al actualizar la categoría'));
+                }
+            } catch (Exception $e) {
+                header('Location: index.php?page=categorias&error=' . urlencode('Error al actualizar la categoría: ' . $e->getMessage()));
+            }
+        } else {
+            header('Location: index.php?page=categorias');
         }
-        header('Location: index.php?page=categorias');
         exit;
     }
 
     public function eliminar() {
-        $id = $_GET['id'];
-        Categoria::eliminar($id);
-        header('Location: index.php?page=categorias');
+        try {
+            $id = $_GET['id'];
+            if (Categoria::eliminar($id)) {
+                header('Location: index.php?page=categorias&mensaje=' . urlencode('Categoría eliminada exitosamente'));
+            } else {
+                header('Location: index.php?page=categorias&error=' . urlencode('Error al eliminar la categoría'));
+            }
+        } catch (Exception $e) {
+            header('Location: index.php?page=categorias&error=' . urlencode('Error al eliminar la categoría: ' . $e->getMessage()));
+        }
         exit;
     }
 }
