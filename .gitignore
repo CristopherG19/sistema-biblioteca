@@ -5,6 +5,7 @@ Thumbs.db
 *.temp
 
 # Archivos de configuración local
+config/database.php
 config/database.local.php
 .env
 .env.local
