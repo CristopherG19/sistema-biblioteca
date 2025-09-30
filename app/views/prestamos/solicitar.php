@@ -107,6 +107,23 @@
                             </div>
                         </div>
 
+                        <!-- Información sobre duración del préstamo -->
+                        <div class="alert alert-info border-0 mb-3">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-clock me-2"></i>Duración del Préstamo
+                            </h6>
+                            <p class="mb-2">
+                                <strong>Duración estándar:</strong> 15 días calendario
+                            </p>
+                            <p class="mb-0">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    El bibliotecario puede ajustar la duración según las políticas de la biblioteca. 
+                                    Recibirás notificación con la fecha exacta de devolución cuando tu solicitud sea aprobada.
+                                </small>
+                            </p>
+                        </div>
+
                         <!-- Botones -->
                         <div class="d-flex gap-2 pt-3 border-top">
                             <button type="submit" class="btn btn-primary">
@@ -167,7 +184,7 @@
                         </div>
                         <div>
                             <strong>Préstamo activo</strong><br>
-                            <small class="text-muted">Puedes retirar el libro de la biblioteca</small>
+                            <small class="text-muted">Puedes retirar el libro (duración: 15 días)</small>
                         </div>
                     </div>
                 </div>
@@ -188,6 +205,10 @@
                             <small>Las solicitudes se procesan en 24-48h</small>
                         </li>
                         <li class="mb-2">
+                            <i class="fas fa-calendar-alt text-primary me-2"></i>
+                            <small>Duración estándar: 15 días (puede variar)</small>
+                        </li>
+                        <li class="mb-2">
                             <i class="fas fa-book text-primary me-2"></i>
                             <small>Una solicitud por libro a la vez</small>
                         </li>
@@ -196,6 +217,39 @@
                             <small>Revisa tus solicitudes regularmente</small>
                         </li>
                     </ul>
+                </div>
+            </div>
+            
+            <!-- Políticas de Préstamo -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0"><i class="fas fa-gavel me-2"></i>Políticas de Préstamo</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-success mb-2">
+                                <i class="fas fa-calendar-check me-1"></i>Duración
+                            </h6>
+                            <ul class="list-unstyled small mb-3">
+                                <li>• <strong>Estándar:</strong> 15 días</li>
+                                <li>• <strong>Libros técnicos:</strong> 7 días</li>
+                                <li>• <strong>Novelas:</strong> 21 días</li>
+                                <li>• <strong>Referencia:</strong> 3 días</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success mb-2">
+                                <i class="fas fa-exclamation-triangle me-1"></i>Restricciones
+                            </h6>
+                            <ul class="list-unstyled small mb-0">
+                                <li>• Máximo 3 libros simultáneos</li>
+                                <li>• Renovación hasta 2 veces</li>
+                                <li>• Multa por retraso: $1/día</li>
+                                <li>• Suspensión por 3 retrasos</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
