@@ -14,6 +14,8 @@ require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/PrestamosController.php';
 require_once '../app/controllers/ReportesController.php';
 require_once '../app/controllers/ExportController.php';
+require_once '../app/controllers/FavoritosController.php';
+require_once '../app/controllers/HistorialController.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -249,6 +251,54 @@ switch ($page) {
         } else {
             header('Location: index.php?page=reportes&error=' . urlencode('Acción de exportación no válida'));
             exit;
+        }
+        break;
+        
+    case 'favoritos':
+        // Verificar autenticación antes de acceder a favoritos
+        AuthController::verificarAutenticacion();
+        $controller = new FavoritosController();
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+        
+        if ($action === 'index') {
+            $controller->index();
+        } elseif ($action === 'toggle') {
+            $controller->toggle();
+        } elseif ($action === 'eliminar') {
+            $controller->eliminar();
+        } elseif ($action === 'getRecientes') {
+            $controller->getFavoritosRecientes();
+        } elseif ($action === 'esFavorito') {
+            $controller->esFavorito();
+        } else {
+            $controller->index();
+        }
+        break;
+        
+    case 'historial':
+        // Verificar autenticación antes de acceder a historial
+        AuthController::verificarAutenticacion();
+        $controller = new HistorialController();
+        $action = isset($_GET['action']) ? $_GET['action'] : 'index';
+        
+        if ($action === 'index') {
+            $controller->index();
+        } elseif ($action === 'prestamos') {
+            $controller->prestamos();
+        } elseif ($action === 'busquedas') {
+            $controller->busquedas();
+        } elseif ($action === 'visualizaciones') {
+            $controller->visualizaciones();
+        } elseif ($action === 'getEstadisticas') {
+            $controller->getEstadisticas();
+        } elseif ($action === 'getActividadesRecientes') {
+            $controller->getActividadesRecientes();
+        } elseif ($action === 'limpiar') {
+            $controller->limpiar();
+        } elseif ($action === 'exportar') {
+            $controller->exportar();
+        } else {
+            $controller->index();
         }
         break;
         

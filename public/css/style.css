@@ -5,13 +5,13 @@
 
 /* Variables CSS personalizadas */
 :root {
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --card-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    --card-shadow-hover: 0 10px 30px rgba(0,0,0,0.15);
-    --border-radius: 12px;
+    --primary-gradient: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    --success-gradient: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+    --info-gradient: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    --warning-gradient: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
+    --border-radius: 8px;
     --transition: all 0.3s ease;
 }
 
@@ -317,8 +317,8 @@ body {
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9fa;
-    color: #667eea !important;
+    background-color: #e2e8f0;
+    color: #2d3748 !important;
 }
 
 .dropdown-item i {
@@ -326,7 +326,7 @@ body {
 }
 
 .dropdown-item:hover i {
-    color: #667eea !important;
+    color: #2d3748 !important;
 }
 
 /* Badges estilizados */

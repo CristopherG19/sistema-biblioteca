@@ -161,13 +161,11 @@ $esLector = AuthController::esLector();
                                     <i class="fas fa-chart-bar me-2"></i>Reportes
                                 </a></li>
                             <?php else: ?>
-                                <li><a class="dropdown-item disabled" href="#" tabindex="-1">
+                                <li><a class="dropdown-item" href="index.php?page=favoritos">
                                     <i class="fas fa-heart me-2"></i>Mis Favoritos
-                                    <span class="badge bg-info ms-1">Próximamente</span>
                                 </a></li>
-                                <li><a class="dropdown-item disabled" href="#" tabindex="-1">
+                                <li><a class="dropdown-item" href="index.php?page=historial">
                                     <i class="fas fa-history me-2"></i>Mi Historial
-                                    <span class="badge bg-info ms-1">Próximamente</span>
                                 </a></li>
                             <?php endif; ?>
                             

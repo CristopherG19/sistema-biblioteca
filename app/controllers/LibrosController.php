@@ -2,6 +2,7 @@
 require_once '../app/models/Libro.php';
 require_once '../app/models/Categoria.php';
 require_once '../app/models/Prestamo.php';
+require_once '../app/models/Historial.php';
 require_once '../app/utils/PDFHandler.php';
 
 class LibrosController {
@@ -194,6 +195,12 @@ class LibrosController {
             $infoPDF = $this->pdfHandler->obtenerInfoArchivo($libro['archivo_pdf']);
             $libro['info_pdf'] = $infoPDF;
             $libro['url_pdf'] = $this->pdfHandler->obtenerURLArchivo($libro['archivo_pdf']);
+        }
+        
+        // Registrar visualización en el historial (solo para lectores)
+        if (isset($_SESSION['usuario_rol']) && $_SESSION['usuario_rol'] == 2) {
+            $historial = new Historial();
+            $historial->registrarVisualizacion($_SESSION['usuario_id'], $id, $libro['titulo']);
         }
         
         include __DIR__ . '/../views/libros/detalle.php';

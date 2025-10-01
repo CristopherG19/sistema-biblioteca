@@ -223,11 +223,17 @@ include __DIR__ . '/../partials/header.php';
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             <?php else: ?>
-                                                <!-- Los lectores solo ven detalle -->
+                                                <!-- Los lectores ven detalle, favoritos y pueden solicitar préstamo -->
                                                 <a href="index.php?page=libros&action=detalle&id=<?php echo $libro['idLibro']; ?>" 
                                                    class="btn btn-outline-info" title="Ver Detalle">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                <button class="btn btn-outline-danger" 
+                                                        title="Agregar a Favoritos" 
+                                                        data-libro-id="<?php echo $libro['idLibro']; ?>"
+                                                        onclick="toggleFavorito(<?php echo $libro['idLibro']; ?>)">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
                                                 <?php if ($libro['disponible'] > 0): ?>
                                                     <a href="index.php?page=prestamos&action=solicitar&libro_id=<?php echo $libro['idLibro']; ?>" 
                                                        class="btn btn-outline-success" title="Solicitar Préstamo">
@@ -297,6 +303,92 @@ function clearFilters() {
     for (let i = 0; i < rows.length; i++) {
         rows[i].style.display = '';
     }
+}
+
+// Función para toggle favorito
+function toggleFavorito(libroId) {
+    fetch('index.php?page=favoritos&action=toggle', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'libro_id=' + libroId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar el botón de favorito
+            const boton = document.querySelector(`[data-libro-id="${libroId}"]`);
+            if (boton) {
+                const icono = boton.querySelector('i');
+                if (data.accion === 'agregado') {
+                    icono.className = 'fas fa-heart';
+                    boton.classList.remove('btn-outline-danger');
+                    boton.classList.add('btn-danger');
+                    boton.title = 'Quitar de Favoritos';
+                } else {
+                    icono.className = 'far fa-heart';
+                    boton.classList.remove('btn-danger');
+                    boton.classList.add('btn-outline-danger');
+                    boton.title = 'Agregar a Favoritos';
+                }
+            }
+            
+            // Mostrar mensaje
+            mostrarMensaje(data.message, 'success');
+        } else {
+            mostrarMensaje('Error: ' + data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        mostrarMensaje('Error al procesar la solicitud', 'error');
+    });
+}
+
+// Función para mostrar mensajes
+function mostrarMensaje(mensaje, tipo) {
+    const alerta = document.createElement('div');
+    alerta.className = `alert alert-${tipo === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    alerta.innerHTML = `
+        <i class="fas fa-${tipo === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${mensaje}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    const container = document.querySelector('.container-fluid');
+    container.insertBefore(alerta, container.firstChild);
+    
+    // Auto-ocultar después de 3 segundos
+    setTimeout(() => {
+        if (alerta.parentNode) {
+            alerta.remove();
+        }
+    }, 3000);
+}
+
+// Cargar estado de favoritos al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    const botonesFavoritos = document.querySelectorAll('[data-libro-id]');
+    botonesFavoritos.forEach(boton => {
+        const libroId = boton.getAttribute('data-libro-id');
+        verificarEstadoFavorito(libroId, boton);
+    });
+});
+
+// Verificar si un libro está en favoritos
+function verificarEstadoFavorito(libroId, boton) {
+    fetch(`index.php?page=favoritos&action=esFavorito&libro_id=${libroId}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && data.esFavorito) {
+            const icono = boton.querySelector('i');
+            icono.className = 'fas fa-heart';
+            boton.classList.remove('btn-outline-danger');
+            boton.classList.add('btn-danger');
+            boton.title = 'Quitar de Favoritos';
+        }
+    })
+    .catch(error => console.error('Error al verificar favorito:', error));
 }
 </script>
 

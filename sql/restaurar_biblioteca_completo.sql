@@ -1,3 +1,28 @@
+-- =====================================================
+-- SCRIPT DE RESTAURACIÓN COMPLETA - SISTEMA BIBLIOTECA
+-- =====================================================
+-- 
+-- DESCRIPCIÓN: Script único para restaurar completamente
+--              la base de datos del Sistema de Biblioteca
+-- 
+-- CONTENIDO:
+-- - 15 tablas con estructura y datos
+-- - 73 procedimientos almacenados
+-- - 2 vistas del sistema
+-- - Configuraciones de charset UTF8MB4
+-- - Claves foráneas y restricciones
+-- 
+-- FECHA: 30 de Septiembre de 2025
+-- VERSIÓN: BiblioSys v1.0
+-- 
+-- INSTRUCCIONES DE USO:
+-- 1. MySQL Command Line: mysql -u root -p < restaurar_biblioteca_completo.sql
+-- 2. phpMyAdmin: Importar este archivo
+-- 3. MySQL Workbench: Ejecutar como script
+-- 
+-- =====================================================
+
+
 CREATE DATABASE  IF NOT EXISTS `biblioteca_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `biblioteca_db`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
@@ -2640,3 +2665,10 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-09-23 21:59:47
+
+-- =====================================================
+-- MENSAJE DE ÉXITO
+-- =====================================================
+SELECT '¡Base de datos restaurada exitosamente!' as mensaje,
+       'Sistema de Biblioteca v1.0' as version,
+       NOW() as fecha_restauracion;
